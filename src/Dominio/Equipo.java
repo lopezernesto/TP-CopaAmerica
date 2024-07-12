@@ -14,10 +14,19 @@ public class Equipo implements Comparable {
         golesFavor = gf;
     }
 
+    public int hashCode() {
+        int hash = nombre.hashCode();
+        return hash;
+    }
+
     @Override
     public int compareTo(Object otro) {
         Equipo c = (Equipo) otro;
-        return nombre.compareTo(c.getNombre());
+        return nombre.compareTo(c.nombre);
+    }
+
+    public boolean equals(Equipo e) {
+        return (nombre.equals(e.nombre));
     }
 
     public String getNombre() {

@@ -8,8 +8,8 @@ public class NodoVert {
     private Ciudad ciudad;
 
     // Creo un Vertice
-    public NodoVert(String nombre) {
-        ciudad = new Ciudad(nombre);
+    public NodoVert(String nombre, boolean sede) {
+        ciudad = new Ciudad(nombre, sede);
     }
 
     // Para que dos Vertices sean iguales, sus ciudades deben llamarse igual

@@ -6,9 +6,10 @@ public class Ciudad {
     private int cant;
     boolean sede, alojamiento;
 
-    public Ciudad(String nombre) {
+    public Ciudad(String nombre, boolean sede) {
         this.nombre = nombre;
         alojamiento = true;
+        this.sede = sede;
     }
 
     public boolean reservar(int cantidad) {

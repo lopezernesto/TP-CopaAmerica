@@ -8,7 +8,7 @@ public class TestPartido {
         Equipo eq1 = new Equipo("Argentina", "escalo", 'A', 4, 10, 2);
         Equipo eq2 = new Equipo("Canada", "kcyo", 'A', 5, 10, 2);
         Equipo eq3 = new Equipo("Colombia", "xd", 'B', 0, 0, 0);
-        Ciudad c = new Ciudad("NEW YORK");
+        Ciudad c = new Ciudad("NEW YORK", false);
         Partido p = new Partido(eq1, eq2, "grupo", c, "MERCEDES-BENZ", 02, 0);
         System.out.println(p.toString());
         ArbolAVL arbol = new ArbolAVL();

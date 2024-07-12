@@ -2,11 +2,11 @@ package Dominio;
 
 public class Partido {
     private Equipo eq1, eq2;
-    private String fase, resultado, estadio;
+    private String ronda, resultado, estadio;
     private Ciudad ciudad;
 
     public Partido(Equipo uno, Equipo dos, String fase, Ciudad ciudad, String estadio, int resEq1, int resEq2) {
-        this.fase = fase;
+        this.ronda = fase;
         this.ciudad = ciudad;
         this.estadio = estadio;
         if (uno.compareTo(dos) <= 0) {
@@ -18,6 +18,10 @@ public class Partido {
             resultado = resEq2 + ":" + resEq1;
             eq2 = uno;
         }
+    }
+
+    public boolean equals(Partido p) {
+        return (eq1.equals(p.eq1) && eq2.equals(p.eq2) && ronda.equals(p.ronda));
     }
 
     public String getEquipo1() {
@@ -36,12 +40,12 @@ public class Partido {
         this.eq2 = eq2;
     }
 
-    public String getFase() {
-        return fase;
+    public String getRonda() {
+        return ronda;
     }
 
-    public void setFase(String fase) {
-        this.fase = fase;
+    public void setRonda(String fase) {
+        this.ronda = fase;
     }
 
     public String getResultado() {
@@ -52,15 +56,8 @@ public class Partido {
         this.resultado = resultado;
     }
 
-    /*
-     * Partido: nombre eq1, nombre eq2, instancia, ciudad, estadio, goles eq1, goles
-     * eq2
-     * P: ARGENTINA; CANADA; GRUPO; ATLANTA; MERCEDES-BENZ; 2; 0
-     * P: ARGENTINA; CHILE; GRUPO; NEW YORK; METLIFE; 1; 0
-     * 
-     */
     public String toString() {
-        return eq1.getNombre() + "; " + eq2.getNombre() + "; " + fase + "; " + ciudad.getNombre() + "; " + estadio
+        return eq1.getNombre() + "; " + eq2.getNombre() + "; " + ronda + "; " + ciudad.getNombre() + "; " + estadio
                 + "; " + resultado;
     }
 }

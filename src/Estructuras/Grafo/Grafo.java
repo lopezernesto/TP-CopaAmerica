@@ -12,11 +12,11 @@ public class Grafo {
      * de Vertices que tiene mi grafo
      * Retorna false unicamente si ya existe un Vertice con ese nombre
      */
-    public boolean insertarVertice(String nombreCiudad) {
+    public boolean insertarVertice(String nombreCiudad, boolean sede) {
         boolean exit = false;
         if (inicio == null) {
             // Si no tiene vertices, inserta
-            inicio = new NodoVert(nombreCiudad);
+            inicio = new NodoVert(nombreCiudad, sede);
         } else {
             NodoVert aux = inicio;
             // Sino, verifica que no exista una ciudad con ese nombre
@@ -26,7 +26,7 @@ public class Grafo {
             }
             if (aux != null)
                 // Si no encuentra una ciudad con ese nombre la inserta como enlace al ultimo
-                aux.setSiguienteVertice(new NodoVert(nombreCiudad));
+                aux.setSiguienteVertice(new NodoVert(nombreCiudad, sede));
         }
         return !exit;
     }
