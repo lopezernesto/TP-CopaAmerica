@@ -21,7 +21,7 @@ public class Grafo {
             NodoVert aux = inicio;
             // Sino, verifica que no exista una ciudad con ese nombre
             while (!exit && aux.getSiguienteVertice() != null) {
-                exit = aux.getNombre().equals(nombreCiudad);
+                exit = aux.getCiudad().equals(nombreCiudad);
                 aux = aux.getSiguienteVertice();
             }
             if (aux != null)
@@ -47,7 +47,7 @@ public class Grafo {
             NodoVert anterior = null;
             // Primero busco el vertice a eliminar
             while (aux != null && !exit) {
-                exit = aux.getNombre().equals(nombreCiudad);
+                exit = aux.getCiudad().equals(nombreCiudad);
                 if (exit) {
                     // Si lo encontro borra todos sus arcos desde los vertices destino
                     borrarAdyacencias(aux);
@@ -98,7 +98,7 @@ public class Grafo {
         if (inicio != null) {
             NodoVert aux = inicio;
             while (!exit && aux != null) {
-                exit = aux.getNombre().equals(nombreCiudad);
+                exit = aux.getCiudad().equals(nombreCiudad);
                 aux = aux.getSiguienteVertice();
             }
         }
@@ -121,10 +121,10 @@ public class Grafo {
             NodoVert aux = inicio, origen = null, destino = null;
             while (aux != null && !encontrado) {
                 // Si aun no se encontro la ciudad de destino y el nombre coincide, lo guardo
-                if (destino == null && aux.getNombre().equals(ciudadDestino))
+                if (destino == null && aux.getCiudad().equals(ciudadDestino))
                     destino = aux;
                 // Si aun no se encontro la ciudad de origen y el nombre coincide, lo guardo
-                if (origen == null && aux.getNombre().equals(ciudadOrigen))
+                if (origen == null && aux.getCiudad().equals(ciudadOrigen))
                     origen = aux;
                 // En caso de haber encontrado ambas, encontrado=true para cortar el while
                 if (origen != null && destino != null) {
@@ -148,9 +148,9 @@ public class Grafo {
         if (inicio != null) {
             NodoVert aux = inicio, origen = null, destino = null;
             while (aux != null && !encontrado) {
-                if (destino == null && aux.getNombre().equals(ciudadDestino))
+                if (destino == null && aux.getCiudad().equals(ciudadDestino))
                     destino = aux;
-                if (origen == null && aux.getNombre().equals(ciudadOrigen))
+                if (origen == null && aux.getCiudad().equals(ciudadOrigen))
                     origen = aux;
                 if (origen != null && destino != null) {
                     encontrado = true;
@@ -170,8 +170,10 @@ public class Grafo {
             cad = "";
             NodoVert aux = inicio;
             while (aux != null) {
-                cad += aux.getNombre() + ": " + "\n";
-                cad += aux.toString() + "\n" + "----------" + "\n";
+                cad += "------------------------------Ciudad-------------------------" + "\n";
+                cad += aux.getCiudad() + ": ";
+                cad += "\n" + "----------------------------Conexiones-----------------------"
+                        + "\n" + aux.toString();
                 aux = aux.getSiguienteVertice();
             }
         }

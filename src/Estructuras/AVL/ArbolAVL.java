@@ -1,5 +1,7 @@
 package Estructuras.AVL;
 
+import Dominio.Equipo;
+
 public class ArbolAVL {
     private NodoAVL raiz;
 
@@ -7,7 +9,7 @@ public class ArbolAVL {
 
     }
 
-    public boolean insertar(Comparable elem) {
+    public boolean insertar(Equipo elem) {
         boolean exit = false;
         if (raiz == null) {
             // Si raiz es nula, lo inserto ahi
@@ -33,7 +35,7 @@ public class ArbolAVL {
         return exit;
     }
 
-    private boolean insertarAux(NodoAVL padre, NodoAVL n, boolean hijo, Comparable elem) {
+    private boolean insertarAux(NodoAVL padre, NodoAVL n, boolean hijo, Equipo elem) {
         boolean exit = false;
         // Si n es null es porque no se encontro al elem que debo insertar
         if (n == null) {
@@ -66,7 +68,7 @@ public class ArbolAVL {
         return exit;
     }
 
-    public boolean eliminar(Comparable elem) {
+    public boolean eliminar(Equipo elem) {
         boolean exit = false;
         if (raiz != null) {
             int temp = raiz.getElem().compareTo(elem);
@@ -96,7 +98,7 @@ public class ArbolAVL {
     /*
      * Metodo para eliminar un nodo diferente a la raiz
      */
-    private boolean eliminarAux(NodoAVL padre, NodoAVL n, Comparable elem, boolean hijo) {
+    private boolean eliminarAux(NodoAVL padre, NodoAVL n, Equipo elem, boolean hijo) {
         boolean exit = false;
         int temp = n.getElem().compareTo(elem);
         if (temp == 0) {
@@ -425,7 +427,7 @@ public class ArbolAVL {
         return raiz == null;
     }
 
-    public boolean pertenece(Comparable elem) {
+    public boolean pertenece(Equipo elem) {
         boolean exit = false;
         if (!esVacio()) {
             exit = perteneceAux(raiz, elem);
@@ -433,7 +435,7 @@ public class ArbolAVL {
         return exit;
     }
 
-    private boolean perteneceAux(NodoAVL n, Comparable elem) {
+    private boolean perteneceAux(NodoAVL n, Equipo elem) {
         boolean exit = false;
         if (n != null) {
             int temp = n.getElem().compareTo(elem);
@@ -461,14 +463,14 @@ public class ArbolAVL {
     public String toStringAux(NodoAVL n) {
         String cad = "";
         if (n != null) {
-            cad += "(" + n.getElem() + ") -> ";
+            cad += "(" + n.getElem().getNombre() + ") -> ";
             if (n.getIzquierdo() != null) {
-                cad += "HI: " + n.getIzquierdo().getElem() + "  ";
+                cad += "HI: " + n.getIzquierdo().getElem().getNombre() + "  ";
             } else {
                 cad += "HI: -  ";
             }
             if (n.getDerecho() != null) {
-                cad += "HD: " + n.getDerecho().getElem() + "\n";
+                cad += "HD: " + n.getDerecho().getElem().getNombre() + "\n";
             } else {
                 cad += "HD: - \n";
             }
