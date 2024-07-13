@@ -17,6 +17,7 @@ public class Grafo {
         if (inicio == null) {
             // Si no tiene vertices, inserta
             inicio = new NodoVert(nombreCiudad, sede);
+            exit = true;
         } else {
             NodoVert aux = inicio;
             // Sino, verifica que no exista una ciudad con ese nombre
@@ -24,11 +25,14 @@ public class Grafo {
                 exit = aux.getCiudad().equals(nombreCiudad);
                 aux = aux.getSiguienteVertice();
             }
-            if (aux != null)
+            // Caso particular es cuando hay 1 ciudad cargada, no entra al while
+            if (aux != null && !aux.getCiudad().equals(nombreCiudad)) {
                 // Si no encuentra una ciudad con ese nombre la inserta como enlace al ultimo
                 aux.setSiguienteVertice(new NodoVert(nombreCiudad, sede));
+                exit = true;
+            }
         }
-        return !exit;
+        return exit;
     }
 
     /*
@@ -173,7 +177,7 @@ public class Grafo {
                 cad += "------------------------------Ciudad-------------------------" + "\n";
                 cad += aux.getCiudad() + ": ";
                 cad += "\n" + "----------------------------Conexiones-----------------------"
-                        + "\n" + aux.toString();
+                        + "\n" + aux.toString() + "\n";
                 aux = aux.getSiguienteVertice();
             }
         }
