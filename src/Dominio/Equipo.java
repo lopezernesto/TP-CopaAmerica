@@ -5,13 +5,13 @@ public class Equipo implements Comparable {
     private char grupo;
     private int puntos, golesFavor, golesContra;
 
-    public Equipo(String nombreEquipo, String dt, char grupo, int puntos, int gf, int gc) {
+    public Equipo(String nombreEquipo, String dt, char grupo) {
         nombre = nombreEquipo;
         entrenador = dt;
         this.grupo = grupo;
-        this.puntos = puntos;
-        golesContra = gc;
-        golesFavor = gf;
+        puntos = 0;
+        golesContra = 0;
+        golesFavor = 0;
     }
 
     public int hashCode() {

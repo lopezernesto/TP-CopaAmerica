@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
+import Dominio.Equipo;
+import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
 
 public class Main {
     private static Scanner sc = new Scanner(System.in);
     private static char opcion;
     private static Grafo ciudades = new Grafo();
+    private static ArbolAVL equipos = new ArbolAVL();
 
     public static void menu() {
         System.out.println("MENU DE OPCIONES:");
@@ -20,6 +23,96 @@ public class Main {
         System.out.println("8) Mostrar Sistema");
         System.out.println("0) Salir");
         System.out.println("-----------------------------------------------------");
+    }
+
+    /*
+     * A partir de aca seran operaciones con Equipos
+     */
+    private static void ABMequipos() {
+        System.out.println("__________________________________________");
+        System.out.println("Altas, bajas y modificaciones de Equipos:");
+        boolean exit = false;
+        do {
+            System.out.println("______________________");
+            System.out.println("1) Crear Equipos");
+            System.out.println("2) Borrar Equipos");
+            System.out.println("3) Modificar Equipos");
+            System.out.println("0) Salir");
+            System.out.println("______________________");
+            System.out.print("Ingrese la opcion: ");
+            opcion = sc.next().charAt(0);
+            switch (opcion) {
+                case '1':
+                    agregarEquipos();
+                    break;
+                case '2':
+                    // borrarEquipos();
+                case '3':
+                    // modificarEquipos();
+                    break;
+                case '0':
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("La opcion ingresada es incorrecta");
+                    break;
+            }
+        } while (!exit);
+    }
+
+    /*
+     * Metodo utilizado para crear uno o mas equipos
+     * A tener en cuenta:
+     * 1) Los equipos se crean de 0. Sin GF, GC ni puntos
+     * 2) Los puntos, gf, gc se van modificando a medida que se juegan partidos
+     * 3) Para crear un equipo es necesario que no se repita el nombre del mismo
+     */
+    private static void agregarEquipos() {
+        boolean exit = false;
+        // Establezco opcion='y' para que inmediatamente me deje agregar un equipo
+        opcion = 'y';
+        String nombre, dt;
+        char grupo;
+        Equipo e;
+        do {
+            switch (opcion) {
+                // Mientras el usuario ingrese 'y' va a seguir ejecutandose
+                case 'y':
+                    System.out.print("Ingrese el nombre del equipo: ");
+                    nombre = sc.next();
+                    do {
+                        // Solo hay 4 grupos (A, B, C, D)
+                        System.out.print("Ingrese el grupo: ");
+                        // respuesta = sc.next().toUpperCase();
+                        grupo = sc.next().toUpperCase().charAt(0);
+                        if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
+                            System.out.println("Ingrese unicamente (A,B,C,D)");
+                        }
+                    } while (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D');
+                    System.out.print("Quien es el DT?: ");
+                    dt = sc.next();
+                    e = new Equipo(nombre, dt, grupo);
+                    if (!equipos.insertar(e)) {
+                        System.out.println("No se pudo crear el equipo porque ya existe uno con ese nombre");
+                    }
+                    do {
+                        // Luego pregunto si desea continuar
+                        System.out.print("Desea continuar? y/n: ");
+                        opcion = sc.next().toLowerCase().charAt(0);
+                        if (opcion != 'y' && opcion != 'n') {
+                            System.out.println("La opcion ingresada es incorrecta");
+                        }
+                    } while (opcion != 'y' && opcion != 'n');
+                    break;
+                case 'n':
+                    // En caso de no querer continuar se modifica la variable de corte
+                    exit = true;
+                    break;
+                default:
+                    // Nunca entra en el default porque esta en un bucle hasta ingresar y/n
+                    break;
+            }
+        } while (!exit);
     }
 
     /*
@@ -72,12 +165,12 @@ public class Main {
             switch (opcion) {
                 // Mientras el usuario ingrese 'y' va a seguir ejecutandose
                 case 'y':
-                    System.out.print("Ingrese nombre de la ciudad: ");
+                    System.out.print("Ingrese el nombre de la ciudad: ");
                     nombre = sc.next();
                     do {
                         // Sede sera un booleano, por lo tanto solo puede ser y/n
                         System.out.print("La ciudad es sede? y/n: ");
-                        sede = sc.next().charAt(0);
+                        sede = sc.next().toLowerCase().charAt(0);
                         if (sede != 'y' && sede != 'n') {
                             System.out.println("Ingrese unicamente 'y' para si y 'n' para no");
                         }
@@ -90,10 +183,10 @@ public class Main {
                     }
                     do {
                         // Luego pregunto si desea continuar
-                        System.out.println("Desea continuar? y/n: ");
-                        opcion = sc.next().charAt(0);
+                        System.out.print("Desea continuar? y/n: ");
+                        opcion = sc.next().toLowerCase().charAt(0);
                         if (opcion != 'y' && opcion != 'n') {
-                            System.out.println("Opcion incorrecta");
+                            System.out.println("La opcion ingresada es incorrecta");
                         }
                     } while (opcion != 'y' && opcion != 'n');
                     break;
@@ -106,7 +199,6 @@ public class Main {
                     break;
             }
         } while (!exit);
-
     }
 
     /*
@@ -121,16 +213,16 @@ public class Main {
         do {
             switch (opcion) {
                 case 'y':
-                    System.out.print("Ingrese nombre de la ciudad: ");
+                    System.out.print("Ingrese el nombre de la ciudad: ");
                     nombre = sc.next();
                     if (!ciudades.eliminarVertice(nombre)) {
                         System.out.println("No existe una ciudad con ese nombre");
                     }
                     do {
-                        System.out.println("Desea continuar? y/n: ");
-                        opcion = sc.next().charAt(0);
+                        System.out.print("Desea continuar? y/n: ");
+                        opcion = sc.next().toLowerCase().charAt(0);
                         if (opcion != 'y' && opcion != 'n') {
-                            System.out.println("Opcion incorrecta");
+                            System.out.println("La opcion ingresada es incorrecta");
                         }
                     } while (opcion != 'y' && opcion != 'n');
                     break;
@@ -160,7 +252,7 @@ public class Main {
             // Como tanto para eliminar y agregar necesito el nombre de las dos ciudades
             if (opcion != '0') {
                 // Si la opcion sea alguna de esas, pido las dos ciudades antes de operar
-                System.out.print("Ingrese nombre de la primer ciudad: ");
+                System.out.print("Ingrese el nombre de la primer ciudad: ");
                 nombreA = sc.next();
                 System.out.print("Ingrese el nombre de la segunda ciudad: ");
                 nombreB = sc.next();
@@ -170,12 +262,12 @@ public class Main {
                     do {
                         // El tiempo de vuelo(int) es requerido para crear el camino
                         System.out.print("Ingrese el tiempo de vuelo: ");
-                        // Utilizo un try-catch ya que puede ingresar una cadena no solo de numeros
-                        try {
-                            // Y al utilizar el parseInt me tiraria error
-                            tiempo = Integer.parseInt(sc.next());
+                        // Utilizo una expresion regular para verificar que solo sean numeros
+                        String respuesta = sc.next();
+                        if (respuesta.matches("\\d+")) {
+                            tiempo = Integer.parseInt(respuesta);
                             aux = true;
-                        } catch (NumberFormatException e) {
+                        } else {
                             System.out.println("Error: El valor ingresado no es un numero.");
                         }
                     } while (!aux);
@@ -192,7 +284,7 @@ public class Main {
                     exit = true;
                     break;
                 default:
-
+                    System.out.println("La opcion ingresada es incorrecta");
                     break;
             }
         } while (!exit);
@@ -222,6 +314,7 @@ public class Main {
                     ABMciudades();
                     break;
                 case '2':
+                    ABMequipos();
                     break;
                 case '3':
                     break;
@@ -246,5 +339,6 @@ public class Main {
 
         } while (!exit);
         System.out.println(ciudades.toString());
+        System.out.println(equipos.toString());
     }
 }
