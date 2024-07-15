@@ -61,6 +61,108 @@ public class Main {
     }
 
     /*
+     * Metodo utilizado para crear uno o mas equipos
+     * A tener en cuenta:
+     * 1) Los equipos se crean de 0. Sin GF, GC ni puntos
+     * 2) Los puntos, gf, gc se van modificando a medida que se juegan partidos
+     * 3) Para crear un equipo es necesario que no se repita el nombre del mismo
+     */
+    private static void agregarEquipos() {
+        boolean exit = false;
+        // Establezco opcion='y' para que inmediatamente me deje agregar un equipo
+        opcion = 'y';
+        String nombre, dt;
+        char grupo;
+        Equipo e;
+        do {
+            switch (opcion) {
+                // Mientras el usuario ingrese 'y' va a seguir ejecutandose
+                case 'y':
+                    System.out.print("Ingrese el nombre del equipo: ");
+                    nombre = sc.next();
+                    do {
+                        // Solo hay 4 grupos (A, B, C, D)
+                        System.out.print("Ingrese el grupo: ");
+                        grupo = sc.next().toUpperCase().charAt(0);
+                        if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
+                            System.out.println("Ingrese unicamente (A,B,C,D)");
+                        }
+                    } while (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D');
+                    System.out.print("Quien es el DT?: ");
+                    dt = sc.next();
+                    e = new Equipo(nombre, dt, grupo);
+                    if (!equipos.insertar(e)) {
+                        System.out.println("No se pudo crear el equipo porque ya existe uno con ese nombre");
+                    }
+                    do {
+                        // Luego pregunto si desea continuar
+                        System.out.print("Desea continuar? y/n: ");
+                        opcion = sc.next().toLowerCase().charAt(0);
+                        if (opcion != 'y' && opcion != 'n') {
+                            System.out.println("La opcion ingresada es incorrecta");
+                        }
+                    } while (opcion != 'y' && opcion != 'n');
+                    break;
+                case 'n':
+                    // En caso de no querer continuar se modifica la variable de corte
+                    exit = true;
+                    break;
+                default:
+                    // Nunca entra en el default porque esta en un bucle hasta ingresar y/n
+                    break;
+            }
+        } while (!exit);
+    }
+
+    // public static void establecerPartido(Equipo uno, Equipo dos) {
+    // System.out.print("Ingrese el nombre del segundo equipo");
+    // Equipo a = new Equipo(nombreA);
+    // a = equipos.pertenece(a);
+    // if (a != null && e != null) {
+    // establecerPartido(e, a);
+    // } else {
+    // System.out.println("Verifique nuevamente el nombre de los equipos que
+    // ingreso");
+    // }
+    // }
+
+    /*
+     * En este metodo se podran borrar la cantidad de equipos que se desee
+     * Se crea un equipo solo con el nombre para buscarlo en el AVL que almacena los
+     * equipos, si lo encuentra lo elimina.
+     */
+    public static void borrarEquipos() {
+        boolean exit = false;
+        opcion = 'y';
+        String nombre;
+        do {
+            switch (opcion) {
+                case 'y':
+                    System.out.print("Ingrese el nombre del equipo: ");
+                    nombre = sc.next();
+                    Equipo e = new Equipo(nombre);
+                    if (!equipos.eliminar(e)) {
+                        System.out.println("No se encontro un equipo con ese nombre");
+                    }
+                    do {
+                        // Luego pregunto si desea continuar
+                        System.out.print("Desea continuar? y/n: ");
+                        opcion = sc.next().toLowerCase().charAt(0);
+                        if (opcion != 'y' && opcion != 'n') {
+                            System.out.println("La opcion ingresada es incorrecta");
+                        }
+                    } while (opcion != 'y' && opcion != 'n');
+                    break;
+                case 'n':
+                    exit = true;
+                    break;
+                default:
+                    break;
+            }
+        } while (!exit);
+    }
+
+    /*
      * Las unicas modificaciones que se pueden hacer entre equipos son las de
      * cambiar el nombre, grupo o el dt, en caso de querer modificar puntos o goles,
      * debera hacerse a traves de un partido
@@ -127,108 +229,6 @@ public class Main {
             }
         } while (!exit);
 
-    }
-
-    // public static void establecerPartido(Equipo uno, Equipo dos) {
-    // System.out.print("Ingrese el nombre del segundo equipo");
-    // Equipo a = new Equipo(nombreA);
-    // a = equipos.pertenece(a);
-    // if (a != null && e != null) {
-    // establecerPartido(e, a);
-    // } else {
-    // System.out.println("Verifique nuevamente el nombre de los equipos que
-    // ingreso");
-    // }
-    // }
-
-    /*
-     * En este metodo se podran borrar la cantidad de equipos que se desee
-     * Se crea un equipo solo con el nombre para buscarlo en el AVL que almacena los
-     * equipos, si lo encuentra lo elimina.
-     */
-    public static void borrarEquipos() {
-        boolean exit = false;
-        opcion = 'y';
-        String nombre;
-        do {
-            switch (opcion) {
-                case 'y':
-                    System.out.print("Ingrese el nombre del equipo: ");
-                    nombre = sc.next();
-                    Equipo e = new Equipo(nombre);
-                    if (!equipos.eliminar(e)) {
-                        System.out.println("No se encontro un equipo con ese nombre");
-                    }
-                    do {
-                        // Luego pregunto si desea continuar
-                        System.out.print("Desea continuar? y/n: ");
-                        opcion = sc.next().toLowerCase().charAt(0);
-                        if (opcion != 'y' && opcion != 'n') {
-                            System.out.println("La opcion ingresada es incorrecta");
-                        }
-                    } while (opcion != 'y' && opcion != 'n');
-                    break;
-                case 'n':
-                    exit = true;
-                    break;
-                default:
-                    break;
-            }
-        } while (!exit);
-    }
-
-    /*
-     * Metodo utilizado para crear uno o mas equipos
-     * A tener en cuenta:
-     * 1) Los equipos se crean de 0. Sin GF, GC ni puntos
-     * 2) Los puntos, gf, gc se van modificando a medida que se juegan partidos
-     * 3) Para crear un equipo es necesario que no se repita el nombre del mismo
-     */
-    private static void agregarEquipos() {
-        boolean exit = false;
-        // Establezco opcion='y' para que inmediatamente me deje agregar un equipo
-        opcion = 'y';
-        String nombre, dt;
-        char grupo;
-        Equipo e;
-        do {
-            switch (opcion) {
-                // Mientras el usuario ingrese 'y' va a seguir ejecutandose
-                case 'y':
-                    System.out.print("Ingrese el nombre del equipo: ");
-                    nombre = sc.next();
-                    do {
-                        // Solo hay 4 grupos (A, B, C, D)
-                        System.out.print("Ingrese el grupo: ");
-                        grupo = sc.next().toUpperCase().charAt(0);
-                        if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
-                            System.out.println("Ingrese unicamente (A,B,C,D)");
-                        }
-                    } while (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D');
-                    System.out.print("Quien es el DT?: ");
-                    dt = sc.next();
-                    e = new Equipo(nombre, dt, grupo);
-                    if (!equipos.insertar(e)) {
-                        System.out.println("No se pudo crear el equipo porque ya existe uno con ese nombre");
-                    }
-                    do {
-                        // Luego pregunto si desea continuar
-                        System.out.print("Desea continuar? y/n: ");
-                        opcion = sc.next().toLowerCase().charAt(0);
-                        if (opcion != 'y' && opcion != 'n') {
-                            System.out.println("La opcion ingresada es incorrecta");
-                        }
-                    } while (opcion != 'y' && opcion != 'n');
-                    break;
-                case 'n':
-                    // En caso de no querer continuar se modifica la variable de corte
-                    exit = true;
-                    break;
-                default:
-                    // Nunca entra en el default porque esta en un bucle hasta ingresar y/n
-                    break;
-            }
-        } while (!exit);
     }
 
     /*

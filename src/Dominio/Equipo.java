@@ -22,11 +22,6 @@ public class Equipo implements Comparable {
         golesFavor = 0;
     }
 
-    public int hashCode() {
-        int hash = nombre.hashCode();
-        return hash;
-    }
-
     @Override
     public int compareTo(Object otro) {
         Equipo c = (Equipo) otro;

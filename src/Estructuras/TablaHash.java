@@ -1,19 +1,21 @@
 package Estructuras;
 
+import Dominio.Equipo;
+import Dominio.Partido;
 import Estructuras.Lineales.Nodo;
 
 public class TablaHash {
 
-    private Nodo[] arreglo = new Nodo[13];
+    private Nodo[] arreglo = new Nodo[37];
     private int cant;
 
     public TablaHash() {
         cant = 0;
     }
 
-    public boolean insertar(Object elem) {
+    public boolean insertar(Partido elem) {
         boolean exit = false;
-        int pos = elem.hashCode() % 13;
+        int pos = elem.hashCode() % 37;
         Nodo aux = arreglo[pos];
 
         while (!exit && aux != null) {
@@ -28,9 +30,29 @@ public class TablaHash {
         return !exit;
     }
 
-    public boolean eliminar(Object elem) {
+    /*
+     * Entran dos "Equipos" solos cargados con nombre, ya ordenados
+     * Como Nodo utiliza la clase Object, lo casteo a Partido
+     * 
+     * Obs: como maximo dos equipos se enfrentan dos veces
+     */
+    public String recuperar(Equipo uno, Equipo dos) {
+        Partido p = new Partido(uno, dos);
+        String ret = "";
+        // Como el hashcode se usa solo con el nombre
+        int pos = p.hashCode() % 37;
+        p = (Partido) arreglo[pos].getElem();
+        if (arreglo[pos].getEnlace() != null) {
+            Partido x = (Partido) arreglo[pos].getEnlace().getElem();
+            ret += x.toString() + "\n";
+        }
+        ret += p.toString();
+        return ret;
+    }
+
+    public boolean eliminar(Partido elem) {
         boolean exit = false;
-        int pos = elem.hashCode() % 13;
+        int pos = elem.hashCode() % 37;
         Nodo aux = arreglo[pos];
         // Llevo referencia del nodo anterior para enlazarlo
         Nodo anterior = null;
@@ -56,9 +78,9 @@ public class TablaHash {
         return exit;
     }
 
-    public boolean pertenece(Object elem) {
+    public boolean pertenece(Partido elem) {
         boolean exit = false;
-        int pos = elem.hashCode() % 13;
+        int pos = elem.hashCode() % 37;
         Nodo aux = arreglo[pos];
         while (!exit && aux != null) {
             exit = aux.getElem().equals(elem);

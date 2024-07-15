@@ -5,6 +5,15 @@ public class Partido {
     private String ronda, resultado, estadio;
     private Ciudad ciudad;
 
+    /*
+     * Este constructor es para "crear" un partido para poder comparar sus claves
+     * Ya estan ordenados lexicograficamente
+     */
+    public Partido(Equipo uno, Equipo dos) {
+        eq1 = uno;
+        eq2 = dos;
+    }
+
     public Partido(Equipo uno, Equipo dos, String fase, Ciudad ciudad, String estadio, int resEq1, int resEq2) {
         this.ronda = fase;
         this.ciudad = ciudad;
@@ -18,6 +27,19 @@ public class Partido {
             resultado = resEq2 + ":" + resEq1;
             eq2 = uno;
         }
+    }
+
+    public int hashCode() {
+        String n1 = eq1.getNombre(), n2 = eq2.getNombre();
+        int i = 0, hash = 5381;
+        while (i <= n1.length() - 1) {
+            hash = (hash * 33) + n1.charAt(i++);
+        }
+        i = 0;
+        while (i <= n2.length() - 1) {
+            hash = (hash * 33) + n2.charAt(i++);
+        }
+        return Math.abs(hash);
     }
 
     public boolean equals(Partido p) {
