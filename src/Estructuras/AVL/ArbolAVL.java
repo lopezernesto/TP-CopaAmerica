@@ -427,29 +427,33 @@ public class ArbolAVL {
         return raiz == null;
     }
 
-    public boolean pertenece(Equipo elem) {
-        boolean exit = false;
+    /*
+     * Cambio el return de pertenece, ahora si pertenece devuelve el equipo en lugar
+     * de un true/false
+     */
+    public Equipo pertenece(Equipo elem) {
+        Equipo retorno = null;
         if (!esVacio()) {
-            exit = perteneceAux(raiz, elem);
+            retorno = perteneceAux(raiz, elem);
         }
-        return exit;
+        return retorno;
     }
 
-    private boolean perteneceAux(NodoAVL n, Equipo elem) {
-        boolean exit = false;
+    private Equipo perteneceAux(NodoAVL n, Equipo elem) {
+        Equipo retorno = null;
         if (n != null) {
             int temp = n.getElem().compareTo(elem);
             if (temp == 0) {
-                exit = true;
+                retorno = n.getElem();
             } else {
                 if (temp < 0) {
-                    exit = perteneceAux(n.getDerecho(), elem);
+                    retorno = perteneceAux(n.getDerecho(), elem);
                 } else {
-                    exit = perteneceAux(n.getIzquierdo(), elem);
+                    retorno = perteneceAux(n.getIzquierdo(), elem);
                 }
             }
         }
-        return exit;
+        return retorno;
     }
 
     public String toString() {

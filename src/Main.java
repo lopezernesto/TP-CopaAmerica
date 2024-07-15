@@ -46,15 +46,132 @@ public class Main {
                     agregarEquipos();
                     break;
                 case '2':
-                    // borrarEquipos();
+                    borrarEquipos();
                 case '3':
-                    // modificarEquipos();
+                    modificarEquipos();
                     break;
                 case '0':
                     exit = true;
                     break;
                 default:
                     System.out.println("La opcion ingresada es incorrecta");
+                    break;
+            }
+        } while (!exit);
+    }
+
+    /*
+     * Las unicas modificaciones que se pueden hacer entre equipos son las de
+     * cambiar el nombre, grupo o el dt, en caso de querer modificar puntos o goles,
+     * debera hacerse a traves de un partido
+     */
+    public static void modificarEquipos() {
+        boolean exit = false;
+        Equipo e = null;
+        String nombreA = "";
+        do {
+            System.out.println("______________________");
+            System.out.println("1) Cambiar el tecnico");
+            System.out.println("2) Cambiar nombre");
+            System.out.println("3) Cambiar de grupo");
+            System.out.println("0) Salir");
+            System.out.println("______________________");
+            System.out.print("Ingrese la opcion: ");
+            opcion = sc.next().charAt(0);
+            if (opcion > '0' && opcion < '0') {
+                System.out.print("Ingrese el nombre del equipo: ");
+                nombreA = sc.next();
+                e = new Equipo(nombreA);
+                e = equipos.pertenece(e);
+            }
+            switch (opcion) {
+                case '1':
+                    if (e != null) {
+                        System.out.print("Ingrese el nombre del nuevo DT: ");
+                        String dt = sc.next();
+                        e.setEntrenador(dt);
+                    } else {
+                        System.out.println("No se encontro un equipo con ese nombre");
+                    }
+                    break;
+                case '2':
+                    System.out.print("Ingrese el nuevo nombre: ");
+                    nombreA = sc.next();
+                    if (e != null) {
+                        e.setNombre(nombreA);
+                    } else {
+                        System.out.println("No se encontro un equipo con ese nombre");
+                    }
+                    break;
+                case '3':
+                    if (e != null) {
+                        char grupo;
+                        // Solo hay 4 grupos (A, B, C, D)
+                        System.out.print("Ingrese el grupo: ");
+                        grupo = sc.next().toUpperCase().charAt(0);
+                        if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
+                            System.out.println("Ingrese unicamente (A,B,C,D)");
+                        } else {
+                            e.setGrupo(grupo);
+                        }
+                    } else {
+                        System.out.println("No se encontro un equipo con ese nombre");
+                    }
+                    break;
+                case '0':
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("La opcion ingresada es incorrecta");
+                    break;
+            }
+        } while (!exit);
+
+    }
+
+    // public static void establecerPartido(Equipo uno, Equipo dos) {
+    // System.out.print("Ingrese el nombre del segundo equipo");
+    // Equipo a = new Equipo(nombreA);
+    // a = equipos.pertenece(a);
+    // if (a != null && e != null) {
+    // establecerPartido(e, a);
+    // } else {
+    // System.out.println("Verifique nuevamente el nombre de los equipos que
+    // ingreso");
+    // }
+    // }
+
+    /*
+     * En este metodo se podran borrar la cantidad de equipos que se desee
+     * Se crea un equipo solo con el nombre para buscarlo en el AVL que almacena los
+     * equipos, si lo encuentra lo elimina.
+     */
+    public static void borrarEquipos() {
+        boolean exit = false;
+        opcion = 'y';
+        String nombre;
+        do {
+            switch (opcion) {
+                case 'y':
+                    System.out.print("Ingrese el nombre del equipo: ");
+                    nombre = sc.next();
+                    Equipo e = new Equipo(nombre);
+                    if (!equipos.eliminar(e)) {
+                        System.out.println("No se encontro un equipo con ese nombre");
+                    }
+                    do {
+                        // Luego pregunto si desea continuar
+                        System.out.print("Desea continuar? y/n: ");
+                        opcion = sc.next().toLowerCase().charAt(0);
+                        if (opcion != 'y' && opcion != 'n') {
+                            System.out.println("La opcion ingresada es incorrecta");
+                        }
+                    } while (opcion != 'y' && opcion != 'n');
+                    break;
+                case 'n':
+                    exit = true;
+                    break;
+                default:
                     break;
             }
         } while (!exit);
@@ -83,7 +200,6 @@ public class Main {
                     do {
                         // Solo hay 4 grupos (A, B, C, D)
                         System.out.print("Ingrese el grupo: ");
-                        // respuesta = sc.next().toUpperCase();
                         grupo = sc.next().toUpperCase().charAt(0);
                         if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
                             System.out.println("Ingrese unicamente (A,B,C,D)");
@@ -152,8 +268,9 @@ public class Main {
 
     /*
      * Metodo utilizado para agregar la cantidad de ciudades que se desee
-     * Para crear una ciudad son necesarias dos variables
-     * 1) Nombre de la ciudad 2)Si es sede o no (true/false)
+     * Para crear una ciudad son necesarias dos variables:
+     * 1) Nombre de la ciudad
+     * 2) Si es sede o no (true/false)
      */
     private static void agregarCiudades() {
         boolean exit = false;
@@ -244,13 +361,15 @@ public class Main {
         String nombreA = "", nombreB = "";
         int tiempo = 0;
         do {
+            System.out.println("______________________");
             System.out.println("1) Agregar camino");
             System.out.println("2) Eliminar camino");
             System.out.println("0) Salir");
+            System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
             opcion = sc.next().charAt(0);
             // Como tanto para eliminar y agregar necesito el nombre de las dos ciudades
-            if (opcion != '0') {
+            if (opcion > '0' && opcion < '0') {
                 // Si la opcion sea alguna de esas, pido las dos ciudades antes de operar
                 System.out.print("Ingrese el nombre de la primer ciudad: ");
                 nombreA = sc.next();

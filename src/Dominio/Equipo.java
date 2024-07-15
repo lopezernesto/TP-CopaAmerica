@@ -5,6 +5,14 @@ public class Equipo implements Comparable {
     private char grupo;
     private int puntos, golesFavor, golesContra;
 
+    /*
+     * Este constructor es para "crear" un equipo para poder compararlo en mi AVL
+     * Asi de esta manera lo puedo eliminar
+     */
+    public Equipo(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Equipo(String nombreEquipo, String dt, char grupo) {
         nombre = nombreEquipo;
         entrenador = dt;
