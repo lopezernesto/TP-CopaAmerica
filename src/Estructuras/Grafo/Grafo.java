@@ -22,7 +22,8 @@ public class Grafo {
             NodoVert aux = inicio;
             // Sino, verifica que no exista una ciudad con ese nombre
             while (!exit && aux.getSiguienteVertice() != null) {
-                exit = aux.getCiudad().equals(nombreCiudad);
+                if (aux.getCiudad().equals(nombreCiudad))
+                    exit = true;
                 aux = aux.getSiguienteVertice();
             }
             // Caso particular es cuando hay 1 ciudad cargada, no entra al while
