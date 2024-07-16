@@ -427,19 +427,43 @@ public class ArbolAVL {
         return raiz == null;
     }
 
-    /*
-     * Cambio el return de pertenece, ahora si pertenece devuelve el equipo en lugar
-     * de un true/false
-     */
-    public Equipo pertenece(Equipo elem) {
-        Equipo retorno = null;
+    public boolean pertenece(Equipo elem) {
+        boolean retorno = false;
         if (!esVacio()) {
             retorno = perteneceAux(raiz, elem);
         }
         return retorno;
     }
 
-    private Equipo perteneceAux(NodoAVL n, Equipo elem) {
+    private boolean perteneceAux(NodoAVL n, Equipo elem) {
+        boolean retorno = false;
+        if (n != null) {
+            int temp = n.getElem().compareTo(elem);
+            if (temp == 0) {
+                retorno = true;
+            } else {
+                if (temp < 0) {
+                    retorno = perteneceAux(n.getDerecho(), elem);
+                } else {
+                    retorno = perteneceAux(n.getIzquierdo(), elem);
+                }
+            }
+        }
+        return retorno;
+    }
+
+    /*
+     * Recuperar es casi igual al pertenece pero devuelve el Equipo en lugar de T/F
+     */
+    public Equipo recuperar(Equipo elem) {
+        Equipo retorno = null;
+        if (!esVacio()) {
+            retorno = recuperarAux(raiz, elem);
+        }
+        return retorno;
+    }
+
+    private Equipo recuperarAux(NodoAVL n, Equipo elem) {
         Equipo retorno = null;
         if (n != null) {
             int temp = n.getElem().compareTo(elem);
@@ -447,9 +471,9 @@ public class ArbolAVL {
                 retorno = n.getElem();
             } else {
                 if (temp < 0) {
-                    retorno = perteneceAux(n.getDerecho(), elem);
+                    retorno = recuperarAux(n.getDerecho(), elem);
                 } else {
-                    retorno = perteneceAux(n.getIzquierdo(), elem);
+                    retorno = recuperarAux(n.getIzquierdo(), elem);
                 }
             }
         }

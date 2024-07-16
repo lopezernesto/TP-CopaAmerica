@@ -22,10 +22,19 @@ public class Equipo implements Comparable {
         golesFavor = 0;
     }
 
+    /*
+     * Si los nombres son iguales pero estan escrito de diferente manera
+     * (o sea, alternando mayusculas y minusculas) devuelve 0 igualmente
+     */
     @Override
     public int compareTo(Object otro) {
         Equipo c = (Equipo) otro;
-        return nombre.compareTo(c.nombre);
+        String segundo = c.nombre;
+        // Verifico si son cadenas iguales
+        if (nombre.equalsIgnoreCase(segundo)) {
+            segundo = nombre;
+        }
+        return nombre.compareTo(segundo);
     }
 
     public boolean equals(Equipo e) {
