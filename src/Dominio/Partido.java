@@ -7,15 +7,20 @@ public class Partido {
 
     /*
      * Este constructor es para "crear" un partido para poder comparar sus claves
-     * Ya estan ordenados lexicograficamente
      */
-    public Partido(Equipo uno, Equipo dos) {
-        eq1 = uno;
-        eq2 = dos;
+    public Partido(Equipo uno, Equipo dos, String ronda) {
+        this.ronda = ronda;
+        if (uno.compareTo(dos) <= 0) {
+            eq1 = uno;
+            eq2 = dos;
+        } else {
+            eq1 = dos;
+            eq2 = uno;
+        }
     }
 
-    public Partido(Equipo uno, Equipo dos, String fase, Ciudad ciudad, String estadio, int resEq1, int resEq2) {
-        this.ronda = fase;
+    public Partido(Equipo uno, Equipo dos, String ronda, Ciudad ciudad, String estadio, int resEq1, int resEq2) {
+        this.ronda = ronda;
         this.ciudad = ciudad;
         this.estadio = estadio;
         if (uno.compareTo(dos) <= 0) {

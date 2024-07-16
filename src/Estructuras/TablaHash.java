@@ -31,22 +31,25 @@ public class TablaHash {
     }
 
     /*
-     * Entran dos "Equipos" solos cargados con nombre, ya ordenados
+     * Entran dos "Equipos" solos cargados con nombre, ya ordenados eq1<eq2
      * Como Nodo utiliza la clase Object, lo casteo a Partido
      * 
      * Obs: como maximo dos equipos se enfrentan dos veces
      */
     public String recuperar(Equipo uno, Equipo dos) {
-        Partido p = new Partido(uno, dos);
-        String ret = "";
+        Partido p = new Partido(uno, dos, null);
+        String ret = "No hay partidos entre esos dos equipos";
         // Como el hashcode se usa solo con el nombre
         int pos = p.hashCode() % 37;
-        p = (Partido) arreglo[pos].getElem();
-        if (arreglo[pos].getEnlace() != null) {
-            Partido x = (Partido) arreglo[pos].getEnlace().getElem();
-            ret += x.toString() + "\n";
+        if (arreglo[pos] != null) {
+            ret = "";
+            p = (Partido) arreglo[pos].getElem();
+            if (arreglo[pos].getEnlace() != null) {
+                Partido x = (Partido) arreglo[pos].getEnlace().getElem();
+                ret += x.toString() + "\n";
+            }
+            ret += p.toString();
         }
-        ret += p.toString();
         return ret;
     }
 
