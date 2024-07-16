@@ -32,6 +32,42 @@ public class Partido {
             resultado = resEq2 + ":" + resEq1;
             eq2 = uno;
         }
+        modificarEquipos(eq1, eq2, ronda, resEq1, resEq2);
+    }
+
+    /*
+     * Segun el resultado del partido modifica los equipos
+     * Aclaracion, los Setters no modifican la variable
+     * simplemente le suman a lo que ya tienen
+     */
+    private void modificarEquipos(Equipo uno, Equipo dos, String ronda, int resEq1, int resEq2) {
+        // Si la ronda no es por grupos, la modifico
+        if (!ronda.equals("grupo")) {
+            uno.modificarRonda(ronda);
+            dos.modificarRonda(ronda);
+        }
+        // Si el equipo 1 marco algun gol
+        if (resEq1 != 0) {
+            uno.sumarGolesFavor(resEq1);
+            dos.sumarGolesContra(resEq1);
+        }
+        // Si el equipo 2 marco algun gol
+        if (resEq2 != 0) {
+            uno.sumarGolesContra(resEq2);
+            dos.sumarGolesFavor(resEq2);
+        }
+        // Si empataron
+        if (resEq1 == resEq2) {
+            uno.sumarPuntos(1);
+        } else {
+            // Si gano el equipo2
+            if (resEq1 < resEq2) {
+                dos.sumarPuntos(3);
+            } else {
+                // Si gano el equipo1
+                uno.sumarPuntos(3);
+            }
+        }
     }
 
     public int hashCode() {
@@ -47,7 +83,9 @@ public class Partido {
         return Math.abs(hash);
     }
 
-    public boolean equals(Partido p) {
+    @Override
+    public boolean equals(Object elem) {
+        Partido p = (Partido) elem;
         return (eq1.equals(p.eq1) && eq2.equals(p.eq2) && ronda.equals(p.ronda));
     }
 
@@ -84,7 +122,9 @@ public class Partido {
     }
 
     public String toString() {
-        return eq1.getNombre() + "; " + eq2.getNombre() + "; " + ronda + "; " + ciudad.getNombre() + "; " + estadio
-                + "; " + resultado;
+        return eq1.getNombre() + "; " + eq2.getNombre() + "; " + ronda + "; "/*
+                                                                              * + ciudad.getNombre() + "; " + estadio
+                                                                              * + "; "
+                                                                              */ + resultado;
     }
 }
