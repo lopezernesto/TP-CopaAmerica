@@ -4,6 +4,7 @@ public class Equipo implements Comparable {
     private String entrenador, nombre;
     private char grupo;
     private int puntos, golesFavor, golesContra;
+    private boolean cuartos, semi, laFinal;
 
     /*
      * Este constructor es para "crear" un equipo para poder compararlo en mi AVL
@@ -20,25 +21,94 @@ public class Equipo implements Comparable {
         puntos = 0;
         golesContra = 0;
         golesFavor = 0;
+        cuartos = false;
+        semi = false;
+        laFinal = false;
+    }
+
+    /*
+     * Los siguientes tres metodos son invocados desde Partido
+     * Cuando se establece un partido, en base a su resultado
+     * modifica los equipo
+     */
+    public void sumarGolesFavor(int goles) {
+        golesFavor += goles;
+    }
+
+    public void sumarGolesContra(int goles) {
+        golesContra += goles;
+    }
+
+    public void sumarPuntos(int puntos) {
+        puntos += puntos;
+    }
+
+    /*
+     * Metodo que verifica si el equipo ya jugo esa ronda
+     * En caso de ya haberla jugado, no podra crearse el partido
+     */
+    public boolean jugoRonda(String ronda) {
+        boolean ret = false;
+        switch (ronda) {
+            case "cuartos":
+                ret = cuartos;
+                break;
+            case "semis":
+                ret = semi;
+                break;
+            case "final":
+                ret = laFinal;
+                break;
+            default:
+                break;
+        }
+        return ret;
+    }
+
+    /*
+     * Metodo que modifica la ronda, segun cual hayan jugado
+     * Esto lo hace una vez que ya se creo el partido
+     */
+    public void modificarRonda(String ronda) {
+        switch (ronda) {
+            case "cuartos":
+                cuartos = true;
+                break;
+            case "semis":
+                semi = true;
+                break;
+            case "final":
+                laFinal = true;
+                break;
+            default:
+                break;
+        }
     }
 
     /*
      * Si los nombres son iguales pero estan escrito de diferente manera
      * (o sea, alternando mayusculas y minusculas) devuelve 0 igualmente
+     * 
+     * Las comparaciones son en minusculas pero el nombre lo inserta
+     * tal cual como el usuario lo pide
      */
     @Override
     public int compareTo(Object otro) {
         Equipo c = (Equipo) otro;
-        String segundo = c.nombre;
+        // Lo que ingresa por parametro lo pongo en minusculas para comparar
+        String segundo = c.nombre.toLowerCase();
+        // Creo la variable aux para guardar el nombre original en minuscula
+        String aux = nombre.toLowerCase();
         // Verifico si son cadenas iguales
-        if (nombre.equalsIgnoreCase(segundo)) {
-            segundo = nombre;
+        if (aux.equals(segundo)) {
+            segundo = aux;
         }
-        return nombre.compareTo(segundo);
+        // Retorno la comparacion de ambos nombres en minuscula
+        return aux.compareTo(segundo);
     }
 
     public boolean equals(Equipo e) {
-        return (nombre.equals(e.nombre));
+        return (nombre.equalsIgnoreCase(e.nombre));
     }
 
     public String getNombre() {
