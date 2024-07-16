@@ -1,15 +1,17 @@
 package Estructuras.Lineales;
 
+import Dominio.Partido;
+
 public class Nodo {
-    private Object elem;
+    private Partido elem;
     private Nodo enlace;
 
-    public Nodo(Object elem, Nodo enlace) {
+    public Nodo(Partido elem, Nodo enlace) {
         this.elem = elem;
         this.enlace = enlace;
     }
 
-    public Object getElem() {
+    public Partido getElem() {
         return this.elem;
     }
 
@@ -17,7 +19,7 @@ public class Nodo {
         return this.enlace;
     }
 
-    public void setElem(Object elem) {
+    public void setElem(Partido elem) {
         this.elem = elem;
     }
 
