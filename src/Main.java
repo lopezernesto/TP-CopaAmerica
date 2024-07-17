@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 import Dominio.Equipo;
@@ -429,7 +430,7 @@ public class Main {
     /*
      * Metodo para crear partido entre dos equipos
      * Cosas a tener en cuenta:
-     * 1) Pueden haber 0, 1 y 2 partidos entre sos dos equipos unicamente
+     * 1) Pueden haber entre 0 y 2 partidos unicamente con dos mismos equipos
      * 2) No importa si se alterna entre mayusculas y minusculas los nombres
      * 3) En caso de ya existir un partido, no lo crea
      * 4) Dos partidos son iguales si se repiten los equipos y la ronda
@@ -458,23 +459,11 @@ public class Main {
                     System.out.print("Ingrese la ronda: ");
                     String ronda = sc.next().toLowerCase();
                     if (rondaValida(ronda) && uno != null && dos != null) {
-                        boolean puedeInsertar = false;
-                        // Si ambos equipos se enfrentan por grupo y son del mismo grupo
-                        if (ronda.equals("grupo")) {
-                            if (uno.getGrupo() == dos.getGrupo()) {
-                                puedeInsertar = true;
-                            }
-                        } else {
-                            errorE();
-                        }
-                        // Si ambos equipos no han jugado esa ronda
-                        if (!uno.jugoRonda(ronda) && !dos.jugoRonda(ronda)) {
-                            puedeInsertar = true;
-                        } else {
-                            errorE();
-                        }
+                        // puedeInsertar es un metodo de clase que me indica si es posible crear el
+                        // partido dados unos datos basicos
+                        boolean puedeInsertar = Partido.puedeInsertar(uno, dos, ronda);
                         if (puedeInsertar) {
-                            int resEq1 = 0, resEq2 = 0;
+                            int resultadoEquipo1 = 0, resultadoEquipo2 = 0;
                             boolean aux = false;
                             String respuesta;
                             do {
@@ -482,25 +471,26 @@ public class Main {
                                 // Utilizo una expresion regular para verificar que solo sean numeros
                                 respuesta = sc.next();
                                 if (respuesta.matches("\\d+")) {
-                                    resEq1 = Integer.parseInt(respuesta);
-                                    aux = true;
-                                } else {
-                                    System.out.println("Error: El valor ingresado no es un numero.");
-                                }
-                                System.out.print("Ingrese el resultado de: " + segundo + " en el partido: ");
-                                respuesta = sc.next();
-                                if (respuesta.matches("\\d+")) {
-                                    resEq2 = Integer.parseInt(respuesta);
+                                    resultadoEquipo1 = Integer.parseInt(respuesta);
                                     aux = true;
                                 } else {
                                     System.out.println("Error: El valor ingresado no es un numero.");
                                 }
                             } while (!aux);
-                            Partido p = new Partido(uno, dos, ronda, null, respuesta, resEq1, resEq2);
+                            do {
+                                System.out.print("Ingrese el resultado de: " + segundo + " en el partido: ");
+                                respuesta = sc.next();
+                                if (respuesta.matches("\\d+")) {
+                                    resultadoEquipo2 = Integer.parseInt(respuesta);
+                                    aux = true;
+                                } else {
+                                    System.out.println("Error: El valor ingresado no es un numero.");
+                                }
+                            } while (!aux);
+                            Partido p = new Partido(uno, dos, ronda, null, respuesta, resultadoEquipo1,
+                                    resultadoEquipo2);
                             if (!partidos.insertar(p)) {
                                 errorE();
-                            } else {
-                                System.out.println(partidos.recuperar(uno, dos));
                             }
                         } else {
                             errorE();
@@ -527,24 +517,26 @@ public class Main {
 
     }
 
+    /*
+     * Si el usuario ingreso un string diferente de los establecidos, retorna falso
+     */
     private static boolean rondaValida(String ronda) {
         boolean exit = false;
         if (ronda.equals("grupo") || ronda.equals("cuartos") || ronda.equals("semis") || ronda.equals("final")) {
             exit = true;
         }
-        System.out.println(exit);
         return exit;
     }
 
     private static void errorE() {
         System.out.println("----------------------------------Error:----------------------------------");
         System.out.println("Ocurrio un error, verifique lo siguiente:");
-        System.out.println("1) Ingreso Equipos validas");
+        System.out.println("1) Ingreso Equipos validos");
         System.out.println("2) Ingreso una ronda valida");
-        System.out.println("3) Ya haya un partido cargado con esos datos");
-        System.out.println("4) Ya hay dos partidos disputados entre esos equipos");
+        System.out.println("3) Ya haya un partido de alguno de los equipos en una ronda eliminatoria");
+        System.out.println("Recuerde que si, por ej, Argentina jugo 'cuartos', no puede volver a jugar 'cuartos'");
+        System.out.println("4) El partido este repetido");
         System.out.println("5) Si es un partido de 'grupos' ambos equipos deben ser del mismo grupo");
-        System.out.println("6) Alguno de los dos equipos ya jugo esa ronda");
         System.out.println("----------------------------------Error:----------------------------------");
     }
 
@@ -553,9 +545,16 @@ public class Main {
         Equipo arg = new Equipo("Argentina", "asd", 'A');
         Equipo col = new Equipo("Colombia", "asd", 'A');
         Equipo bra = new Equipo("Brasil", "asd", 'B');
+        Equipo uru = new Equipo("Uruguay", "asd", 'C');
+        Equipo pan = new Equipo("Panamá", "xd", 'C');
+        Equipo chi = new Equipo("Chile", "asdasd", 'A');
         equipos.insertar(bra);
         equipos.insertar(arg);
         equipos.insertar(col);
+        equipos.insertar(pan);
+        equipos.insertar(uru);
+        equipos.insertar(chi);
+
         do {
             menu();
             System.out.print("Ingrese la opcion: ");
