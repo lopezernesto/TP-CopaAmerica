@@ -4,12 +4,18 @@ public class Partido {
     private Equipo eq1, eq2;
     private String ronda, resultado, estadio;
     private Ciudad ciudad;
+    private boolean esEliminatoria;
 
     /*
      * Este constructor es para "crear" un partido para poder comparar sus claves
      */
     public Partido(Equipo uno, Equipo dos, String ronda) {
         this.ronda = ronda;
+        if (!ronda.equals("grupo")) {
+            esEliminatoria = true;
+        } else {
+            esEliminatoria = false;
+        }
         if (uno.compareTo(dos) <= 0) {
             eq1 = uno;
             eq2 = dos;
@@ -21,6 +27,11 @@ public class Partido {
 
     public Partido(Equipo uno, Equipo dos, String ronda, Ciudad ciudad, String estadio, int resEq1, int resEq2) {
         this.ronda = ronda;
+        if (!ronda.equals("grupo")) {
+            esEliminatoria = true;
+        } else {
+            esEliminatoria = false;
+        }
         this.ciudad = ciudad;
         this.estadio = estadio;
         if (uno.compareTo(dos) <= 0) {
@@ -33,6 +44,26 @@ public class Partido {
             eq2 = uno;
         }
         modificarEquipos(eq1, eq2, ronda, resEq1, resEq2);
+    }
+
+    /*
+     * Dados dos equipos y la ronda que jugaran verifica si es posible una futura
+     * insercion del Partido entre ambos para esa ronda
+     */
+    public static boolean puedeInsertar(Equipo uno, Equipo dos, String ronda) {
+        boolean exit = false;
+        // Si se juega por grupos, verifica que sean del mismo grupo
+        if (ronda.equals("grupo")) {
+            if (uno.getGrupo() == dos.getGrupo()) {
+                exit = true;
+            }
+        } else {
+            // Si ambos equipos no han jugado esa ronda
+            if (!uno.jugoRonda(ronda) && !dos.jugoRonda(ronda)) {
+                exit = true;
+            }
+        }
+        return exit;
     }
 
     /*
@@ -83,10 +114,24 @@ public class Partido {
         return Math.abs(hash);
     }
 
+    /*
+     * Verifica que sea exactamente el mismo partido, para evitar duplicados, poder
+     * eliminarlo, verificar si pertenece
+     */
     @Override
     public boolean equals(Object elem) {
         Partido p = (Partido) elem;
-        return (eq1.equals(p.eq1) && eq2.equals(p.eq2) && ronda.equals(p.ronda));
+        return (eq1.equals(p.eq1) && eq2.equals(p.eq2) && esEliminatoria == p.esEliminatoria);
+    }
+
+    /*
+     * Verifica que sean los equipos buscados, la diferencia con el equals es que
+     * no requiere comparar la ronda, ya que lo utiliza para ver si es un Partido
+     * que estoy buscando entre esos dos equipos (indpendientemente de la ronda)
+     * Y de esta manera devolver todos los partidos entre esos dos equipos
+     */
+    public boolean verifPartido(Partido elem) {
+        return (eq1.equals(elem.eq1) && eq2.equals(elem.eq2));
     }
 
     public String getEquipo1() {
