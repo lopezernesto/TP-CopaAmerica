@@ -9,13 +9,7 @@ public class Partido {
     /*
      * Este constructor es para "crear" un partido para poder comparar sus claves
      */
-    public Partido(Equipo uno, Equipo dos, String ronda) {
-        this.ronda = ronda;
-        if (!ronda.equals("grupo")) {
-            esEliminatoria = true;
-        } else {
-            esEliminatoria = false;
-        }
+    public Partido(Equipo uno, Equipo dos) {
         if (uno.compareTo(dos) <= 0) {
             eq1 = uno;
             eq2 = dos;
@@ -88,19 +82,8 @@ public class Partido {
             dos.sumarGolesFavor(resEq2);
         }
         // Calculo la dif gol
-        int difUno = uno.getGolesFavor() - uno.getGolesContra();
-        int difDos = dos.getGolesFavor() - dos.getGolesContra();
-
-        if (difUno >= 0) {
-            uno.setDifGol("+" + difUno);
-        } else {
-            uno.setDifGol("-" + difUno);
-        }
-        if (difDos >= 0) {
-            dos.setDifGol("+" + difDos);
-        } else {
-            dos.setDifGol("-" + difDos);
-        }
+        eq1.setDifGol("" + (uno.getGolesFavor() - uno.getGolesContra()));
+        eq2.setDifGol("" + (dos.getGolesFavor() - dos.getGolesContra()));
         // Si empataron
         if (resEq1 == resEq2) {
             uno.sumarPuntos(1);

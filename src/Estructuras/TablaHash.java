@@ -37,8 +37,8 @@ public class TablaHash {
      * 
      * Obs: como maximo dos equipos se enfrentan dos veces
      */
-    public String recuperar(Equipo uno, Equipo dos, String ronda) {
-        Partido p = new Partido(uno, dos, ronda);
+    public String recuperar(Equipo uno, Equipo dos) {
+        Partido p = new Partido(uno, dos);
         String ret = "No hay partidos entre esos dos equipos";
         // Como el hashcode se usa solo con el nombre
         int pos = p.hashCode() % 37;
@@ -70,7 +70,7 @@ public class TablaHash {
     public int recuperarTest(String primero, String segundo) {
         Equipo uno = new Equipo(primero);
         Equipo dos = new Equipo(segundo);
-        Partido p = new Partido(uno, dos, null);
+        Partido p = new Partido(uno, dos);
         // Como el hashcode se usa solo con el nombre
         int pos = p.hashCode() % 37;
         return pos;
