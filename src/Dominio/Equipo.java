@@ -116,6 +116,11 @@ public class Equipo implements Comparable {
         return aux.compareTo(segundo);
     }
 
+    public String toString() {
+        return "Nombre: Grupo: Puntos: GF: GC: DF:" + "\n" + nombre + " " + grupo + " " + golesFavor + " " + golesContra
+                + " " + difGol;
+    }
+
     public boolean equals(Equipo e) {
         return (nombre.equalsIgnoreCase(e.nombre));
     }
