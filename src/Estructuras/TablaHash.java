@@ -17,8 +17,10 @@ public class TablaHash {
         boolean exit = false, encontrado = false;
         int pos = elem.hashCode() % 37;
         Nodo aux = arreglo[pos];
+        Partido p;
         while (!encontrado && aux != null) {
-            if (aux.getElem().equals(elem))
+            p = (Partido) aux.getElem();
+            if (p.equals(elem))
                 encontrado = true;
             aux = aux.getEnlace();
         }
@@ -45,11 +47,11 @@ public class TablaHash {
         Nodo aux = arreglo[pos];
         if (aux != null) {
             ret = "";
-            String otro = aux.getElem().toString() + "\n";
-            p = aux.getElem();
+            p = (Partido) aux.getElem();
+            String otro = p.toString() + "\n";
             Partido x;
             while (aux.getEnlace() != null) {
-                x = aux.getEnlace().getElem();
+                x = (Partido) aux.getEnlace().getElem();
                 otro += x.toString() + "\n";
                 if (x.verifPartido(p)) {
                     ret += x.toString() + "\n";
@@ -82,10 +84,10 @@ public class TablaHash {
         Nodo aux = arreglo[pos];
         // Llevo referencia del nodo anterior para enlazarlo
         Nodo anterior = null;
-
+        Partido p;
         while (!exit && aux != null) {
-            exit = aux.getElem().equals(elem);
-            if (exit) {
+            p = (Partido) aux.getElem();
+            if (p.equals(elem)) {
                 cant--;
                 // Si encuentra al elemento
                 if (anterior != null)
@@ -108,8 +110,10 @@ public class TablaHash {
         boolean exit = false;
         int pos = elem.hashCode() % 37;
         Nodo aux = arreglo[pos];
+        Partido p;
         while (!exit && aux != null) {
-            exit = aux.getElem().equals(elem);
+            p = (Partido) aux.getElem();
+            exit = p.equals(elem);
             aux = aux.getEnlace();
         }
         return exit;
