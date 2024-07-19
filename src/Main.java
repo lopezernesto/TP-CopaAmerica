@@ -474,7 +474,7 @@ public class Main {
                                     resultadoEquipo1 = Integer.parseInt(respuesta);
                                     aux = true;
                                 } else {
-                                    System.out.println("Error: El valor ingresado no es un numero.");
+                                    System.out.println("Error: El valor ingresado no es un numero positivo.");
                                 }
                             } while (!aux);
                             do {
@@ -484,7 +484,7 @@ public class Main {
                                     resultadoEquipo2 = Integer.parseInt(respuesta);
                                     aux = true;
                                 } else {
-                                    System.out.println("Error: El valor ingresado no es un numero.");
+                                    System.out.println("Error: El valor ingresado no es un numero positivo.");
                                 }
                             } while (!aux);
                             Partido p = new Partido(uno, dos, ronda, null, respuesta, resultadoEquipo1,
@@ -528,6 +528,9 @@ public class Main {
         return exit;
     }
 
+    /*
+     * Mensaje de error para el metodo que crea Partidos
+     */
     private static void errorE() {
         System.out.println("----------------------------------Error:----------------------------------");
         System.out.println("Ocurrio un error, verifique lo siguiente:");

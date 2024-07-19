@@ -1,7 +1,16 @@
 package Dominio;
 
 public class Equipo implements Comparable {
-    private String entrenador, nombre;
+    private String entrenador, nombre, difGol;
+
+    public String getDifGol() {
+        return difGol;
+    }
+
+    public void setDifGol(String difGol) {
+        this.difGol = difGol;
+    }
+
     private char grupo;
     private int puntos, golesFavor, golesContra;
     private boolean cuartos, semi, laFinal;

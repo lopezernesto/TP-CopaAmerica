@@ -87,6 +87,20 @@ public class Partido {
             uno.sumarGolesContra(resEq2);
             dos.sumarGolesFavor(resEq2);
         }
+        // Calculo la dif gol
+        int difUno = uno.getGolesFavor() - uno.getGolesContra();
+        int difDos = dos.getGolesFavor() - dos.getGolesContra();
+
+        if (difUno >= 0) {
+            uno.setDifGol("+" + difUno);
+        } else {
+            uno.setDifGol("-" + difUno);
+        }
+        if (difDos >= 0) {
+            dos.setDifGol("+" + difDos);
+        } else {
+            dos.setDifGol("-" + difDos);
+        }
         // Si empataron
         if (resEq1 == resEq2) {
             uno.sumarPuntos(1);
