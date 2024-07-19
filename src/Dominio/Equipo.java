@@ -49,7 +49,7 @@ public class Equipo implements Comparable {
     }
 
     public void sumarPuntos(int puntos) {
-        puntos += puntos;
+        this.puntos += puntos;
     }
 
     /*
@@ -117,8 +117,10 @@ public class Equipo implements Comparable {
     }
 
     public String toString() {
-        return "Nombre: Grupo: Puntos: GF: GC: DF:" + "\n" + nombre + " " + grupo + " " + golesFavor + " " + golesContra
-                + " " + difGol;
+        return "Nombre:   Grupo: Puntos: GF: GC: DF:" + "\n" + nombre + "    " + grupo + "      " + puntos + "    "
+                + golesFavor + "  "
+                + golesContra
+                + "  " + difGol;
     }
 
     public boolean equals(Equipo e) {
