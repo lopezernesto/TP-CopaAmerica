@@ -1,7 +1,5 @@
 package Estructuras.Lineales;
 
-import Dominio.Partido;
-
 public class Nodo {
     private Object elem;
     private Nodo enlace;

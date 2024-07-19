@@ -16,6 +16,11 @@ public class TestPartido {
         // System.out.println(p.toString());
         ArbolAVL arbol = new ArbolAVL();
         TablaHash tabla = new TablaHash();
+        System.out.println(eq1.toString());
+        System.out.println(tabla.insertar(n));
+        System.out.println(tabla.insertar(p));
+        System.out.println(tabla.insertar(x));
+        System.out.println(tabla.recuperar(eq3, eq2));
 
         System.out.println(tabla.recuperarTest("Argentina", "Canadá") + " - Argentina" + "Canadá");
         System.out.println(tabla.recuperarTest("Perú", "Chile") + " - Perú" + "Chile");
@@ -64,8 +69,7 @@ public class TestPartido {
         // th.insertar(p);
         // th.insertar(x);
         // th.insertar(n);
-        // System.out.println(th.recuperar(eq3, eq1));
-        // System.out.println(th.recuperar(eq2, eq3));
+
         // arbol.insertar(eq3);
         // arbol.insertar(eq1);
         // arbol.insertar(eq2);
