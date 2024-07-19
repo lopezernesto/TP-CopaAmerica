@@ -1,6 +1,5 @@
-import java.util.HashMap;
-import java.util.Scanner;
 
+import java.util.Scanner;
 import Dominio.Equipo;
 import Dominio.Partido;
 import Estructuras.TablaHash;
@@ -543,6 +542,54 @@ public class Main {
         System.out.println("----------------------------------Error:----------------------------------");
     }
 
+    public static void consultaEquipos() {
+        boolean exit = false;
+        do {
+            System.out.println("______________________");
+            System.out.println("1) Info del equipo");
+            System.out.println("2) Equipos en rango");
+            System.out.println("0) Salir");
+            System.out.println("______________________");
+            System.out.print("Ingrese la opcion: ");
+            opcion = sc.next().charAt(0);
+            switch (opcion) {
+                case '1':
+                    System.out.print("Ingrese el nombre del equipo: ");
+                    String nombreA = sc.next();
+                    Equipo e;
+                    e = new Equipo(nombreA);
+                    e = equipos.recuperar(e);
+                    if (e != null) {
+                        System.out.println(e.toString());
+                    } else {
+                        System.out.println("No se encontro un equipo con ese nombre");
+                    }
+                    break;
+                case '2':
+                    System.out.print("Ingrese la primer palabra: ");
+                    String min = sc.next();
+                    System.out.print("Ingrese la segunda palabra: ");
+                    String max = sc.next();
+                    if (min.compareTo(max) >= 0) {
+                        String aux = min;
+                        min = max;
+                        max = aux;
+                    }
+                    // Enviar min y max en minuscula
+                    System.out.println(equipos.listarRango(min, max).toString());
+                    System.out.println("La primer palabra es: " + min);
+                    System.out.println("La segunda palabra es: " + max);
+                    break;
+                case '0':
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("La opcion ingresada es incorrecta");
+                    break;
+            }
+        } while (!exit);
+    }
+
     public static void main(String[] args) {
         boolean exit = false;
         Equipo arg = new Equipo("Argentina", "asd", 'A');
@@ -573,6 +620,7 @@ public class Main {
                     establecerPartido();
                     break;
                 case '4':
+                    consultaEquipos();
                     break;
                 case '5':
                     break;
@@ -593,6 +641,7 @@ public class Main {
 
         } while (!exit);
         System.out.println(ciudades.toString());
+
         System.out.println(equipos.toString());
     }
 }
