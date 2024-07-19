@@ -108,10 +108,6 @@ public class Equipo implements Comparable {
         String segundo = c.nombre.toLowerCase();
         // Creo la variable aux para guardar el nombre original en minuscula
         String aux = nombre.toLowerCase();
-        // Verifico si son cadenas iguales
-        if (aux.equals(segundo)) {
-            segundo = aux;
-        }
         // Retorno la comparacion de ambos nombres en minuscula
         return aux.compareTo(segundo);
     }

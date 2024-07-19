@@ -1,6 +1,7 @@
 package Estructuras.AVL;
 
 import Dominio.Equipo;
+import Estructuras.Lineales.Lista;
 
 public class ArbolAVL {
     private NodoAVL raiz;
@@ -253,7 +254,7 @@ public class ArbolAVL {
     /*
      * Metodo para balancear los subarboles
      */
-    public boolean balancear(NodoAVL padre, NodoAVL n, boolean hijo) {
+    private boolean balancear(NodoAVL padre, NodoAVL n, boolean hijo) {
         int balance = balance(n);
         // Si el balance es 2 o -2
         if (balance < -1 || balance > 1) {
@@ -273,7 +274,7 @@ public class ArbolAVL {
     /*
      * Caso especial para balancear raiz
      */
-    public boolean balancearRaiz(NodoAVL nodo) {
+    private boolean balancearRaiz(NodoAVL nodo) {
         int balance = balance(nodo);
         if (balance < -1 || balance > 1) {
             // Si el balance es +- 2 entonces hay que aplicar rotaciones
@@ -287,7 +288,7 @@ public class ArbolAVL {
      * Balance(n)=Alt(HI)-Alt(HD)
      * Si no tiene hijo, se considera altura -1
      */
-    public int balance(NodoAVL nodo) {
+    private int balance(NodoAVL nodo) {
         int altIzq = -1, altDer = -1;
         if (nodo.getIzquierdo() != null) {
             altIzq = nodo.getIzquierdo().getAltura();
@@ -478,6 +479,34 @@ public class ArbolAVL {
             }
         }
         return retorno;
+    }
+
+    /*
+     * Dadas dos cadenas ya ordenadas lexicograficamente
+     * 
+     * Tanto 'min' como 'max' ya vienen completamente en minuscula
+     */
+    public Lista listarRango(String min, String max) {
+        Lista l = new Lista();
+        if (!esVacio()) {
+            listarRangoAux(raiz, l, min, max);
+        }
+        return l;
+    }
+
+    private void listarRangoAux(NodoAVL n, Lista l, String min, String max) {
+        if (n != null) {
+            String nombre = n.getElem().getNombre().toLowerCase();
+            if (nombre.compareTo(min) > 0) {
+                listarRangoAux(n.getIzquierdo(), l, min, max);
+            }
+            if ((nombre.compareTo(min) >= 0) && (nombre.compareTo(max) <= 0)) {
+                l.insertar(n.getElem().getNombre(), l.longitud() + 1);
+            }
+            if (nombre.compareTo(max) < 0) {
+                listarRangoAux(n.getDerecho(), l, min, max);
+            }
+        }
     }
 
     public String toString() {
