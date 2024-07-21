@@ -28,15 +28,19 @@ public class Partido {
         }
         this.ciudad = ciudad;
         this.estadio = estadio;
+        // Verifico si estan ordenados los equipos
         if (uno.compareTo(dos) <= 0) {
             eq1 = uno;
-            resultado = resEq1 + ":" + resEq2;
             eq2 = dos;
         } else {
+            // Si no lo estan, tambien invierto los resultados
+            int aux = resEq1;
+            resEq1 = resEq2;
+            resEq2 = aux;
             eq1 = dos;
-            resultado = resEq2 + ":" + resEq1;
             eq2 = uno;
         }
+        resultado = resEq1 + ":" + resEq2;
         modificarEquipos(eq1, eq2, ronda, resEq1, resEq2);
     }
 
@@ -81,9 +85,10 @@ public class Partido {
             uno.sumarGolesContra(resEq2);
             dos.sumarGolesFavor(resEq2);
         }
-        // Calculo la dif gol
-        eq1.setDifGol("" + (uno.getGolesFavor() - uno.getGolesContra()));
-        eq2.setDifGol("" + (dos.getGolesFavor() - dos.getGolesContra()));
+        // Actualizo la diferencia de gol
+        uno.actualizarDifGol();
+        dos.actualizarDifGol();
+
         // Si empataron
         if (resEq1 == resEq2) {
             uno.sumarPuntos(1);
