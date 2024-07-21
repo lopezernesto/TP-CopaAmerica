@@ -3,25 +3,9 @@ package Dominio;
 public class Equipo implements Comparable {
     private String entrenador, nombre, difGol;
 
-    public String getDifGol() {
-        return difGol;
-    }
-
-    public void setDifGol(String difGol) {
-        this.difGol = difGol;
-    }
-
     private char grupo;
     private int puntos, golesFavor, golesContra;
     private boolean cuartos, semi, laFinal;
-
-    /*
-     * Este constructor es para "crear" un equipo para poder compararlo en mi AVL
-     * Asi de esta manera lo puedo eliminar
-     */
-    public Equipo(String nombre) {
-        this.nombre = nombre;
-    }
 
     public Equipo(String nombreEquipo, String dt, char grupo) {
         nombre = nombreEquipo;
@@ -125,6 +109,14 @@ public class Equipo implements Comparable {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public String getDifGol() {
+        return difGol;
+    }
+
+    public void setDifGol(String difGol) {
+        this.difGol = difGol;
     }
 
     public void setNombre(String nombre) {
