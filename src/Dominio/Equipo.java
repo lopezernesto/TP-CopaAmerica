@@ -11,6 +11,7 @@ public class Equipo implements Comparable {
         nombre = nombreEquipo;
         entrenador = dt;
         this.grupo = grupo;
+        difGol = "0";
         puntos = 0;
         golesContra = 0;
         golesFavor = 0;
@@ -97,14 +98,25 @@ public class Equipo implements Comparable {
     }
 
     public String toString() {
-        return "Nombre:   Grupo: Puntos: GF: GC: DF:" + "\n" + nombre + "    " + grupo + "      " + puntos + "    "
-                + golesFavor + "  "
-                + golesContra
-                + "  " + difGol;
+        String header = String.format("%-16s %-7s %-7s %-7s %-7s %-7s", "Nombre:", "Grupo:", "Puntos:", "GF:", "GC:",
+                "DF:");
+        String equipoInfo = String.format("%-16s %-7c %-7d %-7d %-7d %-7s",
+                nombre, grupo, puntos, golesFavor, golesContra, difGol);
+
+        return header + "\n" + equipoInfo;
     }
 
     public boolean equals(Equipo e) {
         return (nombre.equalsIgnoreCase(e.nombre));
+    }
+
+    /*
+     * Actualizo difgol
+     * Si la difgol > 0 le agrego un "+"
+     */
+    public void actualizarDifGol() {
+        int diferencia = golesFavor - golesContra;
+        difGol = ((golesFavor - golesContra) > 0 ? "+" : "") + diferencia;
     }
 
     public String getNombre() {
@@ -113,10 +125,6 @@ public class Equipo implements Comparable {
 
     public String getDifGol() {
         return difGol;
-    }
-
-    public void setDifGol(String difGol) {
-        this.difGol = difGol;
     }
 
     public void setNombre(String nombre) {
