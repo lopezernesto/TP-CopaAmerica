@@ -1,4 +1,5 @@
 
+import java.util.Random;
 import java.util.Scanner;
 import Dominio.Equipo;
 import Dominio.Partido;
@@ -15,17 +16,20 @@ public class Main {
 
     public static void menu() {
         System.out.println("MENU DE OPCIONES:");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("1) ABM Ciudades");
-        System.out.println("2) ABM Equipos");
-        System.out.println("3) Altas Partidos");
-        System.out.println("4) Consulta sobre Equipos");
-        System.out.println("5) Consulta sobre Partidos");
-        System.out.println("6) Consulta sobre Viajes desde punto A hasta punto B");
-        System.out.println("7) Listar Equipos por goles a favor");
-        System.out.println("8) Mostrar Sistema");
-        System.out.println("0) Salir");
-        System.out.println("-----------------------------------------------------");
+        // System.out.println("*****************************************************");
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("|                             1) ABM Ciudades                              |");
+        System.out.println("|                              2) ABM Equipos                              |");
+        System.out.println("|                            3) Altas Partidos                             |");
+        System.out.println("|                        4) Consulta sobre Equipos                         |");
+        System.out.println("|           5) Consulta sobre Partidos                                     |");
+        System.out.println("|           6) Consulta sobre Viajes desde punto A hasta punto B           |");
+        System.out.println("|           7) Listar Equipos por goles a favor                            |");
+        System.out.println("|           8) Mostrar Sistema                                             |");
+        System.out.println("|           0) Salir                                                       |");
+        // System.out.println("-----------------------------------------------------");
+        System.out.println("****************************************************************************");
+
     }
 
     /*
@@ -310,8 +314,7 @@ public class Main {
 
     /*
      * En este metodo se podran borrar la cantidad de equipos que se desee
-     * Se crea un equipo solo con el nombre para buscarlo en el AVL que almacena los
-     * equipos, si lo encuentra lo elimina.
+     * Se busca al equipo con ese nombre, en caso de encontrarlo lo elimina
      */
     public static void borrarEquipos() {
         boolean exit = false;
@@ -322,8 +325,10 @@ public class Main {
                 case 'y':
                     System.out.print("Ingrese el nombre del equipo: ");
                     nombre = sc.next();
-                    Equipo e = new Equipo(nombre);
-                    if (!equipos.eliminar(e)) {
+                    Equipo e = equipos.recuperar(nombre.toLowerCase());
+                    if (e != null) {
+                        equipos.eliminar(e);
+                    } else {
                         System.out.println("No se encontro un equipo con ese nombre");
                     }
                     do {
@@ -365,17 +370,16 @@ public class Main {
             if (opcion > '0' && opcion < '4') {
                 System.out.print("Ingrese el nombre del equipo: ");
                 nombreA = sc.next();
-                e = new Equipo(nombreA);
-                e = equipos.recuperar(e);
+                e = equipos.recuperar(nombreA.toLowerCase());
             }
             switch (opcion) {
                 case '1':
+                    // 'e' es el equipo original
                     if (e != null) {
                         System.out.print("Ingrese el nuevo nombre: ");
                         nombreA = sc.next();
-                        Equipo a = new Equipo(nombreA);
                         // Si desea cambiar el nombre verifico que no haya un equipo con ese nombre
-                        if (!equipos.pertenece(a)) {
+                        if (!equipos.pertenece(nombreA.toLowerCase())) {
                             // Si no lo hay elimino al equipo, le cambio el nombre y lo agrego
                             equipos.eliminar(e);
                             e.setNombre(nombreA);
@@ -423,6 +427,60 @@ public class Main {
     }
 
     /*
+     * Muestra informacion de los equipos (Nombre, grupo, puntos, GF, GC, Dif gol)
+     * 
+     * Y tambien muestra una Lista con equipos cuyo nombres esten entre dos palabras
+     * Para evitar problemas, se compara envian las palabras en minusculas
+     * y se compara a los nombres del equipo en minuscula
+     */
+    public static void consultaEquipos() {
+        boolean exit = false;
+        do {
+            System.out.println("______________________");
+            System.out.println("1) Info del equipo");
+            System.out.println("2) Equipos en rango");
+            System.out.println("0) Salir");
+            System.out.println("______________________");
+            System.out.print("Ingrese la opcion: ");
+            opcion = sc.next().charAt(0);
+            switch (opcion) {
+                case '1':
+                    System.out.print("Ingrese el nombre del equipo: ");
+                    String nombreA = sc.next();
+                    Equipo e;
+                    e = equipos.recuperar(nombreA.toLowerCase());
+                    if (e != null) {
+                        System.out.println(e.toString());
+                    } else {
+                        System.out.println("No se encontro un equipo con ese nombre");
+                    }
+                    break;
+                case '2':
+                    System.out.print("Ingrese la primer palabra: ");
+                    String min = sc.next();
+                    System.out.print("Ingrese la segunda palabra: ");
+                    String max = sc.next();
+                    if (min.compareTo(max) >= 0) {
+                        String aux = min;
+                        min = max;
+                        max = aux;
+                    }
+                    // Se envia min y max en minuscula
+                    System.out.println(equipos.listarRango(min.toLowerCase(), max.toLowerCase()).toString());
+                    System.out.println("La primer palabra es: " + min);
+                    System.out.println("La segunda palabra es: " + max);
+                    break;
+                case '0':
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("La opcion ingresada es incorrecta");
+                    break;
+            }
+        } while (!exit);
+    }
+
+    /*
      * A partir de aca seran operaciones con Partidos
      */
 
@@ -450,10 +508,8 @@ public class Main {
                     primer = sc.next();
                     System.out.print("Ingrese el nombre del segundo equipo: ");
                     segundo = sc.next();
-                    uno = new Equipo(primer);
-                    uno = equipos.recuperar(uno);
-                    dos = new Equipo(segundo);
-                    dos = equipos.recuperar(dos);
+                    uno = equipos.recuperar(primer.toLowerCase());
+                    dos = equipos.recuperar(segundo.toLowerCase());
                     System.out.println("Rondas validas: 'grupo' 'cuartos' 'semis' final");
                     System.out.print("Ingrese la ronda: ");
                     String ronda = sc.next().toLowerCase();
@@ -540,54 +596,6 @@ public class Main {
         System.out.println("4) El partido este repetido");
         System.out.println("5) Si es un partido de 'grupos' ambos equipos deben ser del mismo grupo");
         System.out.println("----------------------------------Error:----------------------------------");
-    }
-
-    public static void consultaEquipos() {
-        boolean exit = false;
-        do {
-            System.out.println("______________________");
-            System.out.println("1) Info del equipo");
-            System.out.println("2) Equipos en rango");
-            System.out.println("0) Salir");
-            System.out.println("______________________");
-            System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
-            switch (opcion) {
-                case '1':
-                    System.out.print("Ingrese el nombre del equipo: ");
-                    String nombreA = sc.next();
-                    Equipo e;
-                    e = new Equipo(nombreA);
-                    e = equipos.recuperar(e);
-                    if (e != null) {
-                        System.out.println(e.toString());
-                    } else {
-                        System.out.println("No se encontro un equipo con ese nombre");
-                    }
-                    break;
-                case '2':
-                    System.out.print("Ingrese la primer palabra: ");
-                    String min = sc.next();
-                    System.out.print("Ingrese la segunda palabra: ");
-                    String max = sc.next();
-                    if (min.compareTo(max) >= 0) {
-                        String aux = min;
-                        min = max;
-                        max = aux;
-                    }
-                    // Enviar min y max en minuscula
-                    System.out.println(equipos.listarRango(min, max).toString());
-                    System.out.println("La primer palabra es: " + min);
-                    System.out.println("La segunda palabra es: " + max);
-                    break;
-                case '0':
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("La opcion ingresada es incorrecta");
-                    break;
-            }
-        } while (!exit);
     }
 
     public static void main(String[] args) {
