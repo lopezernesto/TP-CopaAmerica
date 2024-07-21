@@ -428,25 +428,30 @@ public class ArbolAVL {
         return raiz == null;
     }
 
-    public boolean pertenece(Equipo elem) {
+    /*
+     * Devuelve T/F si encuentra un equipo con el nombre de 'buscado'
+     * 'buscado' ya se envia en minusculas
+     */
+    public boolean pertenece(String buscado) {
         boolean retorno = false;
         if (!esVacio()) {
-            retorno = perteneceAux(raiz, elem);
+            retorno = perteneceAux(raiz, buscado);
         }
         return retorno;
     }
 
-    private boolean perteneceAux(NodoAVL n, Equipo elem) {
+    private boolean perteneceAux(NodoAVL n, String buscado) {
         boolean retorno = false;
         if (n != null) {
-            int temp = n.getElem().compareTo(elem);
+            String nombre = n.getElem().getNombre().toLowerCase();
+            int temp = nombre.compareTo(buscado);
             if (temp == 0) {
                 retorno = true;
             } else {
                 if (temp < 0) {
-                    retorno = perteneceAux(n.getDerecho(), elem);
+                    retorno = perteneceAux(n.getDerecho(), buscado);
                 } else {
-                    retorno = perteneceAux(n.getIzquierdo(), elem);
+                    retorno = perteneceAux(n.getIzquierdo(), buscado);
                 }
             }
         }
@@ -455,26 +460,29 @@ public class ArbolAVL {
 
     /*
      * Recuperar es casi igual al pertenece pero devuelve el Equipo en lugar de T/F
+     * 'buscado' es el nombre del equipo buscado en minusculas
      */
-    public Equipo recuperar(Equipo elem) {
+
+    public Equipo recuperar(String buscado) {
         Equipo retorno = null;
         if (!esVacio()) {
-            retorno = recuperarAux(raiz, elem);
+            retorno = recuperarAux(raiz, buscado);
         }
         return retorno;
     }
 
-    private Equipo recuperarAux(NodoAVL n, Equipo elem) {
+    private Equipo recuperarAux(NodoAVL n, String buscado) {
         Equipo retorno = null;
         if (n != null) {
-            int temp = n.getElem().compareTo(elem);
+            String nombre = n.getElem().getNombre().toLowerCase();
+            int temp = nombre.compareTo(buscado);
             if (temp == 0) {
                 retorno = n.getElem();
             } else {
                 if (temp < 0) {
-                    retorno = recuperarAux(n.getDerecho(), elem);
+                    retorno = recuperarAux(n.getDerecho(), buscado);
                 } else {
-                    retorno = recuperarAux(n.getIzquierdo(), elem);
+                    retorno = recuperarAux(n.getIzquierdo(), buscado);
                 }
             }
         }
