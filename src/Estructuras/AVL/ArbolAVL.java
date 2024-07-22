@@ -10,7 +10,7 @@ public class ArbolAVL {
 
     }
 
-    public boolean insertar(Equipo elem) {
+    public boolean insertar(Comparable elem) {
         boolean exit = false;
         if (raiz == null) {
             // Si raiz es nula, lo inserto ahi
@@ -36,7 +36,7 @@ public class ArbolAVL {
         return exit;
     }
 
-    private boolean insertarAux(NodoAVL padre, NodoAVL n, boolean hijo, Equipo elem) {
+    private boolean insertarAux(NodoAVL padre, NodoAVL n, boolean hijo, Comparable elem) {
         boolean exit = false;
         // Si n es null es porque no se encontro al elem que debo insertar
         if (n == null) {
@@ -69,7 +69,7 @@ public class ArbolAVL {
         return exit;
     }
 
-    public boolean eliminar(Equipo elem) {
+    public boolean eliminar(Comparable elem) {
         boolean exit = false;
         if (raiz != null) {
             int temp = raiz.getElem().compareTo(elem);
@@ -78,7 +78,7 @@ public class ArbolAVL {
                 raiz = eliminarRaiz(raiz);
                 exit = true;
             } else {
-                // HI --> | true HD --> false
+                // HI --> true | HD --> false
                 if (temp > 0)
                     exit = eliminarAux(raiz, raiz.getIzquierdo(), elem, true);
                 else {
@@ -99,7 +99,7 @@ public class ArbolAVL {
     /*
      * Metodo para eliminar un nodo diferente a la raiz
      */
-    private boolean eliminarAux(NodoAVL padre, NodoAVL n, Equipo elem, boolean hijo) {
+    private boolean eliminarAux(NodoAVL padre, NodoAVL n, Comparable elem, boolean hijo) {
         boolean exit = false;
         int temp = n.getElem().compareTo(elem);
         if (temp == 0) {
@@ -429,10 +429,11 @@ public class ArbolAVL {
     }
 
     /*
+     * 'buscado' es un Equipo(Comparable) creado solo con el nombre
      * Devuelve T/F si encuentra un equipo con el nombre de 'buscado'
      * 'buscado' ya se envia en minusculas
      */
-    public boolean pertenece(String buscado) {
+    public boolean pertenece(Comparable buscado) {
         boolean retorno = false;
         if (!esVacio()) {
             retorno = perteneceAux(raiz, buscado);
@@ -440,11 +441,10 @@ public class ArbolAVL {
         return retorno;
     }
 
-    private boolean perteneceAux(NodoAVL n, String buscado) {
+    private boolean perteneceAux(NodoAVL n, Comparable buscado) {
         boolean retorno = false;
         if (n != null) {
-            String nombre = n.getElem().getNombre().toLowerCase();
-            int temp = nombre.compareTo(buscado);
+            int temp = n.getElem().compareTo(buscado);
             if (temp == 0) {
                 retorno = true;
             } else {
@@ -460,22 +460,20 @@ public class ArbolAVL {
 
     /*
      * Recuperar es casi igual al pertenece pero devuelve el Equipo en lugar de T/F
-     * 'buscado' es el nombre del equipo buscado en minusculas
      */
 
-    public Equipo recuperar(String buscado) {
-        Equipo retorno = null;
+    public Comparable recuperar(Comparable buscado) {
+        Comparable retorno = null;
         if (!esVacio()) {
             retorno = recuperarAux(raiz, buscado);
         }
         return retorno;
     }
 
-    private Equipo recuperarAux(NodoAVL n, String buscado) {
-        Equipo retorno = null;
+    private Comparable recuperarAux(NodoAVL n, Comparable buscado) {
+        Comparable retorno = null;
         if (n != null) {
-            String nombre = n.getElem().getNombre().toLowerCase();
-            int temp = nombre.compareTo(buscado);
+            int temp = n.getElem().compareTo(buscado);
             if (temp == 0) {
                 retorno = n.getElem();
             } else {
@@ -490,11 +488,13 @@ public class ArbolAVL {
     }
 
     /*
-     * Dadas dos cadenas ya ordenadas lexicograficamente
+     * Dadas dos cadenas (Creadas como Equipo) ya ordenadas min<max
      * 
-     * Tanto 'min' como 'max' ya vienen completamente en minuscula
+     * Devuelve una Lista con los Equipos de la forma min<Equipos<max
+     * Tanto min como max entran en forma de Equipo para utilizar
+     * correctamente el compareTo
      */
-    public Lista listarRango(String min, String max) {
+    public Lista listarRango(Object min, Object max) {
         Lista l = new Lista();
         if (!esVacio()) {
             listarRangoAux(raiz, l, min, max);
@@ -502,16 +502,15 @@ public class ArbolAVL {
         return l;
     }
 
-    private void listarRangoAux(NodoAVL n, Lista l, String min, String max) {
+    private void listarRangoAux(NodoAVL n, Lista l, Object min, Object max) {
         if (n != null) {
-            String nombre = n.getElem().getNombre().toLowerCase();
-            if (nombre.compareTo(min) > 0) {
+            if (n.getElem().compareTo(min) > 0) {
                 listarRangoAux(n.getIzquierdo(), l, min, max);
             }
-            if ((nombre.compareTo(min) >= 0) && (nombre.compareTo(max) <= 0)) {
-                l.insertar(n.getElem().getNombre(), l.longitud() + 1);
+            if ((n.getElem().compareTo(min) >= 0) && (n.getElem().compareTo(max) <= 0)) {
+                l.insertar(n.getElem(), l.longitud() + 1);
             }
-            if (nombre.compareTo(max) < 0) {
+            if (n.getElem().compareTo(max) < 0) {
                 listarRangoAux(n.getDerecho(), l, min, max);
             }
         }
@@ -528,14 +527,14 @@ public class ArbolAVL {
     public String toStringAux(NodoAVL n) {
         String cad = "";
         if (n != null) {
-            cad += "(" + n.getElem().getNombre() + ") -> ";
+            cad += "(" + n.getElem() + ") -> ";
             if (n.getIzquierdo() != null) {
-                cad += "HI: " + n.getIzquierdo().getElem().getNombre() + "  ";
+                cad += "HI: " + n.getIzquierdo().getElem() + "  ";
             } else {
                 cad += "HI: -  ";
             }
             if (n.getDerecho() != null) {
-                cad += "HD: " + n.getDerecho().getElem().getNombre() + "\n";
+                cad += "HD: " + n.getDerecho().getElem() + "\n";
             } else {
                 cad += "HD: - \n";
             }

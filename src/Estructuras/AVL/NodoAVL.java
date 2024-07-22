@@ -1,20 +1,18 @@
 package Estructuras.AVL;
 
-import Dominio.Equipo;
-
 public class NodoAVL {
     private NodoAVL HI, HD;
-    private Equipo elem;
+    private Comparable elem;
     private int altura;
 
-    public NodoAVL(Equipo elem, NodoAVL hijoIzquierdo, NodoAVL hijoDerecho) {
+    public NodoAVL(Comparable elem, NodoAVL hijoIzquierdo, NodoAVL hijoDerecho) {
         this.elem = elem;
         HI = hijoIzquierdo;
         HD = hijoDerecho;
         altura = 0;
     }
 
-    public NodoAVL(Equipo elem) {
+    public NodoAVL(Comparable elem) {
         this.elem = elem;
         HD = HI = null;
         altura = 0;
@@ -51,11 +49,11 @@ public class NodoAVL {
         HD = hijoDerecho;
     }
 
-    public Equipo getElem() {
+    public Comparable getElem() {
         return elem;
     }
 
-    public void setElem(Equipo elem) {
+    public void setElem(Comparable elem) {
         this.elem = elem;
     }
 }
