@@ -7,6 +7,10 @@ public class Equipo implements Comparable {
     private int puntos, golesFavor, golesContra;
     private boolean cuartos, semi, laFinal;
 
+    public Equipo(String nombreEquipo) {
+        nombre = nombreEquipo;
+    }
+
     public Equipo(String nombreEquipo, String dt, char grupo) {
         nombre = nombreEquipo;
         entrenador = dt;
@@ -97,7 +101,12 @@ public class Equipo implements Comparable {
         return aux.compareTo(segundo);
     }
 
+    @Override
     public String toString() {
+        return nombre;
+    }
+
+    public String mostrarInfo() {
         String header = String.format("%-16s %-7s %-7s %-7s %-7s %-7s", "Nombre:", "Grupo:", "Puntos:", "GF:", "GC:",
                 "DF:");
         String equipoInfo = String.format("%-16s %-7c %-7d %-7d %-7d %-7s",
