@@ -598,6 +598,28 @@ public class Main {
         System.out.println("----------------------------------Error:----------------------------------");
     }
 
+    /*
+     * Dados dos equipos, si existen, devuelve los partidos que jugaron entre si
+     * 
+     * Obs: Independientemente del orden lexicografico, devuelve los partidos
+     * jugados entre si (si es que tienen)
+     */
+    public static void consultaPartidos() {
+        System.out.print("Ingrese el nombre del primer equipo: ");
+        String primer = sc.next().toLowerCase();
+        System.out.print("Ingrese el nombre del segundo equipo: ");
+        String segundo = sc.next().toLowerCase();
+        Equipo uno = equipos.recuperar(primer), dos = equipos.recuperar(segundo);
+        if (uno != null && dos != null && !primer.equals(segundo)) {
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            System.out.println(partidos.recuperar(uno, dos));
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+
+        } else {
+
+        }
+    }
+
     public static void main(String[] args) {
         boolean exit = false;
         Equipo arg = new Equipo("Argentina", "asd", 'A');
@@ -631,6 +653,7 @@ public class Main {
                     consultaEquipos();
                     break;
                 case '5':
+                    consultaPartidos();
                     break;
                 case '6':
                     break;

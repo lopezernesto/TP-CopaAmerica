@@ -34,7 +34,7 @@ public class TablaHash {
     }
 
     /*
-     * Entran dos "Equipos" solos cargados con nombre, ya ordenados eq1<eq2
+     * Entran dos Equipos
      * Como Nodo utiliza la clase Object, lo casteo a Partido
      * 
      * Obs: como maximo dos equipos se enfrentan dos veces
@@ -70,10 +70,9 @@ public class TablaHash {
      * Para el test
      */
     public int recuperarTest(String primero, String segundo) {
-        Equipo uno = new Equipo(primero);
-        Equipo dos = new Equipo(segundo);
+        Equipo uno = new Equipo(primero, null, 'X');
+        Equipo dos = new Equipo(segundo, null, 'X');
         Partido p = new Partido(uno, dos);
-        // Como el hashcode se usa solo con el nombre
         int pos = p.hashCode() % 37;
         return pos;
     }

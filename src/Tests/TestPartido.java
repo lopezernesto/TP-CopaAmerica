@@ -6,20 +6,24 @@ import Estructuras.AVL.ArbolAVL;
 
 public class TestPartido {
     public static void main(String[] args) {
-        Equipo eq1 = new Equipo("Argentina", "escalo", 'A');
+        Equipo eq1 = new Equipo("Estados Unidos", "escalo", 'A');
         Equipo eq2 = new Equipo("Canada", "kcyo", 'A');
         Equipo eq3 = new Equipo("Colombia", "xd", 'B');
         Ciudad c = new Ciudad("NEW YORK", false);
         Partido p = new Partido(eq3, eq2, "grupo", c, "MERCEDES-BENZ", 2, 0);
         Partido x = new Partido(eq3, eq2, "semi", c, "MERCEDES-BENZ", 0, 1);
+        Partido f = new Partido(eq3, eq2, "cuartos", c, "MERCEDES-BENZ", 0, 11);
         Partido n = new Partido(eq1, eq3, "grupo", c, "ESTADIO", 0, 0);
         // System.out.println(p.toString());
         ArbolAVL arbol = new ArbolAVL();
         TablaHash tabla = new TablaHash();
         System.out.println(eq1.toString());
-        System.out.println(tabla.insertar(n));
+        System.out.println(eq2.toString());
+        System.out.println(eq3.toString());
+        // System.out.println(tabla.insertar(n));
         System.out.println(tabla.insertar(p));
-        System.out.println(tabla.insertar(x));
+        // System.out.println(tabla.insertar(x));
+        System.out.println(tabla.insertar(f));
         System.out.println(tabla.recuperar(eq3, eq2));
 
         System.out.println(tabla.recuperarTest("Argentina", "Canadá") + " - Argentina" + "Canadá");
