@@ -103,6 +103,7 @@ public class Partido {
         }
     }
 
+    @Override
     public int hashCode() {
         String n1 = eq1.getNombre(), n2 = eq2.getNombre();
         int i = 0, hash = 5381;
@@ -127,13 +128,19 @@ public class Partido {
     }
 
     /*
-     * Verifica que sean los equipos buscados, la diferencia con el equals es que
-     * no requiere comparar la ronda, ya que lo utiliza para ver si es un Partido
-     * que estoy buscando entre esos dos equipos (indpendientemente de la ronda)
-     * Y de esta manera devolver todos los partidos entre esos dos equipos
+     * Verifica que sea el Partido buscado, la diferencia con el equals es que
+     * no requiere comparar la ronda, ya que lo utiliza para ver si los equipos de
+     * ambos Partidos son iguales (indpendientemente de la ronda)
+     * 
+     * Si son iguales es porque estoy hablando del mismo partido (quizas con otro
+     * resultado)
+     * 
+     * Como la TablaHash es generica, lo llama con dos Object
      */
-    public boolean verifPartido(Partido elem) {
-        return (eq1.equals(elem.eq1) && eq2.equals(elem.eq2));
+    public static boolean verifPartido(Object elem, Object elem2) {
+        Partido p = (Partido) elem;
+        Partido n = (Partido) elem2;
+        return (n.eq1.equals(p.eq1) && n.eq2.equals(p.eq2));
     }
 
     public String getEquipo1() {
@@ -168,6 +175,7 @@ public class Partido {
         this.resultado = resultado;
     }
 
+    @Override
     public String toString() {
         return eq1.getNombre() + "; " + eq2.getNombre() + "; " + ronda + "; "/*
                                                                               * + ciudad.getNombre() + "; " + estadio
