@@ -17,9 +17,9 @@ public class TestPartido {
         // System.out.println(p.toString());
         ArbolAVL arbol = new ArbolAVL();
         TablaHash tabla = new TablaHash();
-        System.out.println(eq1.toString());
-        System.out.println(eq2.toString());
-        System.out.println(eq3.toString());
+        System.out.println(eq1.mostrarInfo());
+        System.out.println(eq2.mostrarInfo());
+        System.out.println(eq3.mostrarInfo());
         // System.out.println(tabla.insertar(n));
         System.out.println(tabla.insertar(p));
         // System.out.println(tabla.insertar(x));

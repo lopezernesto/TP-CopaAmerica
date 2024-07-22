@@ -6,6 +6,7 @@ import Dominio.Partido;
 import Estructuras.TablaHash;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
+import Estructuras.Lineales.Lista;
 
 public class Main {
     private static Scanner sc = new Scanner(System.in);
@@ -325,7 +326,8 @@ public class Main {
                 case 'y':
                     System.out.print("Ingrese el nombre del equipo: ");
                     nombre = sc.next();
-                    Equipo e = equipos.recuperar(nombre.toLowerCase());
+                    Equipo e = new Equipo(nombre);
+                    e = (Equipo) equipos.recuperar(e);
                     if (e != null) {
                         equipos.eliminar(e);
                     } else {
@@ -370,7 +372,8 @@ public class Main {
             if (opcion > '0' && opcion < '4') {
                 System.out.print("Ingrese el nombre del equipo: ");
                 nombreA = sc.next();
-                e = equipos.recuperar(nombreA.toLowerCase());
+                e = new Equipo(nombreA);
+                e = (Equipo) equipos.recuperar(e);
             }
             switch (opcion) {
                 case '1':
@@ -379,7 +382,8 @@ public class Main {
                         System.out.print("Ingrese el nuevo nombre: ");
                         nombreA = sc.next();
                         // Si desea cambiar el nombre verifico que no haya un equipo con ese nombre
-                        if (!equipos.pertenece(nombreA.toLowerCase())) {
+                        Equipo nuevo = new Equipo(nombreA);
+                        if (!equipos.pertenece(nuevo)) {
                             // Si no lo hay elimino al equipo, le cambio el nombre y lo agrego
                             equipos.eliminar(e);
                             e.setNombre(nombreA);
@@ -447,10 +451,10 @@ public class Main {
                 case '1':
                     System.out.print("Ingrese el nombre del equipo: ");
                     String nombreA = sc.next();
-                    Equipo e;
-                    e = equipos.recuperar(nombreA.toLowerCase());
+                    Equipo e = new Equipo(nombreA);
+                    e = (Equipo) equipos.recuperar(e);
                     if (e != null) {
-                        System.out.println(e.toString());
+                        System.out.println(e.mostrarInfo());
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
                     }
@@ -465,8 +469,9 @@ public class Main {
                         min = max;
                         max = aux;
                     }
-                    // Se envia min y max en minuscula
-                    System.out.println(equipos.listarRango(min.toLowerCase(), max.toLowerCase()).toString());
+                    // Creo equipo para compararlos de la misma manera (en minuscula)
+                    Equipo uno = new Equipo(min), dos = new Equipo(max);
+                    System.out.println(equipos.listarRango(uno, dos).toString());
                     System.out.println("La primer palabra es: " + min);
                     System.out.println("La segunda palabra es: " + max);
                     break;
@@ -508,8 +513,10 @@ public class Main {
                     primer = sc.next();
                     System.out.print("Ingrese el nombre del segundo equipo: ");
                     segundo = sc.next();
-                    uno = equipos.recuperar(primer.toLowerCase());
-                    dos = equipos.recuperar(segundo.toLowerCase());
+                    uno = new Equipo(primer);
+                    dos = new Equipo(segundo);
+                    uno = (Equipo) equipos.recuperar(uno);
+                    dos = (Equipo) equipos.recuperar(dos);
                     System.out.println("Rondas validas: 'grupo' 'cuartos' 'semis' final");
                     System.out.print("Ingrese la ronda: ");
                     String ronda = sc.next().toLowerCase();
@@ -605,19 +612,32 @@ public class Main {
      * jugados entre si (si es que tienen)
      */
     public static void consultaPartidos() {
+        String sep = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
         System.out.print("Ingrese el nombre del primer equipo: ");
         String primer = sc.next().toLowerCase();
         System.out.print("Ingrese el nombre del segundo equipo: ");
         String segundo = sc.next().toLowerCase();
-        Equipo uno = equipos.recuperar(primer), dos = equipos.recuperar(segundo);
+        Equipo uno = new Equipo(primer), dos = new Equipo(segundo);
+        uno = (Equipo) equipos.recuperar(uno);
+        dos = (Equipo) equipos.recuperar(dos);
         if (uno != null && dos != null && !primer.equals(segundo)) {
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            System.out.println(sep);
             Partido p = new Partido(uno, dos);
-            System.out.println(partidos.recuperar(p));
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            Lista l = (partidos.recuperar(p));
+            int i = 1;
+            while (i <= l.longitud()) {
+                Partido aux = (Partido) l.recuperar(i);
+                if (p.verifPartido(aux)) {
+                    System.out.println(aux.toString());
+                }
+                i++;
+            }
+            System.out.println(sep);
 
         } else {
+            System.out.println(sep);
             System.out.println("Verifique que los nombres sean correctos y que no sean el mismo");
+            System.out.println(sep);
         }
     }
 

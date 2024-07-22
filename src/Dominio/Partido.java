@@ -134,13 +134,9 @@ public class Partido {
      * 
      * Si son iguales es porque estoy hablando del mismo partido (quizas con otro
      * resultado)
-     * 
-     * Como la TablaHash es generica, lo llama con dos Object
      */
-    public static boolean verifPartido(Object elem, Object elem2) {
-        Partido p = (Partido) elem;
-        Partido n = (Partido) elem2;
-        return (n.eq1.equals(p.eq1) && n.eq2.equals(p.eq2));
+    public boolean verifPartido(Partido p) {
+        return (eq1.equals(p.eq1) && eq2.equals(p.eq2));
     }
 
     public String getEquipo1() {

@@ -2,6 +2,7 @@ package Estructuras;
 
 import Dominio.Equipo;
 import Dominio.Partido;
+import Estructuras.Lineales.Lista;
 import Estructuras.Lineales.Nodo;
 
 public class TablaHash {
@@ -87,34 +88,17 @@ public class TablaHash {
      * 
      * Obs: como maximo dos equipos se enfrentan dos veces
      */
-    public String recuperar(Object elem) {
-        String ret = "No hay partidos entre esos dos equipos";
-        // Como el hashcode se usa solo con el nombre
+    public Lista recuperar(Object elem) {
+        Lista l = new Lista();
         int pos = elem.hashCode() % 37;
         Nodo aux = arreglo[pos];
         if (aux != null) {
-            ret = "";
-            Object p = aux.getElem();
-            // Caso especial que el Partido que se encuentra en arreglo[pos]
-            // Sea un partido buscado
-            if (Partido.verifPartido(p, elem)) {
-                ret += p.toString() + "\n";
-            }
-            String otro = p.toString() + "\n";
-            Object x;
-            while (aux.getEnlace() != null) {
-                x = aux.getEnlace().getElem();
-                otro += x.toString() + "\n";
-                if (Partido.verifPartido(x, elem)) {
-                    ret += x.toString() + "\n";
-                }
+            while (aux != null) {
+                l.insertar(aux.getElem(), 1);
                 aux = aux.getEnlace();
             }
-            System.out.println("------");
-            System.out.println(otro);
-            System.out.println("------");
         }
-        return ret;
+        return l;
     }
 
     /*
@@ -142,7 +126,7 @@ public class TablaHash {
             while (aux.getEnlace() != null) {
                 x = (Partido) aux.getEnlace().getElem();
                 otro += x.toString() + "\n";
-                if (Partido.verifPartido(x, p)) {
+                if (x.verifPartido(p)) {
                     ret += x.toString() + "\n";
                 }
                 aux = aux.getEnlace();
