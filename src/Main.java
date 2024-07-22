@@ -612,11 +612,12 @@ public class Main {
         Equipo uno = equipos.recuperar(primer), dos = equipos.recuperar(segundo);
         if (uno != null && dos != null && !primer.equals(segundo)) {
             System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            System.out.println(partidos.recuperar(uno, dos));
+            Partido p = new Partido(uno, dos);
+            System.out.println(partidos.recuperar(p));
             System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         } else {
-
+            System.out.println("Verifique que los nombres sean correctos y que no sean el mismo");
         }
     }
 

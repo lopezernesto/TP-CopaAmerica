@@ -24,7 +24,7 @@ public class TestPartido {
         System.out.println(tabla.insertar(p));
         // System.out.println(tabla.insertar(x));
         System.out.println(tabla.insertar(f));
-        System.out.println(tabla.recuperar(eq3, eq2));
+        System.out.println(tabla.recuperar1(eq3, eq2));
 
         System.out.println(tabla.recuperarTest("Argentina", "Canadá") + " - Argentina" + "Canadá");
         System.out.println(tabla.recuperarTest("Perú", "Chile") + " - Perú" + "Chile");
