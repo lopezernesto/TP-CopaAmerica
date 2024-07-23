@@ -84,6 +84,29 @@ public class TablaHash {
     }
 
     /*
+     * Genera una Lista con los elementos ordenados segun la posicion de su hash
+     */
+
+    public Lista listar() {
+        Lista l = new Lista();
+        if (cant > 0) {
+            int contador = 0, pos = 0;
+            while (contador < cant) {
+                if (arreglo[pos] != null) {
+                    Nodo aux = arreglo[pos];
+                    while (aux != null) {
+                        l.insertar(aux.getElem(), 1);
+                        aux = aux.getEnlace();
+                        contador++;
+                    }
+                }
+                pos++;
+            }
+        }
+        return l;
+    }
+
+    /*
      * elem es el Partido entre dos equipos
      * 
      * Obs: como maximo dos equipos se enfrentan dos veces
