@@ -1,5 +1,3 @@
-
-import java.util.Random;
 import java.util.Scanner;
 import Dominio.Equipo;
 import Dominio.Partido;
@@ -7,6 +5,7 @@ import Estructuras.TablaHash;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
 import Estructuras.Lineales.Lista;
+import Tests.SegundaOpcionListar.AVLEspecifico;
 
 public class Main {
     private static Scanner sc = new Scanner(System.in);
@@ -486,6 +485,32 @@ public class Main {
     }
 
     /*
+     * Dado el AVL de Equipos:
+     * Obtiene una TablaHash de Equipos, ordenados por sus goles a favor
+     * 
+     * Listar() de TablaHash devuelve una Lista de elementos ordenados por su
+     * hashCode. En el caso de Equipo, el hashCode son sus GF
+     * Como la cantidad de equipos<tamaño de TablaHash la lista ya esta ordenada
+     * cuando la devuelve
+     * 
+     * Para cada elemento de la lista muestra su nombre y la cantidad de GF
+     */
+
+    public static void listarPorGF() {
+        long startTime = System.nanoTime();
+        TablaHash th = equipos.ordenarPorGF();
+        Lista l = th.listar();
+        int longitud = l.longitud();
+        for (int i = 1; i <= longitud; i++) {
+            Equipo elem = (Equipo) l.recuperar(i);
+            System.out.println(elem.mostrarGoles());
+        }
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("Metodo TablaHash tardo: " + (double) duration / 1000000000 + " segundos");
+    }
+
+    /*
      * A partir de aca seran operaciones con Partidos
      */
 
@@ -641,6 +666,31 @@ public class Main {
         }
     }
 
+    /*
+     * Este metodo es solo usado para Testear. Segun las pruebas es ineficiente
+     * 
+     * Dado el AVL de equipos que tengo, creo un AVL Especifico
+     * Mi AVL Especifico solo puede insertar elementos
+     * Se utiliza un metodo similar al de 'clone' llamado 'transformar'
+     * 
+     * El insertar de AVL Especifico ya hace los casteos necesarios:
+     * Entra por parametro un Comparable (Equipo) y entonces lo castea a Equipo y
+     * lugeo con el Equipo creo una instancia de mi clase 'EquipoGoles'
+     * que solo guarda el nombre del equipo y sus GF.
+     * El compareTo de esta nueva clase es justamente con los goles a favor.
+     */
+    public static void listarPorGF2() {
+        long startTime = System.nanoTime();
+
+        AVLEspecifico arbol = equipos.transformar();
+        Lista l = arbol.listar();
+        System.out.println(l.toString());
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("Metodo AVL tardo: " + (double) duration / 1000000000 + " segundos");
+        System.out.println("-------------------------------------");
+    }
+
     public static void main(String[] args) {
         boolean exit = false;
         Equipo arg = new Equipo("Argentina", "asd", 'A');
@@ -649,12 +699,23 @@ public class Main {
         Equipo uru = new Equipo("Uruguay", "asd", 'C');
         Equipo pan = new Equipo("Panamá", "xd", 'C');
         Equipo chi = new Equipo("Chile", "asdasd", 'A');
+        Equipo zz = new Equipo("zzzzz", "null", 'B');
         equipos.insertar(bra);
         equipos.insertar(arg);
         equipos.insertar(col);
         equipos.insertar(pan);
         equipos.insertar(uru);
         equipos.insertar(chi);
+        equipos.insertar(zz);
+        // Partidos
+        partidos.insertar(new Partido(arg, col, "grupo", null, null, 93, 2));
+        partidos.insertar(new Partido(col, bra, "cuartos", null, null, 41, 2));
+        partidos.insertar(new Partido(bra, uru, "semis", null, null, 61, 3));
+        partidos.insertar(new Partido(uru, pan, "grupo", null, null, 32, 3));
+        partidos.insertar(new Partido(pan, chi, "cuartos", null, null, 80, 1));
+        partidos.insertar(new Partido(chi, arg, "grupo", null, null, 122, 2));
+        partidos.insertar(new Partido(bra, zz, "grupo", null, null, 143, 3));
+        // partidos.insertar(new Partido(arg, col, "grupo", null, null, 2, 1));
 
         do {
             menu();
@@ -679,6 +740,8 @@ public class Main {
                 case '6':
                     break;
                 case '7':
+                    listarPorGF(); // Metodo 1(Hash)
+                    listarPorGF2(); // Metodo 2(AVL)
                     break;
                 case '8':
                     break;
