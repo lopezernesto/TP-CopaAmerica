@@ -42,6 +42,15 @@ public class Equipo implements Comparable {
     }
 
     /*
+     * Actualizo difgol
+     * Si la difgol > 0 le agrego un "+"
+     */
+    public void actualizarDifGol() {
+        int diferencia = golesFavor - golesContra;
+        difGol = ((golesFavor - golesContra) > 0 ? "+" : "") + diferencia;
+    }
+
+    /*
      * Metodo que verifica si el equipo ya jugo esa ronda
      * En caso de ya haberla jugado, no podra crearse el partido
      */
@@ -88,7 +97,7 @@ public class Equipo implements Comparable {
      * (o sea, alternando mayusculas y minusculas) devuelve 0 igualmente
      * 
      * Las comparaciones son en minusculas pero el nombre lo inserta
-     * tal cual como el usuario lo pide
+     * tal cual como el usuario lo escribe
      */
     @Override
     public int compareTo(Object otro) {
@@ -106,6 +115,12 @@ public class Equipo implements Comparable {
         return nombre;
     }
 
+    /*
+     * Muestra la info con el formato de una 'tabla'
+     * EJ:
+     * Nombre: ------- Grupo: Puntos: GF: GC: DF:
+     * Argentina ------- A ------ 0 -- 0 - 0 - 0
+     */
     public String mostrarInfo() {
         String header = String.format("%-16s %-7s %-7s %-7s %-7s %-7s", "Nombre:", "Grupo:", "Puntos:", "GF:", "GC:",
                 "DF:");
@@ -120,12 +135,20 @@ public class Equipo implements Comparable {
     }
 
     /*
-     * Actualizo difgol
-     * Si la difgol > 0 le agrego un "+"
+     * Utilizado a la hora de recuperar una Lista segun los GF
+     * El hash de esta clase solo se utiliza para eso
      */
-    public void actualizarDifGol() {
-        int diferencia = golesFavor - golesContra;
-        difGol = ((golesFavor - golesContra) > 0 ? "+" : "") + diferencia;
+    @Override
+    public int hashCode() {
+        return golesFavor;
+    }
+
+    /*
+     * Metodo utilizado para, luego de recuperar la lista ordenada por goles,
+     * mostrar el nombre del equipo y la cantidad de goles que tiene
+     */
+    public String mostrarGoles() {
+        return "Nombre del equipo: " + nombre + "\t" + " Cantidad de goles: " + golesFavor;
     }
 
     public String getNombre() {
@@ -179,5 +202,4 @@ public class Equipo implements Comparable {
     public void setGolesContra(int golesContra) {
         this.golesContra = golesContra;
     }
-
 }
