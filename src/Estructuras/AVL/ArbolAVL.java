@@ -1,7 +1,11 @@
 package Estructuras.AVL;
 
+import org.w3c.dom.Node;
+
 import Dominio.Equipo;
+import Estructuras.TablaHash;
 import Estructuras.Lineales.Lista;
+import Tests.SegundaOpcionListar.AVLEspecifico;
 
 public class ArbolAVL {
     private NodoAVL raiz;
@@ -516,6 +520,26 @@ public class ArbolAVL {
         }
     }
 
+    /*
+     * Guarda los elementos del AVL en una TablaHash
+     */
+
+    public TablaHash ordenarPorGF() {
+        TablaHash th = new TablaHash();
+        if (raiz != null) {
+            ordenarAux(raiz, th);
+        }
+        return th;
+    }
+
+    public void ordenarAux(NodoAVL n, TablaHash th) {
+        if (n != null) {
+            th.insertar(n.getElem());
+            ordenarAux(n.getIzquierdo(), th);
+            ordenarAux(n.getDerecho(), th);
+        }
+    }
+
     public String toString() {
         String cad = "Arbol vacio";
         if (!esVacio()) {
@@ -544,4 +568,25 @@ public class ArbolAVL {
         return cad;
     }
 
+    /*
+     * Metodo Auxiliar para transformar este AVL que esta ordenado segun nombres
+     * No se utiliza debido a que, parece ser, no solo no es eficiente sino tampoco
+     * es generico
+     * 
+     * Se guarda para seguir haciendole pruebas
+     */
+    public AVLEspecifico transformar() {
+        AVLEspecifico nuevo = new AVLEspecifico();
+        if (raiz != null)
+            transformarAux(raiz, nuevo);
+        return nuevo;
+    }
+
+    private void transformarAux(NodoAVL n, AVLEspecifico nuevo) {
+        if (n != null) {
+            nuevo.insertar(n.getElem());
+            transformarAux(n.getIzquierdo(), nuevo);
+            transformarAux(n.getDerecho(), nuevo);
+        }
+    }
 }
