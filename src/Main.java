@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+import Dominio.Ciudad;
 import Dominio.Equipo;
 import Dominio.Partido;
 import Estructuras.TablaHash;
@@ -96,7 +98,8 @@ public class Main {
                     // Si sede='y' se crea un booleano con true, sino false
                     // Variable necesaria para crear la ciudad
                     boolean aux = (sede == 'y') ? true : false;
-                    if (!ciudades.insertarVertice(nombre, aux)) {
+                    Ciudad c = new Ciudad(nombre, aux);
+                    if (!ciudades.insertarVertice(c)) {
                         System.out.println("No se pudo crear la ciudad porque ya existe una con ese nombre");
                     }
                     do {
@@ -133,7 +136,8 @@ public class Main {
                 case 'y':
                     System.out.print("Ingrese el nombre de la ciudad: ");
                     nombre = sc.next();
-                    if (!ciudades.eliminarVertice(nombre)) {
+                    Ciudad c = new Ciudad(nombre);
+                    if (!ciudades.eliminarVertice(c)) {
                         System.out.println("No existe una ciudad con ese nombre");
                     }
                     do {
@@ -159,7 +163,8 @@ public class Main {
      */
     private static void modificarCiudades() {
         boolean exit = false, aux = false;
-        String nombreA = "", nombreB = "";
+        String nombreA, nombreB;
+        Ciudad a = null, b = null;
         int tiempo = 0;
         do {
             System.out.println("______________________");
@@ -176,6 +181,8 @@ public class Main {
                 nombreA = sc.next();
                 System.out.print("Ingrese el nombre de la segunda ciudad: ");
                 nombreB = sc.next();
+                a = new Ciudad(nombreA);
+                b = new Ciudad(nombreB);
             }
             switch (opcion) {
                 case '1':
@@ -191,12 +198,12 @@ public class Main {
                             System.out.println("Error: El valor ingresado no es un numero.");
                         }
                     } while (!aux);
-                    if (!ciudades.insertarArco(nombreA, nombreB, tiempo)) {
+                    if (!ciudades.insertarArco(a, b, tiempo)) {
                         errorM();
                     }
                     break;
                 case '2':
-                    if (!ciudades.eliminarArco(nombreA, nombreB)) {
+                    if (!ciudades.eliminarArco(a, b)) {
                         errorM();
                     }
                     break;
@@ -326,7 +333,7 @@ public class Main {
                     System.out.print("Ingrese el nombre del equipo: ");
                     nombre = sc.next();
                     Equipo e = new Equipo(nombre);
-                    e = (Equipo) equipos.recuperar(e);
+                    e = (Equipo) equipos.recuperar(nombre);
                     if (e != null) {
                         equipos.eliminar(e);
                     } else {

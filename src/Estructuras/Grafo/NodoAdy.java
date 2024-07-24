@@ -3,9 +3,9 @@ package Estructuras.Grafo;
 public class NodoAdy {
     private NodoVert destino;
     private NodoAdy sigAdyacente;
-    private int tiempo; // etiqueta
+    private double tiempo; // etiqueta
 
-    public NodoAdy(NodoVert vertice, int valor) {
+    public NodoAdy(NodoVert vertice, double valor) {
         destino = vertice;
         tiempo = valor;
     }
@@ -18,7 +18,7 @@ public class NodoAdy {
         return sigAdyacente;
     }
 
-    public int getEtiqueta() {
+    public double getEtiqueta() {
         return tiempo;
     }
 
@@ -30,7 +30,7 @@ public class NodoAdy {
         destino = vertice;
     }
 
-    public void setEtiqueta(int valor) {
+    public void setEtiqueta(double valor) {
         tiempo = valor;
     }
 

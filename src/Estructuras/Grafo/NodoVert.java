@@ -1,20 +1,18 @@
 package Estructuras.Grafo;
 
-import Dominio.Ciudad;
-
 public class NodoVert {
     private NodoAdy primerArco;
     private NodoVert siguienteVertice;
-    private Ciudad ciudad;
+    private Object elem;
 
-    // Creo un Vertice
-    public NodoVert(String nombre, boolean sede) {
-        ciudad = new Ciudad(nombre, sede);
+    public NodoVert(Object elem) {
+        this.elem = elem;
     }
 
-    // Para que dos Vertices sean iguales, sus ciudades deben llamarse igual
-    public boolean equals(NodoVert vertice) {
-        return ciudad.getNombre().equals(vertice.ciudad.getNombre());
+    @Override
+    public boolean equals(Object o) {
+        NodoVert vertice = (NodoVert) o;
+        return elem.equals(vertice.getElem());
     }
 
     public boolean insertarArco(NodoVert destino, int tiempo) {
@@ -72,13 +70,12 @@ public class NodoVert {
         this.siguienteVertice = siguienteVertice;
     }
 
-    // No retorna la ciudad en si, solo el nombre
-    public String getCiudad() {
-        return ciudad.getNombre();
+    public Object getElem() {
+        return elem;
     }
 
-    public void setCiudad(String nombre) {
-        ciudad.setNombre(nombre);
+    public void setElem(Object elem) {
+        this.elem = elem;
     }
 
     @Override
@@ -88,7 +85,7 @@ public class NodoVert {
             cad = "";
             NodoAdy arco = primerArco;
             while (arco != null) {
-                cad += "------>" + arco.getVertice().ciudad.getNombre() + "\n";
+                cad += "------>" + arco.getVertice().getElem() + "\n";
                 arco = arco.getSiguiente();
             }
         }

@@ -6,6 +6,10 @@ public class Ciudad {
     private int cant;
     boolean sede, alojamiento;
 
+    public Ciudad(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Ciudad(String nombre, boolean sede) {
         this.nombre = nombre;
         alojamiento = true;
@@ -24,11 +28,22 @@ public class Ciudad {
         return exit;
     }
 
+    @Override
+    public boolean equals(Object elem) {
+        Ciudad c = (Ciudad) elem;
+        return nombre.equalsIgnoreCase(c.nombre);
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
 }
