@@ -38,6 +38,14 @@ public class Ciudad {
         return nombre;
     }
 
+    public boolean isAlojamiento() {
+        return alojamiento;
+    }
+
+    public void setAlojamiento(boolean alojamiento) {
+        this.alojamiento = alojamiento;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

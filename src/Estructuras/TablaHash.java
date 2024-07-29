@@ -44,6 +44,7 @@ public class TablaHash {
         while (!exit && aux != null) {
             p = aux.getElem();
             if (p.equals(elem)) {
+                exit = true;
                 cant--;
                 // Si encuentra al elemento
                 if (anterior != null)
