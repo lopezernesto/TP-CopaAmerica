@@ -231,6 +231,124 @@ public class Main {
     }
 
     /*
+     * Muestra informacion sobre los caminos entre dos ciudades
+     */
+    public static void consultaViajes() {
+        boolean exit = false;
+        String c1 = "", c2 = "";
+        Ciudad uno = null, dos = null;
+        Lista l;
+        do {
+            System.out.println("______________________");
+            System.out.println("Entre dos Ciudades:");
+            System.out.println("1) Camino de menor tiempo");
+            System.out.println("2) Camino con menos ciudades");
+            System.out.println("3) Camino de menor tiempo excluyendo una ciudad");
+            System.out.println("4) Todos los caminos");
+            System.out.println("0) Salir");
+            System.out.println("______________________");
+            System.out.print("Ingrese la opcion: ");
+            opcion = sc.next().charAt(0);
+            if (opcion > '0' && opcion < '5') {
+                System.out.print("Ingrese el nombre de la ciudad de origen: ");
+                c1 = sc.next();
+                uno = new Ciudad(c1);
+                System.out.print("Ingrese el nombre de la ciudad de destino");
+                c2 = sc.next();
+                dos = new Ciudad(c2);
+            }
+            switch (opcion) {
+                case '1':
+                    l = ciudades.caminoMasCorto(uno, dos);
+                    if (!l.esVacia()) {
+                        System.out.println("El camino mas corto entre " + c1 + " y " + c2 + " es:");
+                        System.out.println(l.toString());
+                    } else {
+                        errorC();
+                    }
+                    break;
+                case '2':
+                    l = ciudades.listarCaminoMinCiudades(uno, dos);
+                    if (!l.esVacia()) {
+                        System.out.println("El camino con menos ciudades entre " + c1 + " y " + c2 + " es:");
+                        System.out.println(l.toString());
+                    } else {
+                        errorC();
+                    }
+                    break;
+                case '3':
+                    System.out.print("Ingrese la ciudad que desea excluir: ");
+                    String c3 = sc.next();
+                    Ciudad tres = new Ciudad(c3);
+                    l = ciudades.caminoMasCortoSin(uno, dos, tres);
+                    if (!l.esVacia()) {
+                        System.out.println(
+                                "El camino mas corto entre " + c1 + " y " + c2 + " excluyendo a " + c3 + " es:");
+                        System.out.println(l.toString());
+                    } else {
+                        errorC();
+                    }
+                    break;
+                case '4':
+                    l = ciudades.listarCaminos(uno, dos);
+                    if (!l.esVacia()) {
+                        int i;
+                        System.out.println("Los caminos entre " + c1 + " y " + c2 + " son:");
+                        for (i = 1; i <= l.longitud(); i++) {
+                            Lista x = (Lista) l.recuperar(i);
+                            System.out.println(x.toString());
+                        }
+                        System.out.println("Filtro: Caminos que solo haya alojamiento en la ciudad de destino:");
+                        for (i = 1; i <= l.longitud(); i++) {
+                            Lista camino = (Lista) l.recuperar(i);
+                            // Verifico la ciudad destino (la ultima ciudad)
+                            Ciudad destino = (Ciudad) camino.recuperar(camino.longitud());
+                            if (destino.isAlojamiento())
+                                // Si la ciudad de destino tiene aljamiento, muestro el camino
+                                System.out.println(camino.toString());
+                        }
+                        System.out.println("Filtro: Caminos que haya alojamiento en al menos una de las ciudades:");
+                        for (i = 1; i <= l.longitud(); i++) {
+                            Lista x = (Lista) l.recuperar(i);
+                            // Verifico que exista al menos una ciudad de ese camino
+                            // Que tenga alojamiento disponible
+                            boolean salir = false;
+                            int j = 1;
+                            // Si encontre al menos una o si llegue al final, salgo
+                            while (!salir && j <= x.longitud()) {
+                                Ciudad ciudad = (Ciudad) x.recuperar(j);
+                                // Si al menos una de las ciudades tiene alojamiento muestro el camino
+                                if (ciudad.isAlojamiento()) {
+                                    salir = true;
+                                    System.out.println(x.toString());
+                                }
+                                j++;
+                            }
+                        }
+                    } else {
+                        errorC();
+                    }
+                    break;
+                case '0':
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("La opcion ingresada es incorrecta");
+                    break;
+            }
+        } while (!exit);
+    }
+
+    private static void errorC() {
+        System.out.println("----------------------------------Atencion:------------------------------------");
+        System.out.println("La lista esta vacia, verifique lo siguiente:");
+        System.out.println("1) Las ciudades ingresadas sean ciudades validas");
+        System.out.println("2) Exista un camino entre esas dos ciudades");
+        System.out.println("3) Exista un camino bajo las condiciones requeridas (Excluir la tercer ciudad)");
+        System.out.println("----------------------------------Atencion:------------------------------------");
+    }
+
+    /*
      * A partir de aca seran operaciones con Equipos
      */
     private static void ABMequipos() {
@@ -745,6 +863,7 @@ public class Main {
                     consultaPartidos();
                     break;
                 case '6':
+                    consultaViajes();
                     break;
                 case '7':
                     listarPorGF(); // Metodo 1(Hash)
