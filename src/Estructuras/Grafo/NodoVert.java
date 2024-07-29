@@ -4,6 +4,24 @@ public class NodoVert {
     private NodoAdy primerArco;
     private NodoVert siguienteVertice;
     private Object elem;
+    private int x; // Coordenada x
+    private int y; // Coordenada y
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public NodoVert(Object elem) {
         this.elem = elem;
@@ -19,7 +37,6 @@ public class NodoVert {
         boolean exit = false;
         if (primerArco == null) {
             primerArco = new NodoAdy(destino, tiempo);
-            exit = true;
         } else {
             NodoAdy aux = primerArco;
             NodoAdy anterior = null;
@@ -31,8 +48,7 @@ public class NodoVert {
             if (!exit && anterior != null)
                 anterior.setSiguiente(new NodoAdy(destino, tiempo));
         }
-
-        return exit;
+        return !exit;
     }
 
     public boolean eliminarArco(NodoVert destino) {
