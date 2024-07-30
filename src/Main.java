@@ -170,6 +170,7 @@ public class Main {
             System.out.println("______________________");
             System.out.println("1) Agregar camino");
             System.out.println("2) Eliminar camino");
+            System.out.println("3) Registrar alojamiento");
             System.out.println("0) Salir");
             System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
@@ -207,6 +208,28 @@ public class Main {
                         errorM();
                     }
                     break;
+                case '3':
+                    System.out.print("Ingrese la ciudad");
+                    nombreA = sc.next();
+                    a = new Ciudad(nombreA);
+                    a = (Ciudad) ciudades.recuperarVertice(a);
+                    if (a != null && a.isAlojamiento()) {
+                        String respuesta;
+                        do {
+                            System.out.print("Ingrese la cantidad de personas que desee alojar: ");
+                            respuesta = sc.next();
+                            if (respuesta.matches("\\d+")) {
+                                if (!a.reservar(Integer.parseInt(respuesta))) {
+                                    errorM();
+                                }
+                                aux = true;
+                            } else {
+                                System.out.println("Error: El valor ingresado no es un numero positivo.");
+                            }
+                        } while (!aux);
+
+                    }
+                    break;
                 case '0':
                     exit = true;
                     break;
@@ -227,6 +250,7 @@ public class Main {
         System.out.println("2) Ingreso ciudades validas");
         System.out.println("3) Ya exista un camino entre esas ciudades (en caso de querer agregarlo)");
         System.out.println("4) No existia un camino entre esas ciudades (en caso de querer eliminarlo)");
+        System.out.println("5) La ciudad ingresada no tiene alojamiento disponible");
         System.out.println("----------------------------------Error:----------------------------------");
     }
 
@@ -699,14 +723,25 @@ public class Main {
                                     System.out.println("Error: El valor ingresado no es un numero positivo.");
                                 }
                             } while (!aux);
-                            Partido p = new Partido(uno, dos, ronda, null, respuesta, resultadoEquipo1,
-                                    resultadoEquipo2);
-                            if (!partidos.insertar(p)) {
+                            // La ciudad debe ser sede
+                            System.out.print("Ingrese el nombre de la ciudad ");
+                            respuesta = sc.next();
+                            Ciudad ciudad = (Ciudad) ciudades.recuperarVertice(new Ciudad(respuesta));
+                            if (ciudad != null && ciudad.isSede()) {
+                                System.out.print("Ingrese el nombre del estadio: ");
+                                respuesta = sc.next();
+                                Partido p = new Partido(uno, dos, ronda, ciudad, respuesta, resultadoEquipo1,
+                                        resultadoEquipo2);
+                                if (!partidos.insertar(p)) {
+                                    errorE();
+                                }
+                            } else {
                                 errorE();
                             }
                         } else {
                             errorE();
                         }
+
                     } else {
                         errorE();
                     }
@@ -752,6 +787,7 @@ public class Main {
         System.out.println("Recuerde que si, por ej, Argentina jugo 'cuartos', no puede volver a jugar 'cuartos'");
         System.out.println("4) El partido este repetido");
         System.out.println("5) Si es un partido de 'grupos' ambos equipos deben ser del mismo grupo");
+        System.out.println("6) La ciudad ingresada para el partido sea valida y ademas sede");
         System.out.println("----------------------------------Error:----------------------------------");
     }
 
@@ -816,6 +852,18 @@ public class Main {
         System.out.println("-------------------------------------");
     }
 
+    public static void mostrarDatos() {
+        System.out.println("******************Ciudades************************");
+        System.out.println(ciudades.toString());
+        System.out.println("******************Ciudades************************");
+        System.out.println("%%%%%%%%%%%%%%%%%% Equipos %%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println(equipos.toString());
+        System.out.println("%%%%%%%%%%%%%%%%%% Equipos %%%%%%%%%%%%%%%%%%%%%%%");
+        // System.out.println("-------------------Partidos-----------------------");
+        // System.out.println(partidos.toString());
+        // System.out.println("-------------------Partidos-----------------------");
+    }
+
     public static void main(String[] args) {
         boolean exit = false;
         Equipo arg = new Equipo("Argentina", "asd", 'A');
@@ -833,13 +881,13 @@ public class Main {
         equipos.insertar(chi);
         equipos.insertar(zz);
         // Partidos
-        partidos.insertar(new Partido(arg, col, "grupo", null, null, 93, 2));
-        partidos.insertar(new Partido(col, bra, "cuartos", null, null, 41, 2));
-        partidos.insertar(new Partido(bra, uru, "semis", null, null, 61, 3));
-        partidos.insertar(new Partido(uru, pan, "grupo", null, null, 32, 3));
-        partidos.insertar(new Partido(pan, chi, "cuartos", null, null, 80, 1));
-        partidos.insertar(new Partido(chi, arg, "grupo", null, null, 122, 2));
-        partidos.insertar(new Partido(bra, zz, "grupo", null, null, 143, 3));
+        // partidos.insertar(new Partido(arg, col, "grupo", null, null, 93, 2));
+        // partidos.insertar(new Partido(col, bra, "cuartos", null, null, 41, 2));
+        // partidos.insertar(new Partido(bra, uru, "semis", null, null, 61, 3));
+        // partidos.insertar(new Partido(uru, pan, "grupo", null, null, 32, 3));
+        // partidos.insertar(new Partido(pan, chi, "cuartos", null, null, 80, 1));
+        // partidos.insertar(new Partido(chi, arg, "grupo", null, null, 122, 2));
+        // partidos.insertar(new Partido(bra, zz, "grupo", null, null, 143, 3));
         // partidos.insertar(new Partido(arg, col, "grupo", null, null, 2, 1));
 
         do {
@@ -870,6 +918,7 @@ public class Main {
                     listarPorGF2(); // Metodo 2(AVL)
                     break;
                 case '8':
+                    mostrarDatos();
                     break;
                 case '0':
                     System.out.println("--------Finalizado--------");
@@ -881,8 +930,5 @@ public class Main {
             }
 
         } while (!exit);
-        System.out.println(ciudades.toString());
-
-        System.out.println(equipos.toString());
     }
 }

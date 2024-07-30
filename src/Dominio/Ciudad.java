@@ -1,9 +1,8 @@
 package Dominio;
 
 public class Ciudad {
-    private static int max = 20;
+    private int max = 20;
     private String nombre;
-    private int cant;
     boolean sede, alojamiento;
 
     public Ciudad(String nombre) {
@@ -16,12 +15,19 @@ public class Ciudad {
         this.sede = sede;
     }
 
+    public boolean isSede() {
+        return sede;
+    }
+
+    public void setSede(boolean sede) {
+        this.sede = sede;
+    }
+
     public boolean reservar(int cantidad) {
         boolean exit = false;
         if (max - cantidad >= 0) {
-            cant = cantidad;
             exit = true;
-            max -= cant;
+            max -= cantidad;
             if (max == 0)
                 alojamiento = false;
         }
