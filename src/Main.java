@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -106,6 +107,8 @@ public class Main {
                     Ciudad ciudad = new Ciudad(nombre, true, esSede);
                     if (!ciudades.insertarVertice(ciudad)) {
                         System.out.println("No se pudo crear la ciudad porque ya existe una con ese nombre");
+                    } else {
+                        escribirArchivo("Se agrego la ciudad: " + nombre);
                     }
                     do {
                         // Luego pregunto si desea continuar
@@ -879,8 +882,9 @@ public class Main {
 
     public static void main(String[] args) {
         boolean exit = false;
-        String ruta = "/home/ernesto/Escritorio/cargaInicial.txt";
-        leerArchivo(ruta);
+        String entrada = "/home/ernesto/Escritorio/cargaInicial.txt";
+        leerArchivo(entrada);
+        escribirArchivo("Se termino la carga inicial");
         // Equipo arg = new Equipo("Argentina", "asd", 'A');
         // Equipo col = new Equipo("Colombia", "asd", 'A');
         // Equipo bra = new Equipo("Brasil", "asd", 'B');
@@ -938,6 +942,12 @@ public class Main {
                 case '0':
                     System.out.println("--------Finalizado--------");
                     exit = true;
+                    escribirArchivo("EQUIPOS:");
+                    escribirArchivo(equipos.toString());
+                    escribirArchivo("PARTIDOS:");
+                    escribirArchivo(partidos.toString());
+                    escribirArchivo("CIUDADES:");
+                    escribirArchivo(ciudades.toString());
                     break;
                 default:
                     System.out.println("La opcion ingresada es incorrecta");
@@ -950,7 +960,7 @@ public class Main {
     /*
      * De aca en adelante codigo para leer archivo
      */
-    public static void leerArchivo(String ruta) {
+    private static void leerArchivo(String ruta) {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(ruta));
@@ -1046,6 +1056,23 @@ public class Main {
             default:
                 System.out.println(false + " Tipo desconocido: " + tipo);
                 break;
+        }
+    }
+
+    /*
+     * De aca en adelante codigo para escribir en un archivo
+     */
+    private static void escribirArchivo(String cadena) {
+        String salida = "/home/ernesto/Escritorio/salida.txt";
+        try {
+            FileWriter fw = new FileWriter(salida, true);
+            // Escribirmos la cadena y hacemos un salto de linea para la siguiente
+            fw.write(cadena + "\n");
+            fw.close();
+        } catch (IOException e) {
+            // No deberia pasar pero lo dejo para testear
+            System.out.println("Ocurrio un error al escribir en el archivo");
+            e.printStackTrace();
         }
     }
 }
