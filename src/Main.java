@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import Dominio.Ciudad;
 import Dominio.Equipo;
@@ -49,7 +53,7 @@ public class Main {
             System.out.println("0) Salir");
             System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
+            opcion = sc.nextLine().charAt(0);
             switch (opcion) {
                 case '1':
                     agregarCiudades();
@@ -86,11 +90,11 @@ public class Main {
                 // Mientras el usuario ingrese 'y' va a seguir ejecutandose
                 case 'y':
                     System.out.print("Ingrese el nombre de la ciudad: ");
-                    nombre = sc.next();
+                    nombre = sc.nextLine();
                     do {
                         // Sede sera un booleano, por lo tanto solo puede ser y/n
                         System.out.print("La ciudad es sede? y/n: ");
-                        sede = sc.next().toLowerCase().charAt(0);
+                        sede = sc.nextLine().toLowerCase().charAt(0);
                         if (sede != 'y' && sede != 'n') {
                             System.out.println("Ingrese unicamente 'y' para si y 'n' para no");
                         }
@@ -98,14 +102,14 @@ public class Main {
                     // Si sede='y' se crea un booleano con true, sino false
                     // Variable necesaria para crear la ciudad
                     boolean aux = (sede == 'y') ? true : false;
-                    Ciudad c = new Ciudad(nombre, aux);
+                    Ciudad c = new Ciudad(nombre, true, aux);
                     if (!ciudades.insertarVertice(c)) {
                         System.out.println("No se pudo crear la ciudad porque ya existe una con ese nombre");
                     }
                     do {
                         // Luego pregunto si desea continuar
                         System.out.print("Desea continuar? y/n: ");
-                        opcion = sc.next().toLowerCase().charAt(0);
+                        opcion = sc.nextLine().toLowerCase().charAt(0);
                         if (opcion != 'y' && opcion != 'n') {
                             System.out.println("La opcion ingresada es incorrecta");
                         }
@@ -859,27 +863,29 @@ public class Main {
         System.out.println("%%%%%%%%%%%%%%%%%% Equipos %%%%%%%%%%%%%%%%%%%%%%%");
         System.out.println(equipos.toString());
         System.out.println("%%%%%%%%%%%%%%%%%% Equipos %%%%%%%%%%%%%%%%%%%%%%%");
-        // System.out.println("-------------------Partidos-----------------------");
-        // System.out.println(partidos.toString());
-        // System.out.println("-------------------Partidos-----------------------");
+        System.out.println("-------------------Partidos-----------------------");
+        System.out.println(partidos.toString());
+        System.out.println("-------------------Partidos-----------------------");
     }
 
     public static void main(String[] args) {
         boolean exit = false;
-        Equipo arg = new Equipo("Argentina", "asd", 'A');
-        Equipo col = new Equipo("Colombia", "asd", 'A');
-        Equipo bra = new Equipo("Brasil", "asd", 'B');
-        Equipo uru = new Equipo("Uruguay", "asd", 'C');
-        Equipo pan = new Equipo("Panamá", "xd", 'C');
-        Equipo chi = new Equipo("Chile", "asdasd", 'A');
-        Equipo zz = new Equipo("zzzzz", "null", 'B');
-        equipos.insertar(bra);
-        equipos.insertar(arg);
-        equipos.insertar(col);
-        equipos.insertar(pan);
-        equipos.insertar(uru);
-        equipos.insertar(chi);
-        equipos.insertar(zz);
+        String ruta = "/home/ernesto/Escritorio/cargaInicial.txt";
+        leerArchivo(ruta);
+        // Equipo arg = new Equipo("Argentina", "asd", 'A');
+        // Equipo col = new Equipo("Colombia", "asd", 'A');
+        // Equipo bra = new Equipo("Brasil", "asd", 'B');
+        // Equipo uru = new Equipo("Uruguay", "asd", 'C');
+        // Equipo pan = new Equipo("Panamá", "xd", 'C');
+        // Equipo chi = new Equipo("Chile", "asdasd", 'A');
+        // Equipo zz = new Equipo("zzzzz", "null", 'B');
+        // equipos.insertar(bra);
+        // equipos.insertar(arg);
+        // equipos.insertar(col);
+        // equipos.insertar(pan);
+        // equipos.insertar(uru);
+        // equipos.insertar(chi);
+        // equipos.insertar(zz);
         // Partidos
         // partidos.insertar(new Partido(arg, col, "grupo", null, null, 93, 2));
         // partidos.insertar(new Partido(col, bra, "cuartos", null, null, 41, 2));
@@ -893,7 +899,7 @@ public class Main {
         do {
             menu();
             System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
+            opcion = sc.nextLine().charAt(0);
             switch (opcion) {
                 case '1':
                     ABMciudades();
@@ -930,5 +936,104 @@ public class Main {
             }
 
         } while (!exit);
+    }
+
+    /*
+     * De aca en adelante codigo para leer archivo
+     */
+    public static void leerArchivo(String ruta) {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(ruta));
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                System.out.println("Esta es mi linea: " + linea);
+                procesarLinea(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private static void procesarLinea(String linea) {
+        char tipo = linea.charAt(0); // Toma el primer carácter
+        String datos = linea.substring(2); // Toma el resto después de "tipo:"
+
+        StringTokenizer st = new StringTokenizer(datos, ";");
+        Ciudad c;
+        switch (tipo) {
+            case 'E':
+                String nombreEquipo = st.nextToken().trim();
+                String nombreDT = st.nextToken().trim();
+                char grupo = st.nextToken().toUpperCase().trim().charAt(0);
+                Equipo equipo = new Equipo(nombreEquipo, nombreDT, grupo);
+                if (!equipos.insertar(equipo)) {
+                    System.out.println(false + " No se ingreso el equipo " + nombreEquipo);
+                } else {
+                    System.out.println(true + " Se inserto: " + nombreEquipo);
+                }
+                break;
+            case 'P':
+                String equipo1 = st.nextToken().trim();
+                String equipo2 = st.nextToken().trim();
+                String ronda = st.nextToken().toLowerCase().trim();
+                String ciudad = st.nextToken().trim();
+                Equipo uno = (Equipo) equipos.recuperar(new Equipo(equipo1));
+                Equipo dos = (Equipo) equipos.recuperar(new Equipo(equipo2));
+                c = (Ciudad) ciudades.recuperarVertice(new Ciudad(ciudad));
+                if (uno != null && dos != null) {
+                    if (c != null && c.isSede()) {
+                        String estadio = st.nextToken().trim();
+                        int golesEquipo1 = Integer.parseInt(st.nextToken().trim());
+                        int golesEquipo2 = Integer.parseInt(st.nextToken().trim());
+                        Partido partido = new Partido(uno, dos, ronda, c, estadio, golesEquipo1, golesEquipo2);
+                        if (partidos.insertar(partido)) {
+                            System.out.println(true + " Se ingreso el partido entre: " + equipo1 + " y " + equipo2);
+                        } else {
+                            System.out.println(false + " No se ingreso el partido entre: " + equipo1 + " y " + equipo2);
+                        }
+                    } else {
+                        System.out.println(false + " No se encontro la ciudad o no es sede:");
+                    }
+                } else {
+                    System.out.println(false + " No se encontro a alguno de los dos equipos");
+                }
+                break;
+            case 'C':
+                String nombreCiudad = st.nextToken().trim();
+                boolean alojamiento = Boolean.parseBoolean(st.nextToken().trim());
+                boolean sede = Boolean.parseBoolean(st.nextToken().trim());
+                c = new Ciudad(nombreCiudad, alojamiento, sede);
+                if (ciudades.insertarVertice(c)) {
+                    System.out.println(true + " Se inserto: " + nombreCiudad);
+                } else {
+                    System.out.println(false + " Ya hay una ciudad con este nombre: " + nombreCiudad);
+                }
+                break;
+            case 'R':
+                String ciudad1 = st.nextToken().trim();
+                String ciudad2 = st.nextToken().trim();
+                c = new Ciudad(ciudad1);
+                Ciudad c2 = new Ciudad(ciudad2);
+                int vuelo = Integer.parseInt(st.nextToken().trim());
+                if (ciudades.insertarArco(c, c2, vuelo)) {
+                    System.out.println(true + " Se inserto una ruta entre: " + c + " y " + c2);
+                } else {
+                    System.out.println(false + " No se inserto una ruta entre: " + c + " y " + c2);
+                }
+                break;
+            default:
+                System.out.println(false + " Tipo desconocido: " + tipo);
+                break;
+        }
     }
 }

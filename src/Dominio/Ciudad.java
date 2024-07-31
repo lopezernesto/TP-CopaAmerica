@@ -9,9 +9,9 @@ public class Ciudad {
         this.nombre = nombre;
     }
 
-    public Ciudad(String nombre, boolean sede) {
+    public Ciudad(String nombre, boolean alojamiento, boolean sede) {
         this.nombre = nombre;
-        alojamiento = true;
+        this.alojamiento = alojamiento;
         this.sede = sede;
     }
 
@@ -25,7 +25,7 @@ public class Ciudad {
 
     public boolean reservar(int cantidad) {
         boolean exit = false;
-        if (max - cantidad >= 0) {
+        if (alojamiento && max - cantidad >= 0) {
             exit = true;
             max -= cantidad;
             if (max == 0)

@@ -122,10 +122,11 @@ public class Equipo implements Comparable {
      * Argentina ------- A ------ 0 -- 0 - 0 - 0
      */
     public String mostrarInfo() {
-        String header = String.format("%-16s %-7s %-7s %-7s %-7s %-7s", "Nombre:", "Grupo:", "Puntos:", "GF:", "GC:",
-                "DF:");
-        String equipoInfo = String.format("%-16s %-7c %-7d %-7d %-7d %-7s",
-                nombre, grupo, puntos, golesFavor, golesContra, difGol);
+        String header = String.format("%-16s %-7s %-7s %-7s %-7s %-7s %-16s", "Nombre:", "Grupo:", "Puntos:", "GF:",
+                "GC:",
+                "DF:", "Director Tecnico:");
+        String equipoInfo = String.format("%-16s %-7c %-7d %-7d %-7d %-7s %-16s",
+                nombre, grupo, puntos, golesFavor, golesContra, difGol, entrenador);
 
         return header + "\n" + equipoInfo;
     }

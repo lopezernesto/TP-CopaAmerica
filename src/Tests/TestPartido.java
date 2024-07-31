@@ -9,7 +9,7 @@ public class TestPartido {
         Equipo eq1 = new Equipo("Estados Unidos", "escalo", 'A');
         Equipo eq2 = new Equipo("Canada", "kcyo", 'A');
         Equipo eq3 = new Equipo("Colombia", "xd", 'B');
-        Ciudad c = new Ciudad("NEW YORK", false);
+        Ciudad c = new Ciudad("NEW YORK", true, false);
         Partido p = new Partido(eq3, eq2, "grupo", c, "MERCEDES-BENZ", 2, 0);
         Partido x = new Partido(eq3, eq2, "semi", c, "MERCEDES-BENZ", 0, 1);
         Partido f = new Partido(eq3, eq2, "cuartos", c, "MERCEDES-BENZ", 0, 11);
