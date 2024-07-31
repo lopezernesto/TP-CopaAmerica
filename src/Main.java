@@ -78,6 +78,7 @@ public class Main {
      * Para crear una ciudad son necesarias dos variables:
      * 1) Nombre de la ciudad
      * 2) Si es sede o no (true/false)
+     * De por si al crear una ciudad tiene alojamiento disponible
      */
     private static void agregarCiudades() {
         boolean exit = false;
@@ -101,9 +102,9 @@ public class Main {
                     } while (sede != 'y' && sede != 'n');
                     // Si sede='y' se crea un booleano con true, sino false
                     // Variable necesaria para crear la ciudad
-                    boolean aux = (sede == 'y') ? true : false;
-                    Ciudad c = new Ciudad(nombre, true, aux);
-                    if (!ciudades.insertarVertice(c)) {
+                    boolean esSede = (sede == 'y') ? true : false;
+                    Ciudad ciudad = new Ciudad(nombre, true, esSede);
+                    if (!ciudades.insertarVertice(ciudad)) {
                         System.out.println("No se pudo crear la ciudad porque ya existe una con ese nombre");
                     }
                     do {
@@ -140,8 +141,8 @@ public class Main {
                 case 'y':
                     System.out.print("Ingrese el nombre de la ciudad: ");
                     nombre = sc.nextLine();
-                    Ciudad c = new Ciudad(nombre);
-                    if (!ciudades.eliminarVertice(c)) {
+                    Ciudad ciudad = new Ciudad(nombre);
+                    if (!ciudades.eliminarVertice(ciudad)) {
                         System.out.println("No existe una ciudad con ese nombre");
                     }
                     do {
@@ -168,7 +169,7 @@ public class Main {
     private static void modificarCiudades() {
         boolean exit = false, aux = false;
         String nombreA, nombreB;
-        Ciudad a = null, b = null;
+        Ciudad primerCiudad = null, segundaCiudad = null;
         int tiempo = 0;
         do {
             System.out.println("______________________");
@@ -186,8 +187,8 @@ public class Main {
                 nombreA = sc.nextLine();
                 System.out.print("Ingrese el nombre de la segunda ciudad: ");
                 nombreB = sc.nextLine();
-                a = new Ciudad(nombreA);
-                b = new Ciudad(nombreB);
+                primerCiudad = new Ciudad(nombreA);
+                segundaCiudad = new Ciudad(nombreB);
             }
             switch (opcion) {
                 case '1':
@@ -202,28 +203,29 @@ public class Main {
                         } else {
                             System.out.println("Error: El valor ingresado no es un numero.");
                         }
+                        // aux es mi variable de corte para cuando ingreso valor correcto
                     } while (!aux);
-                    if (!ciudades.insertarArco(a, b, tiempo)) {
+                    if (!ciudades.insertarArco(primerCiudad, segundaCiudad, tiempo)) {
                         errorM();
                     }
                     break;
                 case '2':
-                    if (!ciudades.eliminarArco(a, b)) {
+                    if (!ciudades.eliminarArco(primerCiudad, segundaCiudad)) {
                         errorM();
                     }
                     break;
                 case '3':
                     System.out.print("Ingrese la ciudad");
                     nombreA = sc.nextLine();
-                    a = new Ciudad(nombreA);
-                    a = (Ciudad) ciudades.recuperarVertice(a);
-                    if (a != null && a.isAlojamiento()) {
+                    primerCiudad = new Ciudad(nombreA);
+                    primerCiudad = (Ciudad) ciudades.recuperarVertice(primerCiudad);
+                    if (primerCiudad != null && primerCiudad.isAlojamiento()) {
                         String respuesta;
                         do {
                             System.out.print("Ingrese la cantidad de personas que desee alojar: ");
                             respuesta = sc.nextLine();
                             if (respuesta.matches("\\d+")) {
-                                if (!a.reservar(Integer.parseInt(respuesta))) {
+                                if (!primerCiudad.reservar(Integer.parseInt(respuesta))) {
                                     errorM();
                                 }
                                 aux = true;
@@ -263,9 +265,9 @@ public class Main {
      */
     public static void consultaViajes() {
         boolean exit = false;
-        String c1 = "", c2 = "";
-        Ciudad uno = null, dos = null;
-        Lista l;
+        String nombreA = "", nombreB = "";
+        Ciudad ciudadOrigen = null, ciudadDestino = null;
+        Lista lista;
         do {
             System.out.println("______________________");
             System.out.println("Entre dos Ciudades:");
@@ -279,56 +281,57 @@ public class Main {
             opcion = sc.nextLine().charAt(0);
             if (opcion > '0' && opcion < '5') {
                 System.out.print("Ingrese el nombre de la ciudad de origen: ");
-                c1 = sc.nextLine();
-                uno = new Ciudad(c1);
+                nombreA = sc.nextLine();
+                ciudadOrigen = new Ciudad(nombreA);
                 System.out.print("Ingrese el nombre de la ciudad de destino");
-                c2 = sc.nextLine();
-                dos = new Ciudad(c2);
+                nombreB = sc.nextLine();
+                ciudadDestino = new Ciudad(nombreB);
             }
             switch (opcion) {
                 case '1':
-                    l = ciudades.caminoMasCorto(uno, dos);
-                    if (!l.esVacia()) {
-                        System.out.println("El camino mas corto entre " + c1 + " y " + c2 + " es:");
-                        System.out.println(l.toString());
+                    lista = ciudades.caminoMasCorto(ciudadOrigen, ciudadDestino);
+                    if (!lista.esVacia()) {
+                        System.out.println("El camino mas corto entre " + nombreA + " y " + nombreB + " es:");
+                        System.out.println(lista.toString());
                     } else {
                         errorC();
                     }
                     break;
                 case '2':
-                    l = ciudades.listarCaminoMinCiudades(uno, dos);
-                    if (!l.esVacia()) {
-                        System.out.println("El camino con menos ciudades entre " + c1 + " y " + c2 + " es:");
-                        System.out.println(l.toString());
+                    lista = ciudades.listarCaminoMinCiudades(ciudadOrigen, ciudadDestino);
+                    if (!lista.esVacia()) {
+                        System.out.println("El camino con menos ciudades entre " + nombreA + " y " + nombreB + " es:");
+                        System.out.println(lista.toString());
                     } else {
                         errorC();
                     }
                     break;
                 case '3':
                     System.out.print("Ingrese la ciudad que desea excluir: ");
-                    String c3 = sc.nextLine();
-                    Ciudad tres = new Ciudad(c3);
-                    l = ciudades.caminoMasCortoSin(uno, dos, tres);
-                    if (!l.esVacia()) {
-                        System.out.println(
-                                "El camino mas corto entre " + c1 + " y " + c2 + " excluyendo a " + c3 + " es:");
-                        System.out.println(l.toString());
+                    String nombreC = sc.nextLine();
+                    Ciudad ciudadExcluida = new Ciudad(nombreC);
+                    lista = ciudades.caminoMasCortoSin(ciudadOrigen, ciudadDestino, ciudadExcluida);
+                    if (!lista.esVacia()) {
+                        System.out.println("El camino mas corto entre " + nombreA + " y " + nombreB + " excluyendo a "
+                                + nombreC + " es:");
+                        System.out.println(lista.toString());
                     } else {
                         errorC();
                     }
                     break;
                 case '4':
-                    l = ciudades.listarCaminos(uno, dos);
-                    if (!l.esVacia()) {
+                    lista = ciudades.listarCaminos(ciudadOrigen, ciudadDestino);
+                    if (!lista.esVacia()) {
+                        Lista camino;
                         int i;
-                        System.out.println("Los caminos entre " + c1 + " y " + c2 + " son:");
-                        for (i = 1; i <= l.longitud(); i++) {
-                            Lista x = (Lista) l.recuperar(i);
-                            System.out.println(x.toString());
+                        System.out.println("Los caminos entre " + nombreA + " y " + nombreB + " son:");
+                        for (i = 1; i <= lista.longitud(); i++) {
+                            camino = (Lista) lista.recuperar(i);
+                            System.out.println(camino.toString());
                         }
                         System.out.println("Filtro: Caminos que solo haya alojamiento en la ciudad de destino:");
-                        for (i = 1; i <= l.longitud(); i++) {
-                            Lista camino = (Lista) l.recuperar(i);
+                        for (i = 1; i <= lista.longitud(); i++) {
+                            camino = (Lista) lista.recuperar(i);
                             // Verifico la ciudad destino (la ultima ciudad)
                             Ciudad destino = (Ciudad) camino.recuperar(camino.longitud());
                             if (destino.isAlojamiento())
@@ -336,19 +339,19 @@ public class Main {
                                 System.out.println(camino.toString());
                         }
                         System.out.println("Filtro: Caminos que haya alojamiento en al menos una de las ciudades:");
-                        for (i = 1; i <= l.longitud(); i++) {
-                            Lista x = (Lista) l.recuperar(i);
+                        for (i = 1; i <= lista.longitud(); i++) {
+                            camino = (Lista) lista.recuperar(i);
                             // Verifico que exista al menos una ciudad de ese camino
                             // Que tenga alojamiento disponible
                             boolean salir = false;
                             int j = 1;
                             // Si encontre al menos una o si llegue al final, salgo
-                            while (!salir && j <= x.longitud()) {
-                                Ciudad ciudad = (Ciudad) x.recuperar(j);
+                            while (!salir && j <= camino.longitud()) {
+                                Ciudad ciudad = (Ciudad) camino.recuperar(j);
                                 // Si al menos una de las ciudades tiene alojamiento muestro el camino
                                 if (ciudad.isAlojamiento()) {
                                     salir = true;
-                                    System.out.println(x.toString());
+                                    System.out.println(camino.toString());
                                 }
                                 j++;
                             }
@@ -424,7 +427,7 @@ public class Main {
         opcion = 'y';
         String nombre, dt;
         char grupo;
-        Equipo e;
+        Equipo equipo;
         do {
             switch (opcion) {
                 // Mientras el usuario ingrese 'y' va a seguir ejecutandose
@@ -441,8 +444,8 @@ public class Main {
                     } while (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D');
                     System.out.print("Quien es el DT?: ");
                     dt = sc.nextLine();
-                    e = new Equipo(nombre, dt, grupo);
-                    if (!equipos.insertar(e)) {
+                    equipo = new Equipo(nombre, dt, grupo);
+                    if (!equipos.insertar(equipo)) {
                         System.out.println("No se pudo crear el equipo porque ya existe uno con ese nombre");
                     }
                     do {
@@ -473,15 +476,16 @@ public class Main {
         boolean exit = false;
         opcion = 'y';
         String nombre;
+        Equipo equipo;
         do {
             switch (opcion) {
                 case 'y':
                     System.out.print("Ingrese el nombre del equipo: ");
                     nombre = sc.nextLine();
-                    Equipo e = new Equipo(nombre);
-                    e = (Equipo) equipos.recuperar(nombre);
-                    if (e != null) {
-                        equipos.eliminar(e);
+                    equipo = new Equipo(nombre);
+                    equipo = (Equipo) equipos.recuperar(equipo);
+                    if (equipo != null) {
+                        equipos.eliminar(equipo);
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
                     }
@@ -510,7 +514,7 @@ public class Main {
      */
     public static void modificarEquipos() {
         boolean exit = false;
-        Equipo e = null;
+        Equipo equipo = null;
         String nombreA = "";
         do {
             System.out.println("______________________");
@@ -524,22 +528,21 @@ public class Main {
             if (opcion > '0' && opcion < '4') {
                 System.out.print("Ingrese el nombre del equipo: ");
                 nombreA = sc.nextLine();
-                e = new Equipo(nombreA);
-                e = (Equipo) equipos.recuperar(e);
+                equipo = new Equipo(nombreA);
+                equipo = (Equipo) equipos.recuperar(equipo);
             }
             switch (opcion) {
                 case '1':
-                    // 'e' es el equipo original
-                    if (e != null) {
+                    if (equipo != null) {
                         System.out.print("Ingrese el nuevo nombre: ");
                         nombreA = sc.nextLine();
                         // Si desea cambiar el nombre verifico que no haya un equipo con ese nombre
                         Equipo nuevo = new Equipo(nombreA);
                         if (!equipos.pertenece(nuevo)) {
                             // Si no lo hay elimino al equipo, le cambio el nombre y lo agrego
-                            equipos.eliminar(e);
-                            e.setNombre(nombreA);
-                            equipos.insertar(e);
+                            equipos.eliminar(equipo);
+                            equipo.setNombre(nombreA);
+                            equipos.insertar(equipo);
                         } else {
                             System.out.println("Ya existe un equipo con ese nombre");
                         }
@@ -548,16 +551,16 @@ public class Main {
                     }
                     break;
                 case '2':
-                    if (e != null) {
+                    if (equipo != null) {
                         System.out.print("Ingrese el nombre del nuevo DT: ");
                         String dt = sc.nextLine();
-                        e.setEntrenador(dt);
+                        equipo.setEntrenador(dt);
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
                     }
                     break;
                 case '3':
-                    if (e != null) {
+                    if (equipo != null) {
                         char grupo;
                         // Solo hay 4 grupos (A, B, C, D)
                         System.out.print("Ingrese el grupo: ");
@@ -565,7 +568,7 @@ public class Main {
                         if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
                             System.out.println("Ingrese unicamente (A,B,C,D)");
                         } else {
-                            e.setGrupo(grupo);
+                            equipo.setGrupo(grupo);
                         }
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
@@ -603,10 +606,10 @@ public class Main {
                 case '1':
                     System.out.print("Ingrese el nombre del equipo: ");
                     String nombreA = sc.nextLine();
-                    Equipo e = new Equipo(nombreA);
-                    e = (Equipo) equipos.recuperar(e);
-                    if (e != null) {
-                        System.out.println(e.mostrarInfo());
+                    Equipo equipo = new Equipo(nombreA);
+                    equipo = (Equipo) equipos.recuperar(equipo);
+                    if (equipo != null) {
+                        System.out.println(equipo.mostrarInfo());
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
                     }
@@ -616,6 +619,7 @@ public class Main {
                     String min = sc.nextLine();
                     System.out.print("Ingrese la segunda palabra: ");
                     String max = sc.nextLine();
+                    // Si las cadenas no estan ordenadas, las ordeno
                     if (min.compareTo(max) >= 0) {
                         String aux = min;
                         min = max;
@@ -652,11 +656,11 @@ public class Main {
     public static void listarPorGF() {
         long startTime = System.nanoTime();
         TablaHash th = equipos.ordenarPorGF();
-        Lista l = th.listar();
-        int longitud = l.longitud();
+        Lista lista = th.listar();
+        int longitud = lista.longitud();
         for (int i = 1; i <= longitud; i++) {
-            Equipo elem = (Equipo) l.recuperar(i);
-            System.out.println(elem.mostrarGoles());
+            Equipo equipo = (Equipo) lista.recuperar(i);
+            System.out.println(equipo.mostrarGoles());
         }
         long endTime = System.nanoTime();
         long duration = endTime - startTime;
@@ -680,34 +684,34 @@ public class Main {
      * cuartos por mas que sea con otro equipo distinto al que ya jugo
      */
     public static void establecerPartido() {
-        String primer, segundo;
-        Equipo uno, dos;
+        String nombreA, nombreB;
+        Equipo primerEquipo, segundoEquipo;
         boolean exit = false;
         opcion = 'y';
         do {
             switch (opcion) {
                 case 'y':
                     System.out.print("Ingrese el nombre del primer equipo: ");
-                    primer = sc.nextLine();
+                    nombreA = sc.nextLine();
                     System.out.print("Ingrese el nombre del segundo equipo: ");
-                    segundo = sc.nextLine();
-                    uno = new Equipo(primer);
-                    dos = new Equipo(segundo);
-                    uno = (Equipo) equipos.recuperar(uno);
-                    dos = (Equipo) equipos.recuperar(dos);
+                    nombreB = sc.nextLine();
+                    primerEquipo = new Equipo(nombreA);
+                    segundoEquipo = new Equipo(nombreB);
+                    primerEquipo = (Equipo) equipos.recuperar(primerEquipo);
+                    segundoEquipo = (Equipo) equipos.recuperar(segundoEquipo);
                     System.out.println("Rondas validas: 'grupo' 'cuartos' 'semis' final");
                     System.out.print("Ingrese la ronda: ");
                     String ronda = sc.nextLine().toLowerCase();
-                    if (rondaValida(ronda) && uno != null && dos != null) {
+                    if (rondaValida(ronda) && primerEquipo != null && segundoEquipo != null) {
                         // puedeInsertar es un metodo de clase que me indica si es posible crear el
                         // partido dados unos datos basicos
-                        boolean puedeInsertar = Partido.puedeInsertar(uno, dos, ronda);
+                        boolean puedeInsertar = Partido.puedeInsertar(primerEquipo, segundoEquipo, ronda);
                         if (puedeInsertar) {
                             int resultadoEquipo1 = 0, resultadoEquipo2 = 0;
                             boolean aux = false;
                             String respuesta;
                             do {
-                                System.out.print("Ingrese el resultado de: " + primer + " en el partido: ");
+                                System.out.print("Ingrese el resultado de: " + nombreA + " en el partido: ");
                                 // Utilizo una expresion regular para verificar que solo sean numeros
                                 respuesta = sc.nextLine();
                                 if (respuesta.matches("\\d+")) {
@@ -718,7 +722,7 @@ public class Main {
                                 }
                             } while (!aux);
                             do {
-                                System.out.print("Ingrese el resultado de: " + segundo + " en el partido: ");
+                                System.out.print("Ingrese el resultado de: " + nombreB + " en el partido: ");
                                 respuesta = sc.nextLine();
                                 if (respuesta.matches("\\d+")) {
                                     resultadoEquipo2 = Integer.parseInt(respuesta);
@@ -730,12 +734,13 @@ public class Main {
                             // La ciudad debe ser sede
                             System.out.print("Ingrese el nombre de la ciudad ");
                             respuesta = sc.nextLine();
-                            Ciudad ciudad = (Ciudad) ciudades.recuperarVertice(new Ciudad(respuesta));
+                            Ciudad ciudad = new Ciudad(respuesta);
+                            ciudad = (Ciudad) ciudades.recuperarVertice(ciudad);
                             if (ciudad != null && ciudad.isSede()) {
                                 System.out.print("Ingrese el nombre del estadio: ");
                                 respuesta = sc.nextLine();
-                                Partido p = new Partido(uno, dos, ronda, ciudad, respuesta, resultadoEquipo1,
-                                        resultadoEquipo2);
+                                Partido p = new Partido(primerEquipo, segundoEquipo, ronda, ciudad, respuesta,
+                                        resultadoEquipo1, resultadoEquipo2);
                                 if (!partidos.insertar(p)) {
                                     errorE();
                                 }
@@ -802,32 +807,36 @@ public class Main {
      * jugados entre si (si es que tienen)
      */
     public static void consultaPartidos() {
-        String sep = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+        String separador = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
         System.out.print("Ingrese el nombre del primer equipo: ");
         String primer = sc.nextLine().toLowerCase();
         System.out.print("Ingrese el nombre del segundo equipo: ");
         String segundo = sc.nextLine().toLowerCase();
-        Equipo uno = new Equipo(primer), dos = new Equipo(segundo);
-        uno = (Equipo) equipos.recuperar(uno);
-        dos = (Equipo) equipos.recuperar(dos);
-        if (uno != null && dos != null && !primer.equals(segundo)) {
-            System.out.println(sep);
-            Partido p = new Partido(uno, dos);
-            Lista l = (partidos.recuperar(p));
+        Equipo primerEquipo = new Equipo(primer), segundoEquipo = new Equipo(segundo);
+        // Debo recuperarlos por si no ingreso el nombre exactamente como fue registrado
+        primerEquipo = (Equipo) equipos.recuperar(primerEquipo);
+        segundoEquipo = (Equipo) equipos.recuperar(segundoEquipo);
+        if (primerEquipo != null && segundoEquipo != null && !primer.equals(segundo)) {
+            System.out.println(separador);
+            // Crea un partido entre ambos equipos
+            Partido aux = new Partido(primerEquipo, segundoEquipo);
+            // Recuperar devuelve una lista con todos los partidos entre esos equipos
+            Lista lista = partidos.recuperar(aux);
             int i = 1;
-            while (i <= l.longitud()) {
-                Partido aux = (Partido) l.recuperar(i);
-                if (p.verifPartido(aux)) {
-                    System.out.println(aux.toString());
+            while (i <= lista.longitud()) {
+                // Para cada partido de la lista, lo muestra
+                Partido partido = (Partido) lista.recuperar(i);
+                if (partido.verifPartido(partido)) {
+                    System.out.println(partido.toString());
                 }
                 i++;
             }
-            System.out.println(sep);
+            System.out.println(separador);
 
         } else {
-            System.out.println(sep);
+            System.out.println(separador);
             System.out.println("Verifique que los nombres sean correctos y que no sean el mismo");
-            System.out.println(sep);
+            System.out.println(separador);
         }
     }
 
@@ -965,11 +974,13 @@ public class Main {
     }
 
     private static void procesarLinea(String linea) {
-        char tipo = linea.charAt(0); // Toma el primer carácter
-        String datos = linea.substring(2); // Toma el resto después de "tipo:"
+        // Las lineas son de la forma: TIPO: DATOS;DATOS
+        char tipo = linea.charAt(0); // Toma el primer caracter
+        String datos = linea.substring(2); // Toma el resto despues de "tipo:"
 
         StringTokenizer st = new StringTokenizer(datos, ";");
-        Ciudad c;
+        Ciudad ciudad;
+        String nombreCiudad;
         switch (tipo) {
             case 'E':
                 String nombreEquipo = st.nextToken().trim();
@@ -986,16 +997,17 @@ public class Main {
                 String equipo1 = st.nextToken().trim();
                 String equipo2 = st.nextToken().trim();
                 String ronda = st.nextToken().toLowerCase().trim();
-                String ciudad = st.nextToken().trim();
-                Equipo uno = (Equipo) equipos.recuperar(new Equipo(equipo1));
-                Equipo dos = (Equipo) equipos.recuperar(new Equipo(equipo2));
-                c = (Ciudad) ciudades.recuperarVertice(new Ciudad(ciudad));
-                if (uno != null && dos != null) {
-                    if (c != null && c.isSede()) {
+                nombreCiudad = st.nextToken().trim();
+                Equipo primerEquipo = (Equipo) equipos.recuperar(new Equipo(equipo1));
+                Equipo segundoEquipo = (Equipo) equipos.recuperar(new Equipo(equipo2));
+                ciudad = (Ciudad) ciudades.recuperarVertice(new Ciudad(nombreCiudad));
+                if (primerEquipo != null && segundoEquipo != null) {
+                    if (ciudad != null && ciudad.isSede()) {
                         String estadio = st.nextToken().trim();
                         int golesEquipo1 = Integer.parseInt(st.nextToken().trim());
                         int golesEquipo2 = Integer.parseInt(st.nextToken().trim());
-                        Partido partido = new Partido(uno, dos, ronda, c, estadio, golesEquipo1, golesEquipo2);
+                        Partido partido = new Partido(primerEquipo, segundoEquipo, ronda, ciudad, estadio, golesEquipo1,
+                                golesEquipo2);
                         if (partidos.insertar(partido)) {
                             System.out.println(true + " Se ingreso el partido entre: " + equipo1 + " y " + equipo2);
                         } else {
@@ -1009,26 +1021,26 @@ public class Main {
                 }
                 break;
             case 'C':
-                String nombreCiudad = st.nextToken().trim();
+                nombreCiudad = st.nextToken().trim();
                 boolean alojamiento = Boolean.parseBoolean(st.nextToken().trim());
                 boolean sede = Boolean.parseBoolean(st.nextToken().trim());
-                c = new Ciudad(nombreCiudad, alojamiento, sede);
-                if (ciudades.insertarVertice(c)) {
+                ciudad = new Ciudad(nombreCiudad, alojamiento, sede);
+                if (ciudades.insertarVertice(ciudad)) {
                     System.out.println(true + " Se inserto: " + nombreCiudad);
                 } else {
                     System.out.println(false + " Ya hay una ciudad con este nombre: " + nombreCiudad);
                 }
                 break;
             case 'R':
-                String ciudad1 = st.nextToken().trim();
-                String ciudad2 = st.nextToken().trim();
-                c = new Ciudad(ciudad1);
-                Ciudad c2 = new Ciudad(ciudad2);
+                nombreCiudad = st.nextToken().trim();
+                String nombreCiudad2 = st.nextToken().trim();
+                ciudad = new Ciudad(nombreCiudad);
+                Ciudad ciudad2 = new Ciudad(nombreCiudad2);
                 int vuelo = Integer.parseInt(st.nextToken().trim());
-                if (ciudades.insertarArco(c, c2, vuelo)) {
-                    System.out.println(true + " Se inserto una ruta entre: " + c + " y " + c2);
+                if (ciudades.insertarArco(ciudad, ciudad2, vuelo)) {
+                    System.out.println(true + " Se inserto una ruta entre: " + ciudad + " y " + ciudad2);
                 } else {
-                    System.out.println(false + " No se inserto una ruta entre: " + c + " y " + c2);
+                    System.out.println(false + " No se inserto una ruta entre: " + ciudad + " y " + ciudad2);
                 }
                 break;
             default:
