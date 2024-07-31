@@ -139,14 +139,14 @@ public class Main {
             switch (opcion) {
                 case 'y':
                     System.out.print("Ingrese el nombre de la ciudad: ");
-                    nombre = sc.next();
+                    nombre = sc.nextLine();
                     Ciudad c = new Ciudad(nombre);
                     if (!ciudades.eliminarVertice(c)) {
                         System.out.println("No existe una ciudad con ese nombre");
                     }
                     do {
                         System.out.print("Desea continuar? y/n: ");
-                        opcion = sc.next().toLowerCase().charAt(0);
+                        opcion = sc.nextLine().toLowerCase().charAt(0);
                         if (opcion != 'y' && opcion != 'n') {
                             System.out.println("La opcion ingresada es incorrecta");
                         }
@@ -178,14 +178,14 @@ public class Main {
             System.out.println("0) Salir");
             System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
+            opcion = sc.nextLine().charAt(0);
             // Como tanto para eliminar y agregar necesito el nombre de las dos ciudades
             if (opcion > '0' && opcion < '3') {
                 // Si la opcion sea alguna de esas, pido las dos ciudades antes de operar
                 System.out.print("Ingrese el nombre de la primer ciudad: ");
-                nombreA = sc.next();
+                nombreA = sc.nextLine();
                 System.out.print("Ingrese el nombre de la segunda ciudad: ");
-                nombreB = sc.next();
+                nombreB = sc.nextLine();
                 a = new Ciudad(nombreA);
                 b = new Ciudad(nombreB);
             }
@@ -195,7 +195,7 @@ public class Main {
                         // El tiempo de vuelo(int) es requerido para crear el camino
                         System.out.print("Ingrese el tiempo de vuelo: ");
                         // Utilizo una expresion regular para verificar que solo sean numeros
-                        String respuesta = sc.next();
+                        String respuesta = sc.nextLine();
                         if (respuesta.matches("\\d+")) {
                             tiempo = Integer.parseInt(respuesta);
                             aux = true;
@@ -214,14 +214,14 @@ public class Main {
                     break;
                 case '3':
                     System.out.print("Ingrese la ciudad");
-                    nombreA = sc.next();
+                    nombreA = sc.nextLine();
                     a = new Ciudad(nombreA);
                     a = (Ciudad) ciudades.recuperarVertice(a);
                     if (a != null && a.isAlojamiento()) {
                         String respuesta;
                         do {
                             System.out.print("Ingrese la cantidad de personas que desee alojar: ");
-                            respuesta = sc.next();
+                            respuesta = sc.nextLine();
                             if (respuesta.matches("\\d+")) {
                                 if (!a.reservar(Integer.parseInt(respuesta))) {
                                     errorM();
@@ -276,13 +276,13 @@ public class Main {
             System.out.println("0) Salir");
             System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
+            opcion = sc.nextLine().charAt(0);
             if (opcion > '0' && opcion < '5') {
                 System.out.print("Ingrese el nombre de la ciudad de origen: ");
-                c1 = sc.next();
+                c1 = sc.nextLine();
                 uno = new Ciudad(c1);
                 System.out.print("Ingrese el nombre de la ciudad de destino");
-                c2 = sc.next();
+                c2 = sc.nextLine();
                 dos = new Ciudad(c2);
             }
             switch (opcion) {
@@ -306,7 +306,7 @@ public class Main {
                     break;
                 case '3':
                     System.out.print("Ingrese la ciudad que desea excluir: ");
-                    String c3 = sc.next();
+                    String c3 = sc.nextLine();
                     Ciudad tres = new Ciudad(c3);
                     l = ciudades.caminoMasCortoSin(uno, dos, tres);
                     if (!l.esVacia()) {
@@ -391,7 +391,7 @@ public class Main {
             System.out.println("0) Salir");
             System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
+            opcion = sc.nextLine().charAt(0);
             switch (opcion) {
                 case '1':
                     agregarEquipos();
@@ -430,17 +430,17 @@ public class Main {
                 // Mientras el usuario ingrese 'y' va a seguir ejecutandose
                 case 'y':
                     System.out.print("Ingrese el nombre del equipo: ");
-                    nombre = sc.next();
+                    nombre = sc.nextLine();
                     do {
                         // Solo hay 4 grupos (A, B, C, D)
                         System.out.print("Ingrese el grupo: ");
-                        grupo = sc.next().toUpperCase().charAt(0);
+                        grupo = sc.nextLine().toUpperCase().charAt(0);
                         if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
                             System.out.println("Ingrese unicamente (A,B,C,D)");
                         }
                     } while (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D');
                     System.out.print("Quien es el DT?: ");
-                    dt = sc.next();
+                    dt = sc.nextLine();
                     e = new Equipo(nombre, dt, grupo);
                     if (!equipos.insertar(e)) {
                         System.out.println("No se pudo crear el equipo porque ya existe uno con ese nombre");
@@ -448,7 +448,7 @@ public class Main {
                     do {
                         // Luego pregunto si desea continuar
                         System.out.print("Desea continuar? y/n: ");
-                        opcion = sc.next().toLowerCase().charAt(0);
+                        opcion = sc.nextLine().toLowerCase().charAt(0);
                         if (opcion != 'y' && opcion != 'n') {
                             System.out.println("La opcion ingresada es incorrecta");
                         }
@@ -477,7 +477,7 @@ public class Main {
             switch (opcion) {
                 case 'y':
                     System.out.print("Ingrese el nombre del equipo: ");
-                    nombre = sc.next();
+                    nombre = sc.nextLine();
                     Equipo e = new Equipo(nombre);
                     e = (Equipo) equipos.recuperar(nombre);
                     if (e != null) {
@@ -488,7 +488,7 @@ public class Main {
                     do {
                         // Luego pregunto si desea continuar
                         System.out.print("Desea continuar? y/n: ");
-                        opcion = sc.next().toLowerCase().charAt(0);
+                        opcion = sc.nextLine().toLowerCase().charAt(0);
                         if (opcion != 'y' && opcion != 'n') {
                             System.out.println("La opcion ingresada es incorrecta");
                         }
@@ -520,10 +520,10 @@ public class Main {
             System.out.println("0) Salir");
             System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
+            opcion = sc.nextLine().charAt(0);
             if (opcion > '0' && opcion < '4') {
                 System.out.print("Ingrese el nombre del equipo: ");
-                nombreA = sc.next();
+                nombreA = sc.nextLine();
                 e = new Equipo(nombreA);
                 e = (Equipo) equipos.recuperar(e);
             }
@@ -532,7 +532,7 @@ public class Main {
                     // 'e' es el equipo original
                     if (e != null) {
                         System.out.print("Ingrese el nuevo nombre: ");
-                        nombreA = sc.next();
+                        nombreA = sc.nextLine();
                         // Si desea cambiar el nombre verifico que no haya un equipo con ese nombre
                         Equipo nuevo = new Equipo(nombreA);
                         if (!equipos.pertenece(nuevo)) {
@@ -550,7 +550,7 @@ public class Main {
                 case '2':
                     if (e != null) {
                         System.out.print("Ingrese el nombre del nuevo DT: ");
-                        String dt = sc.next();
+                        String dt = sc.nextLine();
                         e.setEntrenador(dt);
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
@@ -561,7 +561,7 @@ public class Main {
                         char grupo;
                         // Solo hay 4 grupos (A, B, C, D)
                         System.out.print("Ingrese el grupo: ");
-                        grupo = sc.next().toUpperCase().charAt(0);
+                        grupo = sc.nextLine().toUpperCase().charAt(0);
                         if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
                             System.out.println("Ingrese unicamente (A,B,C,D)");
                         } else {
@@ -598,11 +598,11 @@ public class Main {
             System.out.println("0) Salir");
             System.out.println("______________________");
             System.out.print("Ingrese la opcion: ");
-            opcion = sc.next().charAt(0);
+            opcion = sc.nextLine().charAt(0);
             switch (opcion) {
                 case '1':
                     System.out.print("Ingrese el nombre del equipo: ");
-                    String nombreA = sc.next();
+                    String nombreA = sc.nextLine();
                     Equipo e = new Equipo(nombreA);
                     e = (Equipo) equipos.recuperar(e);
                     if (e != null) {
@@ -613,9 +613,9 @@ public class Main {
                     break;
                 case '2':
                     System.out.print("Ingrese la primer palabra: ");
-                    String min = sc.next();
+                    String min = sc.nextLine();
                     System.out.print("Ingrese la segunda palabra: ");
-                    String max = sc.next();
+                    String max = sc.nextLine();
                     if (min.compareTo(max) >= 0) {
                         String aux = min;
                         min = max;
@@ -688,16 +688,16 @@ public class Main {
             switch (opcion) {
                 case 'y':
                     System.out.print("Ingrese el nombre del primer equipo: ");
-                    primer = sc.next();
+                    primer = sc.nextLine();
                     System.out.print("Ingrese el nombre del segundo equipo: ");
-                    segundo = sc.next();
+                    segundo = sc.nextLine();
                     uno = new Equipo(primer);
                     dos = new Equipo(segundo);
                     uno = (Equipo) equipos.recuperar(uno);
                     dos = (Equipo) equipos.recuperar(dos);
                     System.out.println("Rondas validas: 'grupo' 'cuartos' 'semis' final");
                     System.out.print("Ingrese la ronda: ");
-                    String ronda = sc.next().toLowerCase();
+                    String ronda = sc.nextLine().toLowerCase();
                     if (rondaValida(ronda) && uno != null && dos != null) {
                         // puedeInsertar es un metodo de clase que me indica si es posible crear el
                         // partido dados unos datos basicos
@@ -709,7 +709,7 @@ public class Main {
                             do {
                                 System.out.print("Ingrese el resultado de: " + primer + " en el partido: ");
                                 // Utilizo una expresion regular para verificar que solo sean numeros
-                                respuesta = sc.next();
+                                respuesta = sc.nextLine();
                                 if (respuesta.matches("\\d+")) {
                                     resultadoEquipo1 = Integer.parseInt(respuesta);
                                     aux = true;
@@ -719,7 +719,7 @@ public class Main {
                             } while (!aux);
                             do {
                                 System.out.print("Ingrese el resultado de: " + segundo + " en el partido: ");
-                                respuesta = sc.next();
+                                respuesta = sc.nextLine();
                                 if (respuesta.matches("\\d+")) {
                                     resultadoEquipo2 = Integer.parseInt(respuesta);
                                     aux = true;
@@ -729,11 +729,11 @@ public class Main {
                             } while (!aux);
                             // La ciudad debe ser sede
                             System.out.print("Ingrese el nombre de la ciudad ");
-                            respuesta = sc.next();
+                            respuesta = sc.nextLine();
                             Ciudad ciudad = (Ciudad) ciudades.recuperarVertice(new Ciudad(respuesta));
                             if (ciudad != null && ciudad.isSede()) {
                                 System.out.print("Ingrese el nombre del estadio: ");
-                                respuesta = sc.next();
+                                respuesta = sc.nextLine();
                                 Partido p = new Partido(uno, dos, ronda, ciudad, respuesta, resultadoEquipo1,
                                         resultadoEquipo2);
                                 if (!partidos.insertar(p)) {
@@ -752,7 +752,7 @@ public class Main {
                     do {
                         // Luego pregunto si desea continuar
                         System.out.print("Desea continuar? y/n: ");
-                        opcion = sc.next().toLowerCase().charAt(0);
+                        opcion = sc.nextLine().toLowerCase().charAt(0);
                         if (opcion != 'y' && opcion != 'n') {
                             System.out.println("La opcion ingresada es incorrecta");
                         }
@@ -804,9 +804,9 @@ public class Main {
     public static void consultaPartidos() {
         String sep = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
         System.out.print("Ingrese el nombre del primer equipo: ");
-        String primer = sc.next().toLowerCase();
+        String primer = sc.nextLine().toLowerCase();
         System.out.print("Ingrese el nombre del segundo equipo: ");
-        String segundo = sc.next().toLowerCase();
+        String segundo = sc.nextLine().toLowerCase();
         Equipo uno = new Equipo(primer), dos = new Equipo(segundo);
         uno = (Equipo) equipos.recuperar(uno);
         dos = (Equipo) equipos.recuperar(dos);
