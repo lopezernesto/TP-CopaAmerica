@@ -107,6 +107,26 @@ public class TablaHash {
         return l;
     }
 
+    public String toString() {
+        String ret = "No hay partidos";
+        if (cant > 0) {
+            ret = "";
+            int contador = 0, pos = 0;
+            while (contador < cant) {
+                if (arreglo[pos] != null) {
+                    Nodo aux = arreglo[pos];
+                    while (aux != null) {
+                        ret += aux.getElem().toString() + "\n";
+                        aux = aux.getEnlace();
+                        contador++;
+                    }
+                }
+                pos++;
+            }
+        }
+        return ret;
+    }
+
     /*
      * elem es el Partido entre dos equipos
      * 
