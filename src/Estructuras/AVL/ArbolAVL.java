@@ -1,8 +1,5 @@
 package Estructuras.AVL;
 
-import org.w3c.dom.Node;
-
-import Dominio.Equipo;
 import Estructuras.TablaHash;
 import Estructuras.Lineales.Lista;
 import Tests.SegundaOpcionListar.AVLEspecifico;

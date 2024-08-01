@@ -147,6 +147,8 @@ public class Main {
                     Ciudad ciudad = new Ciudad(nombre);
                     if (!ciudades.eliminarVertice(ciudad)) {
                         System.out.println("No existe una ciudad con ese nombre");
+                    } else {
+                        escribirArchivo("Se borro la ciudad: " + nombre);
                     }
                     do {
                         System.out.print("Desea continuar? y/n: ");
@@ -171,7 +173,7 @@ public class Main {
      */
     private static void modificarCiudades() {
         boolean exit = false, aux = false;
-        String nombreA, nombreB;
+        String nombreA = "", nombreB = "";
         Ciudad primerCiudad = null, segundaCiudad = null;
         int tiempo = 0;
         do {
@@ -210,11 +212,15 @@ public class Main {
                     } while (!aux);
                     if (!ciudades.insertarArco(primerCiudad, segundaCiudad, tiempo)) {
                         errorM();
+                    } else {
+                        escribirArchivo("Se agrego un camino entre " + nombreA + " y " + nombreB);
                     }
                     break;
                 case '2':
                     if (!ciudades.eliminarArco(primerCiudad, segundaCiudad)) {
                         errorM();
+                    } else {
+                        escribirArchivo("Se borro el camino entre " + nombreA + " y " + nombreB);
                     }
                     break;
                 case '3':
@@ -230,6 +236,9 @@ public class Main {
                             if (respuesta.matches("\\d+")) {
                                 if (!primerCiudad.reservar(Integer.parseInt(respuesta))) {
                                     errorM();
+                                } else {
+                                    escribirArchivo(
+                                            "Se registraron " + respuesta + " personas en la ciudad " + nombreA);
                                 }
                                 aux = true;
                             } else {
@@ -450,6 +459,8 @@ public class Main {
                     equipo = new Equipo(nombre, dt, grupo);
                     if (!equipos.insertar(equipo)) {
                         System.out.println("No se pudo crear el equipo porque ya existe uno con ese nombre");
+                    } else {
+                        escribirArchivo("Se agrego el equipo " + nombre);
                     }
                     do {
                         // Luego pregunto si desea continuar
@@ -489,6 +500,7 @@ public class Main {
                     equipo = (Equipo) equipos.recuperar(equipo);
                     if (equipo != null) {
                         equipos.eliminar(equipo);
+                        escribirArchivo("Se borro el equipo " + nombre);
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
                     }
@@ -537,6 +549,8 @@ public class Main {
             switch (opcion) {
                 case '1':
                     if (equipo != null) {
+                        // Aux solo utilizado para el .log
+                        String aux = nombreA;
                         System.out.print("Ingrese el nuevo nombre: ");
                         nombreA = sc.nextLine();
                         // Si desea cambiar el nombre verifico que no haya un equipo con ese nombre
@@ -546,6 +560,7 @@ public class Main {
                             equipos.eliminar(equipo);
                             equipo.setNombre(nombreA);
                             equipos.insertar(equipo);
+                            escribirArchivo("Se cambio el nombre de " + aux + " por el siguiente: " + nombreA);
                         } else {
                             System.out.println("Ya existe un equipo con ese nombre");
                         }
@@ -557,7 +572,10 @@ public class Main {
                     if (equipo != null) {
                         System.out.print("Ingrese el nombre del nuevo DT: ");
                         String dt = sc.nextLine();
+                        escribirArchivo("Se cambio el dt de " + equipo.getNombre() + ". Antes era "
+                                + equipo.getEntrenador() + " y ahora es " + dt);
                         equipo.setEntrenador(dt);
+
                     } else {
                         System.out.println("No se encontro un equipo con ese nombre");
                     }
@@ -571,6 +589,8 @@ public class Main {
                         if (grupo != 'A' && grupo != 'B' && grupo != 'C' && grupo != 'D') {
                             System.out.println("Ingrese unicamente (A,B,C,D)");
                         } else {
+                            escribirArchivo("Se cambio el grupo de " + equipo.getNombre() + ". Antes era "
+                                    + equipo.getGrupo() + " ahora es " + grupo);
                             equipo.setGrupo(grupo);
                         }
                     } else {
@@ -705,7 +725,7 @@ public class Main {
                     System.out.println("Rondas validas: 'grupo' 'cuartos' 'semis' final");
                     System.out.print("Ingrese la ronda: ");
                     String ronda = sc.nextLine().toLowerCase();
-                    if (rondaValida(ronda) && primerEquipo != null && segundoEquipo != null) {
+                    if (rondaValida(ronda) && equiposValidos(primerEquipo, segundoEquipo)) {
                         // puedeInsertar es un metodo de clase que me indica si es posible crear el
                         // partido dados unos datos basicos
                         boolean puedeInsertar = Partido.puedeInsertar(primerEquipo, segundoEquipo, ronda);
@@ -746,6 +766,9 @@ public class Main {
                                         resultadoEquipo1, resultadoEquipo2);
                                 if (!partidos.insertar(p)) {
                                     errorE();
+                                } else {
+                                    escribirArchivo("Se ingreso un partido entre " + primerEquipo + " y "
+                                            + segundoEquipo + " por " + ronda);
                                 }
                             } else {
                                 errorE();
@@ -788,6 +811,13 @@ public class Main {
     }
 
     /*
+     * Verifica que dos equipos no sean nulos y no sean el mismo equipo
+     */
+    private static boolean equiposValidos(Equipo primerEquipo, Equipo segundoEquipo) {
+        return (primerEquipo != null && segundoEquipo != null && !primerEquipo.equals(segundoEquipo));
+    }
+
+    /*
      * Mensaje de error para el metodo que crea Partidos
      */
     private static void errorE() {
@@ -800,6 +830,7 @@ public class Main {
         System.out.println("4) El partido este repetido");
         System.out.println("5) Si es un partido de 'grupos' ambos equipos deben ser del mismo grupo");
         System.out.println("6) La ciudad ingresada para el partido sea valida y ademas sede");
+        System.out.println("7) Los equipos ingresados sean el mismo equipo");
         System.out.println("----------------------------------Error:----------------------------------");
     }
 
@@ -819,7 +850,7 @@ public class Main {
         // Debo recuperarlos por si no ingreso el nombre exactamente como fue registrado
         primerEquipo = (Equipo) equipos.recuperar(primerEquipo);
         segundoEquipo = (Equipo) equipos.recuperar(segundoEquipo);
-        if (primerEquipo != null && segundoEquipo != null && !primer.equals(segundo)) {
+        if (equiposValidos(primerEquipo, segundoEquipo)) {
             System.out.println(separador);
             // Crea un partido entre ambos equipos
             Partido aux = new Partido(primerEquipo, segundoEquipo);
@@ -882,33 +913,26 @@ public class Main {
 
     public static void main(String[] args) {
         boolean exit = false;
-        String entrada = "/home/ernesto/Escritorio/cargaInicial.txt";
+        String salida = "salida.txt";
+        // Este try-catch de filewriter es para vaciar a salida.txt cada vez que inicio
+        // el programa
+        try {
+            FileWriter fw = new FileWriter(salida);
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al vaciar el archivo");
+            e.printStackTrace();
+        }
+        String entrada = "cargaInicial.txt";
         leerArchivo(entrada);
         escribirArchivo("Se termino la carga inicial");
-        // Equipo arg = new Equipo("Argentina", "asd", 'A');
-        // Equipo col = new Equipo("Colombia", "asd", 'A');
-        // Equipo bra = new Equipo("Brasil", "asd", 'B');
-        // Equipo uru = new Equipo("Uruguay", "asd", 'C');
-        // Equipo pan = new Equipo("Panamá", "xd", 'C');
-        // Equipo chi = new Equipo("Chile", "asdasd", 'A');
-        // Equipo zz = new Equipo("zzzzz", "null", 'B');
-        // equipos.insertar(bra);
-        // equipos.insertar(arg);
-        // equipos.insertar(col);
-        // equipos.insertar(pan);
-        // equipos.insertar(uru);
-        // equipos.insertar(chi);
-        // equipos.insertar(zz);
-        // Partidos
-        // partidos.insertar(new Partido(arg, col, "grupo", null, null, 93, 2));
-        // partidos.insertar(new Partido(col, bra, "cuartos", null, null, 41, 2));
-        // partidos.insertar(new Partido(bra, uru, "semis", null, null, 61, 3));
-        // partidos.insertar(new Partido(uru, pan, "grupo", null, null, 32, 3));
-        // partidos.insertar(new Partido(pan, chi, "cuartos", null, null, 80, 1));
-        // partidos.insertar(new Partido(chi, arg, "grupo", null, null, 122, 2));
-        // partidos.insertar(new Partido(bra, zz, "grupo", null, null, 143, 3));
-        // partidos.insertar(new Partido(arg, col, "grupo", null, null, 2, 1));
-
+        escribirArchivo("EQUIPOS:");
+        escribirArchivo(equipos.toString());
+        escribirArchivo("PARTIDOS:");
+        escribirArchivo(partidos.toString());
+        escribirArchivo("CIUDADES:");
+        escribirArchivo(ciudades.toString());
+        escribirArchivo("\n" + "A partir de aca se ingresaran las modificaciones:");
         do {
             menu();
             System.out.print("Ingrese la opcion: ");
@@ -1011,7 +1035,7 @@ public class Main {
                 Equipo primerEquipo = (Equipo) equipos.recuperar(new Equipo(equipo1));
                 Equipo segundoEquipo = (Equipo) equipos.recuperar(new Equipo(equipo2));
                 ciudad = (Ciudad) ciudades.recuperarVertice(new Ciudad(nombreCiudad));
-                if (primerEquipo != null && segundoEquipo != null) {
+                if (equiposValidos(primerEquipo, segundoEquipo)) {
                     if (ciudad != null && ciudad.isSede()) {
                         String estadio = st.nextToken().trim();
                         int golesEquipo1 = Integer.parseInt(st.nextToken().trim());
@@ -1063,7 +1087,7 @@ public class Main {
      * De aca en adelante codigo para escribir en un archivo
      */
     private static void escribirArchivo(String cadena) {
-        String salida = "/home/ernesto/Escritorio/salida.txt";
+        String salida = "salida.txt";
         try {
             FileWriter fw = new FileWriter(salida, true);
             // Escribirmos la cadena y hacemos un salto de linea para la siguiente

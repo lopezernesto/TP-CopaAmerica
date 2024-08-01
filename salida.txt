@@ -1,0 +1,85 @@
+Se termino la carga inicial
+EQUIPOS:
+(España) -> HI: Argentina  HD: Inglaterra
+(Argentina) -> HI: Alemania  HD: Brasil
+(Alemania) -> HI: -  HD: - 
+(Brasil) -> HI: -  HD: - 
+(Inglaterra) -> HI: Francia  HD: Italia
+(Francia) -> HI: -  HD: - 
+(Italia) -> HI: -  HD: Portugal
+(Portugal) -> HI: -  HD: - 
+
+PARTIDOS:
+Alemania; Brasil; ernesto; 0:1
+Alemania; Francia; b; 3:2
+España; Italia; c; 1:1
+Argentina; Portugal; d; 3:2
+Inglaterra; Portugal; d; 2:2
+Argentina; Brasil; a; 2:1
+España; Francia; b; 3:2
+Inglaterra; Italia; c; 1:0
+
+CIUDADES:
+------------------------------Ciudad-------------------------
+Buenos Aires: 
+----------------------------Conexiones-----------------------
+------>Rio de Janeiro
+------>Berlin
+
+------------------------------Ciudad-------------------------
+Rio de Janeiro: 
+----------------------------Conexiones-----------------------
+------>Buenos Aires
+------>Paris
+
+------------------------------Ciudad-------------------------
+Berlin: 
+----------------------------Conexiones-----------------------
+------>Paris
+------>Buenos Aires
+------>Madrid
+
+------------------------------Ciudad-------------------------
+Paris: 
+----------------------------Conexiones-----------------------
+------>Berlin
+------>Rio de Janeiro
+
+------------------------------Ciudad-------------------------
+Madrid: 
+----------------------------Conexiones-----------------------
+------>Rome
+------>London
+------>Berlin
+
+------------------------------Ciudad-------------------------
+Rome: 
+----------------------------Conexiones-----------------------
+------>Madrid
+------>Lisbon
+
+------------------------------Ciudad-------------------------
+London: 
+----------------------------Conexiones-----------------------
+------>Lisbon
+------>Madrid
+
+------------------------------Ciudad-------------------------
+Lisbon: 
+----------------------------Conexiones-----------------------
+------>London
+------>Rome
+
+------------------------------Ciudad-------------------------
+Barcelona: 
+----------------------------Conexiones-----------------------
+------>Milan
+
+------------------------------Ciudad-------------------------
+Milan: 
+----------------------------Conexiones-----------------------
+------>Barcelona
+
+
+
+A partir de aca se ingresaran las modificaciones:

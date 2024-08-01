@@ -1,0 +1,38 @@
+E: Argentina; Scaloni; A
+E: Brasil; Tite; A
+E: Alemania; Flick; B
+E: Francia; Deschamps; B
+E: España; Luis Enrique; C
+E: Italia; Mancini; C
+E: Inglaterra; Southgate; D
+E: Portugal; Santos; D
+C: Buenos Aires; true; true
+C: Rio de Janeiro; true; true
+C: Berlin; true; true
+C: Paris; true; true
+C: Madrid; true; true
+C: Rome; true; true
+C: London; true; true
+C: Lisbon; true; true
+C: Barcelona; true; false
+C: Milan; true; false
+P: Argentina; Brasil; A; Buenos Aires; Monumental; 2; 1
+P: Alemania; Francia; B; Berlin; Olympiastadion; 3; 2
+P: España; Italia; C; Madrid; Bernabeu; 1; 1
+P: Inglaterra; Portugal; D; London; Wembley; 2; 2
+P: Brasil; Alemania; ernesto; Rio de Janeiro; Maracana; 1; 0
+P: Francia; España; B; Paris; Parc des Princes; 2; 3
+P: Italia; Inglaterra; C; Rome; Olimpico; 0; 1
+P: Portugal; Argentina; D; Lisbon; Estadio da Luz; 2; 3
+P: Barcelona; Milan; C; Barcelona; Camp Nou; 3; 1
+P: Buenos Aires; Rio de Janeiro; A; Buenos Aires; La Bombonera; 2; 1
+R: Buenos Aires; Rio de Janeiro; 180
+R: Berlin; Paris; 120
+R: Madrid; Rome; 150
+R: London; Lisbon; 90
+R: Barcelona; Milan; 105
+R: Buenos Aires; Berlin; 210
+R: Rio de Janeiro; Paris; 180
+R: Madrid; London; 135
+R: Rome; Lisbon; 165
+R: Berlin; Madrid; 240
