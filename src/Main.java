@@ -295,7 +295,7 @@ public class Main {
                 System.out.print("Ingrese el nombre de la ciudad de origen: ");
                 nombreA = sc.nextLine();
                 ciudadOrigen = new Ciudad(nombreA);
-                System.out.print("Ingrese el nombre de la ciudad de destino");
+                System.out.print("Ingrese el nombre de la ciudad de destino: ");
                 nombreB = sc.nextLine();
                 ciudadDestino = new Ciudad(nombreB);
             }
@@ -755,7 +755,7 @@ public class Main {
                                 }
                             } while (!aux);
                             // La ciudad debe ser sede
-                            System.out.print("Ingrese el nombre de la ciudad ");
+                            System.out.print("Ingrese el nombre de la ciudad: ");
                             respuesta = sc.nextLine();
                             Ciudad ciudad = new Ciudad(respuesta);
                             ciudad = (Ciudad) ciudades.recuperarVertice(ciudad);
@@ -991,7 +991,7 @@ public class Main {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                System.out.println("Esta es mi linea: " + linea);
+                // System.out.println("Esta es mi linea: " + linea);
                 procesarLinea(linea);
             }
         } catch (IOException e) {
@@ -1022,9 +1022,10 @@ public class Main {
                 char grupo = st.nextToken().toUpperCase().trim().charAt(0);
                 Equipo equipo = new Equipo(nombreEquipo, nombreDT, grupo);
                 if (!equipos.insertar(equipo)) {
+                    System.out.println("No se inserto la linea " + linea);
                     System.out.println(false + " No se ingreso el equipo " + nombreEquipo);
                 } else {
-                    System.out.println(true + " Se inserto: " + nombreEquipo);
+                    // System.out.println(true + " Se inserto: " + nombreEquipo);
                 }
                 break;
             case 'P':
@@ -1043,15 +1044,20 @@ public class Main {
                         Partido partido = new Partido(primerEquipo, segundoEquipo, ronda, ciudad, estadio, golesEquipo1,
                                 golesEquipo2);
                         if (partidos.insertar(partido)) {
-                            System.out.println(true + " Se ingreso el partido entre: " + equipo1 + " y " + equipo2);
+                            // System.out.println(true + " Se ingreso el partido entre: " + equipo1 + " y "
+                            // + equipo2);
                         } else {
+                            System.out.println("No se inserto la linea " + linea);
                             System.out.println(false + " No se ingreso el partido entre: " + equipo1 + " y " + equipo2);
                         }
                     } else {
+                        System.out.println("No se inserto la linea " + linea);
                         System.out.println(false + " No se encontro la ciudad o no es sede:");
                     }
                 } else {
-                    System.out.println(false + " No se encontro a alguno de los dos equipos");
+                    System.out.println("No se inserto la linea " + linea);
+                    System.out.println(false + " No se encontro a alguno de los dos equipos" + primerEquipo + "y "
+                            + segundoEquipo);
                 }
                 break;
             case 'C':
@@ -1060,8 +1066,9 @@ public class Main {
                 boolean sede = Boolean.parseBoolean(st.nextToken().trim());
                 ciudad = new Ciudad(nombreCiudad, alojamiento, sede);
                 if (ciudades.insertarVertice(ciudad)) {
-                    System.out.println(true + " Se inserto: " + nombreCiudad);
+                    // System.out.println(true + " Se inserto: " + nombreCiudad);
                 } else {
+                    System.out.println("No se inserto la linea " + linea);
                     System.out.println(false + " Ya hay una ciudad con este nombre: " + nombreCiudad);
                 }
                 break;
@@ -1072,12 +1079,15 @@ public class Main {
                 Ciudad ciudad2 = new Ciudad(nombreCiudad2);
                 int vuelo = Integer.parseInt(st.nextToken().trim());
                 if (ciudades.insertarArco(ciudad, ciudad2, vuelo)) {
-                    System.out.println(true + " Se inserto una ruta entre: " + ciudad + " y " + ciudad2);
+                    // System.out.println(true + " Se inserto una ruta entre: " + ciudad + " y " +
+                    // ciudad2);
                 } else {
+                    System.out.println("No se inserto la linea " + linea);
                     System.out.println(false + " No se inserto una ruta entre: " + ciudad + " y " + ciudad2);
                 }
                 break;
             default:
+                System.out.println("No se inserto la linea " + linea);
                 System.out.println(false + " Tipo desconocido: " + tipo);
                 break;
         }

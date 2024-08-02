@@ -226,9 +226,10 @@ public class Grafo {
         if (verticeOrigen != null && verticeDestino != null) {
             Lista caminoActual = new Lista();
             TablaHash visitados = new TablaHash();
-            double[] menorTiempo = { Double.MAX_VALUE };
+            double[] mejorTiempo = { Double.MAX_VALUE };
             caminoMasCortoAux(false, verticeOrigen, verticeDestino, null, caminoActual, mejorCamino, visitados, 0,
-                    menorTiempo);
+                    mejorTiempo);
+            mejorCamino.insertar(mejorTiempo[0], 1);
         }
 
         return mejorCamino;
@@ -248,6 +249,7 @@ public class Grafo {
             double[] mejorTiempo = { Double.MAX_VALUE };
             caminoMasCortoAux(true, verticeOrigen, verticeDestino, exclu, caminoActual, mejorCamino, visitados, 0,
                     mejorTiempo);
+            mejorCamino.insertar(mejorTiempo[0], 1);
         }
         return mejorCamino;
     }
@@ -331,6 +333,8 @@ public class Grafo {
             // Establezco un numero alto para evaluar un camino mas corto
             double[] minCiudadesVisitadas = { 10000 };
             caminoMinimo(verticeOrigen, verticeDestino, caminoActual, mejorCamino, th, 0, minCiudadesVisitadas);
+
+            mejorCamino.insertar(minCiudadesVisitadas[0], 1);
         }
         return mejorCamino;
     }

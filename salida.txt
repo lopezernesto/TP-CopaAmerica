@@ -1,84 +1,205 @@
 Se termino la carga inicial
 EQUIPOS:
-(España) -> HI: Argentina  HD: Inglaterra
-(Argentina) -> HI: Alemania  HD: Brasil
-(Alemania) -> HI: -  HD: - 
-(Brasil) -> HI: -  HD: - 
-(Inglaterra) -> HI: Francia  HD: Italia
-(Francia) -> HI: -  HD: - 
-(Italia) -> HI: -  HD: Portugal
-(Portugal) -> HI: -  HD: - 
+(MEXICO) -> HI: CHILE  HD: URUGUAY
+(CHILE) -> HI: BOLIVIA  HD: ESTADOS UNIDOS
+(BOLIVIA) -> HI: ARGENTINA  HD: CANADA
+(ARGENTINA) -> HI: -  HD: - 
+(CANADA) -> HI: BRASIL  HD: - 
+(BRASIL) -> HI: -  HD: - 
+(ESTADOS UNIDOS) -> HI: COSTA RICA  HD: JAMAICA
+(COSTA RICA) -> HI: COLOMBIA  HD: ECUADOR
+(COLOMBIA) -> HI: -  HD: - 
+(ECUADOR) -> HI: -  HD: - 
+(JAMAICA) -> HI: -  HD: - 
+(URUGUAY) -> HI: PARAGUAY  HD: VENEZUELA
+(PARAGUAY) -> HI: PANAMA  HD: PERU
+(PANAMA) -> HI: -  HD: - 
+(PERU) -> HI: -  HD: - 
+(VENEZUELA) -> HI: -  HD: - 
 
 PARTIDOS:
-Alemania; Brasil; ernesto; 0:1
-Alemania; Francia; b; 3:2
-España; Italia; c; 1:1
-Argentina; Portugal; d; 3:2
-Inglaterra; Portugal; d; 2:2
-Argentina; Brasil; a; 2:1
-España; Francia; b; 3:2
-Inglaterra; Italia; c; 1:0
+JAMAICA; VENEZUELA; grupo; 0:1
+ARGENTINA; PERU; grupo; 3:1
+ESTADOS UNIDOS; URUGUAY; grupo; 2:2
+ECUADOR; VENEZUELA; grupo; 1:2
+CANADA; PERU; grupo; 1:1
+BRASIL; COLOMBIA; grupo; 2:1
+ARGENTINA; CANADA; grupo; 2:0
+BOLIVIA; URUGUAY; grupo; 0:2
+BRASIL; PARAGUAY; grupo; 1:0
+PANAMA; URUGUAY; grupo; 0:1
+ESTADOS UNIDOS; PANAMA; grupo; 3:0
+MEXICO; VENEZUELA; grupo; 1:0
+ECUADOR; MEXICO; grupo; 1:2
+COLOMBIA; COSTA RICA; grupo; 2:1
+ECUADOR; JAMAICA; grupo; 1:2
+COSTA RICA; PARAGUAY; grupo; 0:2
+CHILE; PERU; grupo; 0:2
+ARGENTINA; CHILE; grupo; 1:0
+BOLIVIA; PANAMA; grupo; 1:1
 
 CIUDADES:
 ------------------------------Ciudad-------------------------
-Buenos Aires: 
+ATLANTA: 
 ----------------------------Conexiones-----------------------
------->Rio de Janeiro
------->Berlin
+------>EAST RUTHERFORD
+------>GLENDALE
+------>ST. LOUIS
+------>INDIANAPOLIS
 
 ------------------------------Ciudad-------------------------
-Rio de Janeiro: 
+EAST RUTHERFORD: 
 ----------------------------Conexiones-----------------------
------->Buenos Aires
------->Paris
+------>ATLANTA
+------>LOUISVILLE
+------>NASHVILLE
 
 ------------------------------Ciudad-------------------------
-Berlin: 
+MIAMI: 
 ----------------------------Conexiones-----------------------
------->Paris
------->Buenos Aires
------->Madrid
+------>NASHVILLE
+------>HOUSTON
+------>CHARLOTTE
+------>AUSTIN
+------>GLENDALE
 
 ------------------------------Ciudad-------------------------
-Paris: 
+HOUSTON: 
 ----------------------------Conexiones-----------------------
------->Berlin
------->Rio de Janeiro
+------>MIAMI
+------>ARLINGTON
+------>AUSTIN
+------>CINCINNATI
+------>GLENDALE
 
 ------------------------------Ciudad-------------------------
-Madrid: 
+ARLINGTON: 
 ----------------------------Conexiones-----------------------
------->Rome
------->London
------->Berlin
+------>HOUSTON
+------>CINCINNATI
+------>GLENDALE
+------>INDIANAPOLIS
 
 ------------------------------Ciudad-------------------------
-Rome: 
+SANTA CLARA: 
 ----------------------------Conexiones-----------------------
------->Madrid
------->Lisbon
+------>CHARLOTTE
+------>INGLEWOOD
+------>KANSAS CITY
+------>ORLANDO
 
 ------------------------------Ciudad-------------------------
-London: 
+CHARLOTTE: 
 ----------------------------Conexiones-----------------------
------->Lisbon
------->Madrid
+------>MIAMI
+------>SANTA CLARA
+------>INGLEWOOD
+------>ORLANDO
+------>SAN ANTONIO
 
 ------------------------------Ciudad-------------------------
-Lisbon: 
+GLENDALE: 
 ----------------------------Conexiones-----------------------
------->London
------->Rome
+------>ARLINGTON
+------>ATLANTA
+------>MIAMI
+------>HOUSTON
 
 ------------------------------Ciudad-------------------------
-Barcelona: 
+INGLEWOOD: 
 ----------------------------Conexiones-----------------------
------->Milan
+------>SANTA CLARA
+------>CHARLOTTE
+------>AUSTIN
+------>SAN ANTONIO
+------>CINCINNATI
 
 ------------------------------Ciudad-------------------------
-Milan: 
+ORLANDO: 
 ----------------------------Conexiones-----------------------
------->Barcelona
+------>CHARLOTTE
+------>AUSTIN
+------>KANSAS CITY
+------>LOUISVILLE
+------>SANTA CLARA
+
+------------------------------Ciudad-------------------------
+AUSTIN: 
+----------------------------Conexiones-----------------------
+------>MIAMI
+------>HOUSTON
+------>INGLEWOOD
+------>ORLANDO
+------>PARADISE
+
+------------------------------Ciudad-------------------------
+KANSAS CITY: 
+----------------------------Conexiones-----------------------
+------>SANTA CLARA
+------>ORLANDO
+------>PARADISE
+------>ST. LOUIS
+
+------------------------------Ciudad-------------------------
+PARADISE: 
+----------------------------Conexiones-----------------------
+------>AUSTIN
+------>KANSAS CITY
+------>LAS VEGAS
+------>SAN ANTONIO
+------>CINCINNATI
+
+------------------------------Ciudad-------------------------
+LAS VEGAS: 
+----------------------------Conexiones-----------------------
+------>PARADISE
+------>SAN ANTONIO
+------>INDIANAPOLIS
+
+------------------------------Ciudad-------------------------
+NASHVILLE: 
+----------------------------Conexiones-----------------------
+------>EAST RUTHERFORD
+------>MIAMI
+------>LOUISVILLE
+
+------------------------------Ciudad-------------------------
+SAN ANTONIO: 
+----------------------------Conexiones-----------------------
+------>CHARLOTTE
+------>INGLEWOOD
+------>PARADISE
+------>LAS VEGAS
+
+------------------------------Ciudad-------------------------
+INDIANAPOLIS: 
+----------------------------Conexiones-----------------------
+------>LAS VEGAS
+------>ATLANTA
+------>ARLINGTON
+
+------------------------------Ciudad-------------------------
+CINCINNATI: 
+----------------------------Conexiones-----------------------
+------>HOUSTON
+------>ARLINGTON
+------>INGLEWOOD
+------>PARADISE
+
+------------------------------Ciudad-------------------------
+LOUISVILLE: 
+----------------------------Conexiones-----------------------
+------>EAST RUTHERFORD
+------>NASHVILLE
+------>ORLANDO
+------>ST. LOUIS
+
+------------------------------Ciudad-------------------------
+ST. LOUIS: 
+----------------------------Conexiones-----------------------
+------>LOUISVILLE
+------>KANSAS CITY
+------>ATLANTA
 
 
 
