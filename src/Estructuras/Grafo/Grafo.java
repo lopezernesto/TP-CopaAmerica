@@ -223,16 +223,15 @@ public class Grafo {
         NodoVert verticeDestino = obtenerVertice(destino);
 
         Lista mejorCamino = new Lista();
+        Lista[] mejorCaminoRef = { mejorCamino };
         if (verticeOrigen != null && verticeDestino != null) {
             Lista caminoActual = new Lista();
-            TablaHash visitados = new TablaHash();
             double[] mejorTiempo = { Double.MAX_VALUE };
-            caminoMasCortoAux(false, verticeOrigen, verticeDestino, null, caminoActual, mejorCamino, visitados, 0,
-                    mejorTiempo);
-            mejorCamino.insertar(mejorTiempo[0], 1);
+            caminoMasCortoAux(false, verticeOrigen, verticeDestino, null, caminoActual, mejorCaminoRef, 0, mejorTiempo);
+            mejorCaminoRef[0].insertar(mejorTiempo[0], 1);
         }
 
-        return mejorCamino;
+        return mejorCaminoRef[0];
     }
 
     /*
@@ -243,15 +242,14 @@ public class Grafo {
         NodoVert verticeDestino = obtenerVertice(destino);
         NodoVert exclu = obtenerVertice(excluido);
         Lista mejorCamino = new Lista();
+        Lista[] mejorCaminoRef = { mejorCamino };
         if (verticeOrigen != null && verticeDestino != null) {
             Lista caminoActual = new Lista();
-            TablaHash visitados = new TablaHash();
             double[] mejorTiempo = { Double.MAX_VALUE };
-            caminoMasCortoAux(true, verticeOrigen, verticeDestino, exclu, caminoActual, mejorCamino, visitados, 0,
-                    mejorTiempo);
+            caminoMasCortoAux(true, verticeOrigen, verticeDestino, exclu, caminoActual, mejorCaminoRef, 0, mejorTiempo);
             mejorCamino.insertar(mejorTiempo[0], 1);
         }
-        return mejorCamino;
+        return mejorCaminoRef[0];
     }
 
     /*
@@ -273,9 +271,7 @@ public class Grafo {
      * 
      */
     private void caminoMasCortoAux(boolean excluirNodo, NodoVert actual, NodoVert destino, NodoVert excluido,
-            Lista caminoActual, Lista mejorCamino, TablaHash visitados, double tiempoActual, double[] mejorTiempo) {
-        // Mete el nodo visitado en una TablaHash
-        visitados.insertar(actual);
+            Lista caminoActual, Lista[] mejorCamino, double tiempoActual, double[] mejorTiempo) {
         // Agrega la ciudad del nodo al camino
         caminoActual.insertar(actual.getElem(), caminoActual.longitud() + 1);
         // Si llegue a la ciudad Destino
@@ -285,12 +281,9 @@ public class Grafo {
                 // Si el tiempoActual es mejor:
                 // Reemplazo y vacio mi mejorCamino
                 mejorTiempo[0] = tiempoActual;
-                mejorCamino.vaciar();
-                // Para cada elem de mi camino actual (que ahora es mi camino mas corto)
-                for (int i = 1; i <= caminoActual.longitud(); i++) {
-                    // Lo inserto en mejorCamino que ahora esta vacio
-                    mejorCamino.insertar(caminoActual.recuperar(i), i);
-                }
+                mejorCamino[0].vaciar();
+                // Ahora mi camino actual es el mejor camino
+                mejorCamino[0] = caminoActual.clone();
             }
         } else {
             NodoAdy arco = actual.getPrimerArco();
@@ -298,14 +291,14 @@ public class Grafo {
             while (arco != null) {
                 // Se toma la ciudad conectada con ese arco
                 NodoVert vecino = arco.getVertice();
-                // Si la Tabla NO tiene a esa ciudad (significa que no paso por ahi)
-                if (!visitados.pertenece(vecino)) {
+                // Si la lista NO tiene a esa ciudad (significa que no paso por ahi)
+                if (caminoActual.localizar(vecino.getElem()) == -1) {
                     // Explicacion en comentario inicial
                     boolean continuar = !excluirNodo || !vecino.equals(excluido);
                     if (continuar) {
                         // Sumo el tiempo y lo mando por parametro con la nueva ciudad
                         tiempoActual += arco.getEtiqueta();
-                        caminoMasCortoAux(excluirNodo, vecino, destino, excluido, caminoActual, mejorCamino, visitados,
+                        caminoMasCortoAux(excluirNodo, vecino, destino, excluido, caminoActual, mejorCamino,
                                 tiempoActual, mejorTiempo);
                         // Resto el tiempo a la vuelta
                         tiempoActual -= arco.getEtiqueta();
@@ -314,8 +307,6 @@ public class Grafo {
                 arco = arco.getSiguiente();
             }
         }
-
-        visitados.eliminar(actual);
         caminoActual.eliminar(caminoActual.longitud());
     }
 
@@ -325,24 +316,21 @@ public class Grafo {
      */
     public Lista listarCaminoMinCiudades(Object origen, Object destino) {
         Lista mejorCamino = new Lista();
+        Lista[] mejorCaminoRef = { mejorCamino };
         NodoVert verticeOrigen = obtenerVertice(origen);
         NodoVert verticeDestino = obtenerVertice(destino);
         if (verticeOrigen != null && verticeDestino != null) {
             Lista caminoActual = new Lista();
-            TablaHash th = new TablaHash();
             // Establezco un numero alto para evaluar un camino mas corto
             double[] minCiudadesVisitadas = { 10000 };
-            caminoMinimo(verticeOrigen, verticeDestino, caminoActual, mejorCamino, th, 0, minCiudadesVisitadas);
-
-            mejorCamino.insertar(minCiudadesVisitadas[0], 1);
+            caminoMinimo(verticeOrigen, verticeDestino, caminoActual, mejorCaminoRef, 0, minCiudadesVisitadas);
+            mejorCaminoRef[0].insertar(minCiudadesVisitadas[0], 1);
         }
-        return mejorCamino;
+        return mejorCaminoRef[0];
     }
 
-    private void caminoMinimo(NodoVert actual, NodoVert destino, Lista caminoActual, Lista mejorCamino,
-            TablaHash visitados, double ciudadesVisitadas, double[] minCiudadesVisitadas) {
-        // Mete el nodo visitado en una TablaHash
-        visitados.insertar(actual);
+    private void caminoMinimo(NodoVert actual, NodoVert destino, Lista caminoActual, Lista[] mejorCamino,
+            double ciudadesVisitadas, double[] minCiudadesVisitadas) {
         // Agrega la ciudad del nodo al camino
         caminoActual.insertar(actual.getElem(), caminoActual.longitud() + 1);
         // Si llegue a la ciudad Destino
@@ -352,12 +340,9 @@ public class Grafo {
                 // Si el contador de Ciudades es menor:
                 // Reemplazo y vacio mi mejorCamino
                 minCiudadesVisitadas[0] = ciudadesVisitadas;
-                mejorCamino.vaciar();
-                // Para cada elem de mi camino actual (que ahora es mi camino mas corto)
-                for (int i = 1; i <= caminoActual.longitud(); i++) {
-                    // Lo inserto en mejorCamino que ahora esta vacio
-                    mejorCamino.insertar(caminoActual.recuperar(i), i);
-                }
+                mejorCamino[0].vaciar();
+                // ahora camino actual es mi mejor camino
+                mejorCamino[0] = caminoActual.clone();
             }
         } else {
             NodoAdy arco = actual.getPrimerArco();
@@ -365,19 +350,17 @@ public class Grafo {
             while (arco != null) {
                 // Se toma la ciudad conectada con ese arco
                 NodoVert vecino = arco.getVertice();
-                // Si la Tabla NO tiene a esa ciudad (significa que no paso por ahi)
-                if (!visitados.pertenece(vecino)) {
+                // Si la lista NO tiene a esa ciudad (significa que no paso por ahi)
+                if (caminoActual.localizar(vecino.getElem()) == -1) {
                     // Sumo el contador de ciudades
                     ciudadesVisitadas++;
-                    caminoMinimo(vecino, destino, caminoActual, mejorCamino, visitados,
-                            ciudadesVisitadas, minCiudadesVisitadas);
+                    caminoMinimo(vecino, destino, caminoActual, mejorCamino, ciudadesVisitadas, minCiudadesVisitadas);
                     ciudadesVisitadas--;
 
                 }
                 arco = arco.getSiguiente();
             }
         }
-        visitados.eliminar(actual);
         caminoActual.eliminar(caminoActual.longitud());
     }
 
@@ -391,17 +374,13 @@ public class Grafo {
         NodoVert verticeDestino = obtenerVertice(destino);
         if (verticeOrigen != null && verticeDestino != null) {
             Lista caminoParcial = new Lista();
-            TablaHash th = new TablaHash();
-            listarCaminosAux(verticeOrigen, verticeDestino, caminoParcial, caminos, th);
+            listarCaminosAux(verticeOrigen, verticeDestino, caminoParcial, caminos);
         }
 
         return caminos;
     }
 
-    private void listarCaminosAux(NodoVert actual, NodoVert destino, Lista caminoParcial, Lista caminos,
-            TablaHash visitados) {
-        // Mete el nodo visitado en una TablaHash
-        visitados.insertar(actual);
+    private void listarCaminosAux(NodoVert actual, NodoVert destino, Lista caminoParcial, Lista caminos) {
         // Agrega la ciudad del nodo al camino
         caminoParcial.insertar(actual.getElem(), caminoParcial.longitud() + 1);
         // Si llegue a la ciudad Destino
@@ -417,15 +396,14 @@ public class Grafo {
             while (arco != null) {
                 // Se toma la ciudad conectada con ese arco
                 NodoVert vecino = arco.getVertice();
-                // Si la Tabla NO tiene a esa ciudad (significa que no paso por ahi)
-                if (!visitados.pertenece(vecino)) {
-                    listarCaminosAux(vecino, destino, caminoParcial, caminos, visitados);
+                // Si la lista NO tiene a esa ciudad (significa que no paso por ahi)
+                if (caminoParcial.localizar(vecino.getElem()) == -1) {
+                    listarCaminosAux(vecino, destino, caminoParcial, caminos);
 
                 }
                 arco = arco.getSiguiente();
             }
         }
-        visitados.eliminar(actual);
         caminoParcial.eliminar(caminoParcial.longitud());
     }
 
