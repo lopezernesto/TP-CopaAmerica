@@ -23,18 +23,16 @@ public class Main {
 
     public static void menu() {
         System.out.println("MENU DE OPCIONES:");
-        // System.out.println("*****************************************************");
-        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("**************************************************************************");
         System.out.println("|                             1) ABM Ciudades                              |");
         System.out.println("|                              2) ABM Equipos                              |");
         System.out.println("|                            3) Altas Partidos                             |");
         System.out.println("|                        4) Consulta sobre Equipos                         |");
-        System.out.println("|           5) Consulta sobre Partidos                                     |");
+        System.out.println("|                        5) Consulta sobre Partidos                        |");
         System.out.println("|           6) Consulta sobre Viajes desde punto A hasta punto B           |");
-        System.out.println("|           7) Listar Equipos por goles a favor                            |");
-        System.out.println("|           8) Mostrar Sistema                                             |");
-        System.out.println("|           0) Salir                                                       |");
-        // System.out.println("-----------------------------------------------------");
+        System.out.println("|                   7) Listar Equipos por goles a favor                    |");
+        System.out.println("|                            8) Mostrar Sistema                            |");
+        System.out.println("|                                 0) Salir                                 |");
         System.out.println("****************************************************************************");
 
     }
@@ -47,12 +45,12 @@ public class Main {
         System.out.println("Altas, bajas y modificaciones de Ciudades:");
         boolean exit = false;
         do {
-            System.out.println("______________________");
-            System.out.println("1) Crear Ciudades");
-            System.out.println("2) Borrar Ciudades");
-            System.out.println("3) Modificar Ciudades");
-            System.out.println("0) Salir");
-            System.out.println("______________________");
+            System.out.println("-------------------------");
+            System.out.println("|   1) Crear Ciudades   |");
+            System.out.println("|   2) Borrar Ciudades  |");
+            System.out.println("| 3) Modificar Ciudades |");
+            System.out.println("|        0) Salir       |");
+            System.out.println("-------------------------");
             System.out.print("Ingrese la opcion: ");
             opcion = sc.nextLine().charAt(0);
             switch (opcion) {
@@ -66,6 +64,7 @@ public class Main {
                     break;
                 case '0':
                     exit = true;
+                    System.out.println("__________________________________________");
                     break;
                 default:
                     System.out.println("La opcion ingresada es incorrecta");
@@ -177,12 +176,12 @@ public class Main {
         Ciudad primerCiudad = null, segundaCiudad = null;
         int tiempo = 0;
         do {
-            System.out.println("______________________");
-            System.out.println("1) Agregar camino");
-            System.out.println("2) Eliminar camino");
-            System.out.println("3) Registrar alojamiento");
-            System.out.println("0) Salir");
-            System.out.println("______________________");
+            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+            System.out.println("|     1) Agregar camino    |");
+            System.out.println("|    2) Eliminar camino    |");
+            System.out.println("| 3) Registrar alojamiento |");
+            System.out.println("|         0) Salir         |");
+            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
             System.out.print("Ingrese la opcion: ");
             opcion = sc.nextLine().charAt(0);
             // Como tanto para eliminar y agregar necesito el nombre de las dos ciudades
@@ -281,14 +280,14 @@ public class Main {
         Ciudad ciudadOrigen = null, ciudadDestino = null;
         Lista lista;
         do {
-            System.out.println("______________________");
-            System.out.println("Entre dos Ciudades:");
-            System.out.println("1) Camino de menor tiempo");
-            System.out.println("2) Camino con menos ciudades");
-            System.out.println("3) Camino de menor tiempo excluyendo una ciudad");
-            System.out.println("4) Todos los caminos");
-            System.out.println("0) Salir");
-            System.out.println("______________________");
+            System.out.println("###################################################");
+            System.out.println("|               Entre dos Ciudades:               |");
+            System.out.println("|            1) Camino de menor tiempo            |");
+            System.out.println("|          2) Camino con menos ciudades           |");
+            System.out.println("| 3) Camino de menor tiempo excluyendo una ciudad |");
+            System.out.println("|               4) Todos los caminos              |");
+            System.out.println("|                    0) Salir                     |");
+            System.out.println("###################################################");
             System.out.print("Ingrese la opcion: ");
             opcion = sc.nextLine().charAt(0);
             if (opcion > '0' && opcion < '5') {
@@ -399,12 +398,12 @@ public class Main {
         System.out.println("Altas, bajas y modificaciones de Equipos:");
         boolean exit = false;
         do {
-            System.out.println("______________________");
-            System.out.println("1) Crear Equipos");
-            System.out.println("2) Borrar Equipos");
-            System.out.println("3) Modificar Equipos");
-            System.out.println("0) Salir");
-            System.out.println("______________________");
+            System.out.println("------------------------");
+            System.out.println("|   1) Crear Equipos   |");
+            System.out.println("|  2) Borrar Equipos   |");
+            System.out.println("| 3) Modificar Equipos |");
+            System.out.println("|       0) Salir       |");
+            System.out.println("------------------------");
             System.out.print("Ingrese la opcion: ");
             opcion = sc.nextLine().charAt(0);
             switch (opcion) {
@@ -418,6 +417,7 @@ public class Main {
                     break;
                 case '0':
                     exit = true;
+                    System.out.println("__________________________________________");
                     break;
                 default:
                     System.out.println("La opcion ingresada es incorrecta");
@@ -532,12 +532,12 @@ public class Main {
         Equipo equipo = null;
         String nombreA = "";
         do {
-            System.out.println("______________________");
-            System.out.println("1) Cambiar nombre");
-            System.out.println("2) Cambiar el tecnico");
-            System.out.println("3) Cambiar de grupo");
-            System.out.println("0) Salir");
-            System.out.println("______________________");
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%");
+            System.out.println("|   1) Cambiar nombre   |");
+            System.out.println("| 2) Cambiar el tecnico |");
+            System.out.println("|  3) Cambiar de grupo  |");
+            System.out.println("|        0) Salir       |");
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%");
             System.out.print("Ingrese la opcion: ");
             opcion = sc.nextLine().charAt(0);
             if (opcion > '0' && opcion < '4') {
@@ -618,11 +618,11 @@ public class Main {
     public static void consultaEquipos() {
         boolean exit = false;
         do {
-            System.out.println("______________________");
-            System.out.println("1) Info del equipo");
-            System.out.println("2) Equipos en rango");
-            System.out.println("0) Salir");
-            System.out.println("______________________");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("| 1) Info del equipo  |");
+            System.out.println("| 2) Equipos en rango |");
+            System.out.println("|      0) Salir       |");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.print("Ingrese la opcion: ");
             opcion = sc.nextLine().charAt(0);
             switch (opcion) {
@@ -1024,8 +1024,6 @@ public class Main {
                 if (!equipos.insertar(equipo)) {
                     System.out.println("No se inserto la linea " + linea);
                     System.out.println(false + " No se ingreso el equipo " + nombreEquipo);
-                } else {
-                    // System.out.println(true + " Se inserto: " + nombreEquipo);
                 }
                 break;
             case 'P':
@@ -1043,16 +1041,13 @@ public class Main {
                         int golesEquipo2 = Integer.parseInt(st.nextToken().trim());
                         Partido partido = new Partido(primerEquipo, segundoEquipo, ronda, ciudad, estadio, golesEquipo1,
                                 golesEquipo2);
-                        if (partidos.insertar(partido)) {
-                            // System.out.println(true + " Se ingreso el partido entre: " + equipo1 + " y "
-                            // + equipo2);
-                        } else {
+                        if (!partidos.insertar(partido)) {
                             System.out.println("No se inserto la linea " + linea);
                             System.out.println(false + " No se ingreso el partido entre: " + equipo1 + " y " + equipo2);
                         }
                     } else {
                         System.out.println("No se inserto la linea " + linea);
-                        System.out.println(false + " No se encontro la ciudad o no es sede:");
+                        System.out.println(false + " No se encontro la ciudad o no es sede");
                     }
                 } else {
                     System.out.println("No se inserto la linea " + linea);
@@ -1065,9 +1060,7 @@ public class Main {
                 boolean alojamiento = Boolean.parseBoolean(st.nextToken().trim());
                 boolean sede = Boolean.parseBoolean(st.nextToken().trim());
                 ciudad = new Ciudad(nombreCiudad, alojamiento, sede);
-                if (ciudades.insertarVertice(ciudad)) {
-                    // System.out.println(true + " Se inserto: " + nombreCiudad);
-                } else {
+                if (!ciudades.insertarVertice(ciudad)) {
                     System.out.println("No se inserto la linea " + linea);
                     System.out.println(false + " Ya hay una ciudad con este nombre: " + nombreCiudad);
                 }
@@ -1078,10 +1071,7 @@ public class Main {
                 ciudad = new Ciudad(nombreCiudad);
                 Ciudad ciudad2 = new Ciudad(nombreCiudad2);
                 int vuelo = Integer.parseInt(st.nextToken().trim());
-                if (ciudades.insertarArco(ciudad, ciudad2, vuelo)) {
-                    // System.out.println(true + " Se inserto una ruta entre: " + ciudad + " y " +
-                    // ciudad2);
-                } else {
+                if (!ciudades.insertarArco(ciudad, ciudad2, vuelo)) {
                     System.out.println("No se inserto la linea " + linea);
                     System.out.println(false + " No se inserto una ruta entre: " + ciudad + " y " + ciudad2);
                 }
