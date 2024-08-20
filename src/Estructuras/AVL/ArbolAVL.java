@@ -165,26 +165,18 @@ public class ArbolAVL {
 
     /*
      * Metodo para buscar al candidato cuando se elimina un elem
-     * y reemplazarlo por el mejor candidato encontrado
+     * y reemplazarlo por el menor candidato de la derecha
      * 
      * Retorna el subarbol con el elem ya eliminado
      */
     private NodoAVL metodo2(NodoAVL nodo) {
         NodoAVL candidato = null;
         boolean exit = false;
-        // Obtengo los mejores candidatos
-        NodoAVL candidatoIzq = mayorIzq(nodo.getIzquierdo());
+        // Obtengo el mejor candidato por derecha
         NodoAVL candidatoDer = menorDer(nodo.getDerecho());
-        // Obtengo la cantidad de hijos de los candidatos para recorrer
-        int hijosCandidatoIzq = cantHijos(candidatoIzq), hijosCandidatoDer = cantHijos(candidatoDer);
-        if (hijosCandidatoIzq <= hijosCandidatoDer) {
-            // Le voy seteando el elemento al que fui eliminando
-            nodo.setElem(candidatoIzq.getElem());
-            exit = eliminarAux(nodo, nodo.getIzquierdo(), candidatoIzq.getElem(), true);
-        } else {
-            nodo.setElem(candidatoDer.getElem());
-            exit = eliminarAux(nodo, nodo.getDerecho(), candidatoDer.getElem(), false);
-        }
+        // Inserta al elemento
+        nodo.setElem(candidatoDer.getElem());
+        exit = eliminarAux(nodo, nodo.getDerecho(), candidatoDer.getElem(), false);
         if (exit) {
             candidato = nodo;
         }
@@ -226,18 +218,6 @@ public class ArbolAVL {
             }
         }
         return cant;
-    }
-
-    /*
-     * mayorIzq es el metodo quee recorre al hijo izquierdo
-     * por la derecha hasta que ya no haya otro
-     */
-    private NodoAVL mayorIzq(NodoAVL n) {
-        NodoAVL aux = n;
-        while (aux.getDerecho() != null) {
-            aux = aux.getDerecho();
-        }
-        return aux;
     }
 
     /*
