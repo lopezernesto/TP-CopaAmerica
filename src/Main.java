@@ -59,6 +59,7 @@ public class Main {
                     break;
                 case '2':
                     borrarCiudades();
+                    break;
                 case '3':
                     modificarCiudades();
                     break;
@@ -223,7 +224,7 @@ public class Main {
                     }
                     break;
                 case '3':
-                    System.out.print("Ingrese la ciudad");
+                    System.out.print("Ingrese el nombre de la ciudad: ");
                     nombreA = sc.nextLine();
                     primerCiudad = new Ciudad(nombreA);
                     primerCiudad = (Ciudad) ciudades.recuperarVertice(primerCiudad);
@@ -860,7 +861,7 @@ public class Main {
             while (i <= lista.longitud()) {
                 // Para cada partido de la lista, lo muestra
                 Partido partido = (Partido) lista.recuperar(i);
-                if (partido.verifPartido(partido)) {
+                if (partido.verifPartido(aux)) {
                     System.out.println(partido.toString());
                 }
                 i++;

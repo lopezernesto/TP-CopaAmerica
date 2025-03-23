@@ -18,25 +18,25 @@ EQUIPOS:
 (VENEZUELA) -> HI: -  HD: - 
 
 PARTIDOS:
-JAMAICA; VENEZUELA; grupo; 0:1
-ARGENTINA; PERU; grupo; 3:1
-ESTADOS UNIDOS; URUGUAY; grupo; 2:2
-ECUADOR; VENEZUELA; grupo; 1:2
-CANADA; PERU; grupo; 1:1
-BRASIL; COLOMBIA; grupo; 2:1
-ARGENTINA; CANADA; grupo; 2:0
-BOLIVIA; URUGUAY; grupo; 0:2
-BRASIL; PARAGUAY; grupo; 1:0
-PANAMA; URUGUAY; grupo; 0:1
-ESTADOS UNIDOS; PANAMA; grupo; 3:0
-MEXICO; VENEZUELA; grupo; 1:0
-ECUADOR; MEXICO; grupo; 1:2
-COLOMBIA; COSTA RICA; grupo; 2:1
-ECUADOR; JAMAICA; grupo; 1:2
-COSTA RICA; PARAGUAY; grupo; 0:2
-CHILE; PERU; grupo; 0:2
-ARGENTINA; CHILE; grupo; 1:0
-BOLIVIA; PANAMA; grupo; 1:1
+JAMAICA; VENEZUELA; grupo; INGLEWOOD; SOFI STADIUM; 0:1
+ARGENTINA; PERU; grupo; HOUSTON; NRG STADIUM; 3:1
+ESTADOS UNIDOS; URUGUAY; grupo; ORLANDO; EXPLORIA STADIUM; 2:2
+ECUADOR; VENEZUELA; grupo; AUSTIN; Q2 STADIUM; 1:2
+CANADA; PERU; grupo; MIAMI; HARD ROCK STADIUM; 1:1
+BRASIL; COLOMBIA; grupo; ATLANTA; MERCEDES-BENZ STADIUM; 2:1
+ARGENTINA; CANADA; grupo; ATLANTA; MERCEDES-BENZ STADIUM; 2:0
+BOLIVIA; URUGUAY; grupo; EAST RUTHERFORD; METLIFE STADIUM; 0:2
+BRASIL; PARAGUAY; grupo; ARLINGTON; AT&T STADIUM; 1:0
+PANAMA; URUGUAY; grupo; AUSTIN; Q2 STADIUM; 0:1
+ESTADOS UNIDOS; PANAMA; grupo; PARADISE; ALLEGIANT STADIUM; 3:0
+MEXICO; VENEZUELA; grupo; GLENDALE; STATE FARM STADIUM; 1:0
+ECUADOR; MEXICO; grupo; ARLINGTON; AT&T STADIUM; 1:2
+COLOMBIA; COSTA RICA; grupo; GLENDALE; STATE FARM STADIUM; 2:1
+ECUADOR; JAMAICA; grupo; KANSAS CITY; ARROWHEAD STADIUM; 1:2
+COSTA RICA; PARAGUAY; grupo; CHARLOTTE; BANK OF AMERICA STADIUM; 0:2
+CHILE; PERU; grupo; SANTA CLARA; LEVI'S STADIUM; 0:2
+ARGENTINA; CHILE; grupo; EAST RUTHERFORD; METLIFE STADIUM; 1:0
+BOLIVIA; PANAMA; grupo; KANSAS CITY; ARROWHEAD STADIUM; 1:1
 
 CIUDADES:
 ------------------------------Ciudad-------------------------
@@ -204,206 +204,8 @@ ST. LOUIS:
 
 
 A partir de aca se ingresaran las modificaciones:
-EQUIPOS:
-(MEXICO) -> HI: CHILE  HD: URUGUAY
-(CHILE) -> HI: BOLIVIA  HD: ESTADOS UNIDOS
-(BOLIVIA) -> HI: ARGENTINA  HD: CANADA
-(ARGENTINA) -> HI: -  HD: - 
-(CANADA) -> HI: BRASIL  HD: - 
-(BRASIL) -> HI: -  HD: - 
-(ESTADOS UNIDOS) -> HI: COSTA RICA  HD: JAMAICA
-(COSTA RICA) -> HI: COLOMBIA  HD: ECUADOR
-(COLOMBIA) -> HI: -  HD: - 
-(ECUADOR) -> HI: -  HD: - 
-(JAMAICA) -> HI: -  HD: - 
-(URUGUAY) -> HI: PARAGUAY  HD: VENEZUELA
-(PARAGUAY) -> HI: PANAMA  HD: PERU
-(PANAMA) -> HI: -  HD: - 
-(PERU) -> HI: -  HD: - 
-(VENEZUELA) -> HI: -  HD: - 
-
-PARTIDOS:
-JAMAICA; VENEZUELA; grupo; 0:1
-ARGENTINA; PERU; grupo; 3:1
-ESTADOS UNIDOS; URUGUAY; grupo; 2:2
-ECUADOR; VENEZUELA; grupo; 1:2
-CANADA; PERU; grupo; 1:1
-BRASIL; COLOMBIA; grupo; 2:1
-ARGENTINA; CANADA; grupo; 2:0
-BOLIVIA; URUGUAY; grupo; 0:2
-BRASIL; PARAGUAY; grupo; 1:0
-PANAMA; URUGUAY; grupo; 0:1
-ESTADOS UNIDOS; PANAMA; grupo; 3:0
-MEXICO; VENEZUELA; grupo; 1:0
-ECUADOR; MEXICO; grupo; 1:2
-COLOMBIA; COSTA RICA; grupo; 2:1
-ECUADOR; JAMAICA; grupo; 1:2
-COSTA RICA; PARAGUAY; grupo; 0:2
-CHILE; PERU; grupo; 0:2
-ARGENTINA; CHILE; grupo; 1:0
-BOLIVIA; PANAMA; grupo; 1:1
-
-CIUDADES:
-------------------------------Ciudad-------------------------
-ATLANTA: 
-----------------------------Conexiones-----------------------
------->EAST RUTHERFORD
------->GLENDALE
------->ST. LOUIS
------->INDIANAPOLIS
-
-------------------------------Ciudad-------------------------
-EAST RUTHERFORD: 
-----------------------------Conexiones-----------------------
------->ATLANTA
------->LOUISVILLE
------->NASHVILLE
-
-------------------------------Ciudad-------------------------
-MIAMI: 
-----------------------------Conexiones-----------------------
------->NASHVILLE
------->HOUSTON
------->CHARLOTTE
------->AUSTIN
------->GLENDALE
-
-------------------------------Ciudad-------------------------
-HOUSTON: 
-----------------------------Conexiones-----------------------
------->MIAMI
------->ARLINGTON
------->AUSTIN
------->CINCINNATI
------->GLENDALE
-
-------------------------------Ciudad-------------------------
-ARLINGTON: 
-----------------------------Conexiones-----------------------
------->HOUSTON
------->CINCINNATI
------->GLENDALE
------->INDIANAPOLIS
-
-------------------------------Ciudad-------------------------
-SANTA CLARA: 
-----------------------------Conexiones-----------------------
------->CHARLOTTE
------->INGLEWOOD
------->KANSAS CITY
------->ORLANDO
-
-------------------------------Ciudad-------------------------
-CHARLOTTE: 
-----------------------------Conexiones-----------------------
------->MIAMI
------->SANTA CLARA
------->INGLEWOOD
------->ORLANDO
------->SAN ANTONIO
-
-------------------------------Ciudad-------------------------
-GLENDALE: 
-----------------------------Conexiones-----------------------
------->ARLINGTON
------->ATLANTA
------->MIAMI
------->HOUSTON
-
-------------------------------Ciudad-------------------------
-INGLEWOOD: 
-----------------------------Conexiones-----------------------
------->SANTA CLARA
------->CHARLOTTE
------->AUSTIN
------->SAN ANTONIO
------->CINCINNATI
-
-------------------------------Ciudad-------------------------
-ORLANDO: 
-----------------------------Conexiones-----------------------
------->CHARLOTTE
------->AUSTIN
------->KANSAS CITY
------->LOUISVILLE
------->SANTA CLARA
-
-------------------------------Ciudad-------------------------
-AUSTIN: 
-----------------------------Conexiones-----------------------
------->MIAMI
------->HOUSTON
------->INGLEWOOD
------->ORLANDO
------->PARADISE
-
-------------------------------Ciudad-------------------------
-KANSAS CITY: 
-----------------------------Conexiones-----------------------
------->SANTA CLARA
------->ORLANDO
------->PARADISE
------->ST. LOUIS
-
-------------------------------Ciudad-------------------------
-PARADISE: 
-----------------------------Conexiones-----------------------
------->AUSTIN
------->KANSAS CITY
------->LAS VEGAS
------->SAN ANTONIO
------->CINCINNATI
-
-------------------------------Ciudad-------------------------
-LAS VEGAS: 
-----------------------------Conexiones-----------------------
------->PARADISE
------->SAN ANTONIO
------->INDIANAPOLIS
-
-------------------------------Ciudad-------------------------
-NASHVILLE: 
-----------------------------Conexiones-----------------------
------->EAST RUTHERFORD
------->MIAMI
------->LOUISVILLE
-
-------------------------------Ciudad-------------------------
-SAN ANTONIO: 
-----------------------------Conexiones-----------------------
------->CHARLOTTE
------->INGLEWOOD
------->PARADISE
------->LAS VEGAS
-
-------------------------------Ciudad-------------------------
-INDIANAPOLIS: 
-----------------------------Conexiones-----------------------
------->LAS VEGAS
------->ATLANTA
------->ARLINGTON
-
-------------------------------Ciudad-------------------------
-CINCINNATI: 
-----------------------------Conexiones-----------------------
------->HOUSTON
------->ARLINGTON
------->INGLEWOOD
------->PARADISE
-
-------------------------------Ciudad-------------------------
-LOUISVILLE: 
-----------------------------Conexiones-----------------------
------->EAST RUTHERFORD
------->NASHVILLE
------->ORLANDO
------->ST. LOUIS
-
-------------------------------Ciudad-------------------------
-ST. LOUIS: 
-----------------------------Conexiones-----------------------
------->LOUISVILLE
------->KANSAS CITY
------->ATLANTA
-
-
+Se agrego la ciudad: MapuCity
+Se registraron 2 personas en la ciudad Mapucity
+Se agrego un camino entre mapucity y miami
+Se agrego el equipo manchesterMapu
+Se ingreso un partido entre manchesterMapu y BRASIL por cuartos

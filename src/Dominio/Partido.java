@@ -173,9 +173,7 @@ public class Partido {
 
     @Override
     public String toString() {
-        return eq1.getNombre() + "; " + eq2.getNombre() + "; " + ronda + "; "/*
-                                                                              * + ciudad.getNombre() + "; " + estadio
-                                                                              * + "; "
-                                                                              */ + resultado;
+        return eq1.getNombre() + "; " + eq2.getNombre() + "; " + ronda + "; " + ciudad.getNombre() + "; " + estadio
+                + "; " + resultado;
     }
 }

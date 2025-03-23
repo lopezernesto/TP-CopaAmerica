@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import Estructuras.TablaHash;
 import Estructuras.Lineales.Lista;
 
 //Este digrafo etiquetado es utilizado para hacer un mapa de ciudades
