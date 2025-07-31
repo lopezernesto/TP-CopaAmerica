@@ -275,15 +275,12 @@ public class Grafo {
         caminoActual.insertar(actual.getElem(), caminoActual.longitud() + 1);
         // Si llegue a la ciudad Destino
         if (actual.equals(destino)) {
-            // Comparo el tiempo
-            if (tiempoActual < mejorTiempo[0]) {
-                // Si el tiempoActual es mejor:
-                // Reemplazo y vacio mi mejorCamino
-                mejorTiempo[0] = tiempoActual;
-                mejorCamino[0].vaciar();
-                // Ahora mi camino actual es el mejor camino
-                mejorCamino[0] = caminoActual.clone();
-            }
+            // Como ya se que el tiempo es mejor
+            // Reemplazo y vacio mi mejorCamino
+            mejorTiempo[0] = tiempoActual;
+            mejorCamino[0].vaciar();
+            // Ahora mi camino actual es el mejor camino
+            mejorCamino[0] = caminoActual.clone();
         } else {
             NodoAdy arco = actual.getPrimerArco();
             // Para cada camino de la ciudad actual:
@@ -297,8 +294,11 @@ public class Grafo {
                     if (continuar) {
                         // Sumo el tiempo y lo mando por parametro con la nueva ciudad
                         tiempoActual += arco.getEtiqueta();
-                        caminoMasCortoAux(excluirNodo, vecino, destino, excluido, caminoActual, mejorCamino,
-                                tiempoActual, mejorTiempo);
+                        // Si el tiempoActual es mayor directamente no voy
+                        if (tiempoActual < mejorTiempo[0]) {
+                            caminoMasCortoAux(excluirNodo, vecino, destino, excluido, caminoActual, mejorCamino,
+                                    tiempoActual, mejorTiempo);
+                        }
                         // Resto el tiempo a la vuelta
                         tiempoActual -= arco.getEtiqueta();
                     }
@@ -334,15 +334,13 @@ public class Grafo {
         caminoActual.insertar(actual.getElem(), caminoActual.longitud() + 1);
         // Si llegue a la ciudad Destino
         if (actual.equals(destino)) {
-            // Comparo los contadores
-            if (ciudadesVisitadas < minCiudadesVisitadas[0]) {
-                // Si el contador de Ciudades es menor:
-                // Reemplazo y vacio mi mejorCamino
-                minCiudadesVisitadas[0] = ciudadesVisitadas;
-                mejorCamino[0].vaciar();
-                // ahora camino actual es mi mejor camino
-                mejorCamino[0] = caminoActual.clone();
-            }
+            // Como ya compare que hay menos ciudadesVisitadas
+            // Reemplazo y vacio mi mejorCamino
+            minCiudadesVisitadas[0] = ciudadesVisitadas;
+            mejorCamino[0].vaciar();
+            // ahora camino actual es mi mejor camino
+            mejorCamino[0] = caminoActual.clone();
+
         } else {
             NodoAdy arco = actual.getPrimerArco();
             // Para cada camino de la ciudad actual:
@@ -353,7 +351,11 @@ public class Grafo {
                 if (caminoActual.localizar(vecino.getElem()) == -1) {
                     // Sumo el contador de ciudades
                     ciudadesVisitadas++;
-                    caminoMinimo(vecino, destino, caminoActual, mejorCamino, ciudadesVisitadas, minCiudadesVisitadas);
+                    // Si las ciudades visitadas son mayores, directamente no visito
+                    if (ciudadesVisitadas < minCiudadesVisitadas[0]) {
+                        caminoMinimo(vecino, destino, caminoActual, mejorCamino, ciudadesVisitadas,
+                                minCiudadesVisitadas);
+                    }
                     ciudadesVisitadas--;
 
                 }
@@ -491,6 +493,10 @@ public class Grafo {
         return camino;
     }
 
+    /*
+     * Debo crear una clase de Nodo A*, para evitar tener otro archivo ya que esto
+     * sera usado solo para pruebas lo dejo aca nomas
+     */
     private static class NodoAStar {
         NodoVert vertice;
         NodoAStar padre;

@@ -7,6 +7,9 @@ public class NodoVert {
     private int x; // Coordenada x
     private int y; // Coordenada y
 
+    /*
+     * Las siguientes son metodos para el algoritmo de A*
+     */
     public int getX() {
         return x;
     }
@@ -23,6 +26,9 @@ public class NodoVert {
         this.y = y;
     }
 
+    /*
+     * De aca en adelante son los metodos normales de los NodoVert
+     */
     public NodoVert(Object elem) {
         this.elem = elem;
     }
@@ -51,6 +57,7 @@ public class NodoVert {
         return !exit;
     }
 
+    // elimina todas las apariciones a ese destino
     public boolean eliminarArco(NodoVert destino) {
         boolean exit = false;
 
