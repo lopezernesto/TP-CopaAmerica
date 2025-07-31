@@ -1,5 +1,7 @@
 package Estructuras.AVL;
 
+import Dominio.EquipoGoles;
+import Estructuras.HeapMaximo;
 import Estructuras.TablaHash;
 import Estructuras.Lineales.Lista;
 import Tests.SegundaOpcionListar.AVLEspecifico;
@@ -291,7 +293,7 @@ public class ArbolAVL {
         if (balanceNodo == -2 && nodo.getDerecho() != null) {
             // Balance -2 significa caido a la derecha
             int balanceHijoDerecho = balance(nodo.getDerecho());
-            if (balanceHijoDerecho == -1) {
+            if (balanceHijoDerecho == -1 || balanceHijoDerecho == 0) {
                 // Si el balance del hijo tiene el mismo signo, es giro simple
                 balanceado = giroIzquierda(nodo);
             } else {
@@ -302,7 +304,7 @@ public class ArbolAVL {
             if (balanceNodo == 2 && nodo.getIzquierdo() != null) {
                 // Balance 2 esta caido a la izquierda
                 int balanceHijoIzquierda = balance(nodo.getIzquierdo());
-                if (balanceHijoIzquierda == 1) {
+                if (balanceHijoIzquierda == 1 || balanceHijoIzquierda == 0) {
                     balanceado = giroDerecha(nodo);
                 } else {
                     balanceado = dobleIzquierdaDerecha(nodo);
@@ -498,9 +500,28 @@ public class ArbolAVL {
     }
 
     /*
+     * Se usa para devolver los elementos del AVL (Comparable Equipo) como un Heap
+     * que los convierte en EquipoGoles y los inserta dentro del Heap
+     */
+    public HeapMaximo devolverHeap() {
+        HeapMaximo heap = new HeapMaximo();
+        if (raiz != null) {
+            devolverHeapAux(raiz, heap);
+        }
+        return heap;
+    }
+
+    private void devolverHeapAux(NodoAVL n, HeapMaximo heap) {
+        if (n != null) {
+            heap.insertar(new EquipoGoles(n.getElem()));
+            devolverHeapAux(n.getIzquierdo(), heap);
+            devolverHeapAux(n.getDerecho(), heap);
+        }
+    }
+
+    /*
      * Guarda los elementos del AVL en una TablaHash
      */
-
     public TablaHash ordenarPorGF() {
         TablaHash th = new TablaHash();
         if (raiz != null) {
