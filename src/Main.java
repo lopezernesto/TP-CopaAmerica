@@ -7,7 +7,9 @@ import java.util.StringTokenizer;
 
 import Dominio.Ciudad;
 import Dominio.Equipo;
+import Dominio.EquipoGoles;
 import Dominio.Partido;
+import Estructuras.HeapMaximo;
 import Estructuras.TablaHash;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
@@ -342,31 +344,40 @@ public class Main {
                             System.out.println(camino.toString());
                         }
                         System.out.println("Filtro: Caminos que solo haya alojamiento en la ciudad de destino:");
-                        for (i = 1; i <= lista.longitud(); i++) {
-                            camino = (Lista) lista.recuperar(i);
-                            // Verifico la ciudad destino (la ultima ciudad)
-                            Ciudad destino = (Ciudad) camino.recuperar(camino.longitud());
-                            if (destino.isAlojamiento())
-                                // Si la ciudad de destino tiene aljamiento, muestro el camino
-                                System.out.println(camino.toString());
+                        // agarro la primer lista para obtener la ciudad destino
+                        // esto pasa porque 'ciudadDestino se creo solo con el nombre'
+                        i = 0;
+                        camino = (Lista) lista.recuperar(i);
+                        Ciudad destino = (Ciudad) camino.recuperar(camino.longitud());
+                        // Si la ciudad de destino tiene aljamiento, lo menciono
+                        if (destino.isAlojamiento())
+                            System.out.println("La ciudad de destino tiene alojamiento");
+                        else {
+                            System.out.println("La ciudad de destino tiene alojamiento");
                         }
+
                         System.out.println("Filtro: Caminos que haya alojamiento en al menos una de las ciudades:");
-                        for (i = 1; i <= lista.longitud(); i++) {
-                            camino = (Lista) lista.recuperar(i);
-                            // Verifico que exista al menos una ciudad de ese camino
-                            // Que tenga alojamiento disponible
-                            boolean salir = false;
+                        // tomo la primer lista verifico y la elimino
+                        int longitud = lista.longitud();
+                        i = 0;
+                        while (i < longitud) {
+                            camino = (Lista) lista.recuperar(1);
                             int j = 1;
-                            // Si encontre al menos una o si llegue al final, salgo
-                            while (!salir && j <= camino.longitud()) {
+                            boolean salir = false;
+                            int longitudCamino = camino.longitud();
+                            while (!salir && j <= longitudCamino) {
                                 Ciudad ciudad = (Ciudad) camino.recuperar(j);
                                 // Si al menos una de las ciudades tiene alojamiento muestro el camino
                                 if (ciudad.isAlojamiento()) {
+                                    // en caso de encontrar, no hace falta seguir verificando
                                     salir = true;
                                     System.out.println(camino.toString());
                                 }
                                 j++;
                             }
+                            // borro esa lista
+                            lista.eliminar(1);
+                            i++;
                         }
                     } else {
                         errorC();
@@ -380,6 +391,7 @@ public class Main {
                     break;
             }
         } while (!exit);
+
     }
 
     private static void errorC() {
@@ -665,7 +677,29 @@ public class Main {
         } while (!exit);
     }
 
+    public static void listarPorGF() {
+        long startTime = System.nanoTime();
+        HeapMaximo heap = equipos.devolverHeap();
+        EquipoGoles e = (EquipoGoles) heap.obtenerCima();
+        if (e != null) {
+            while (e != null) {
+                System.out.print(e.toString());
+                heap.eliminar();
+                e = (EquipoGoles) heap.obtenerCima();
+            }
+        } else {
+            System.out.println("No hay equipos cargados para ordenar por GF");
+        }
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("Metodo TablaHash tardo: " + (double) duration / 1000000000 + " segundos");
+        System.out.println("TERMINO EL LISTAR POR GF DE HEAP");
+    }
+
     /*
+     * BORRAR
+     * Lo dejo para pruebas
+     * 
      * Dado el AVL de Equipos:
      * Obtiene una TablaHash de Equipos, ordenados por sus goles a favor
      * 
@@ -677,7 +711,7 @@ public class Main {
      * Para cada elemento de la lista muestra su nombre y la cantidad de GF
      */
 
-    public static void listarPorGF() {
+    public static void listarPorGF1() {
         long startTime = System.nanoTime();
         TablaHash th = equipos.ordenarPorGF();
         Lista lista = th.listar();
@@ -689,6 +723,7 @@ public class Main {
         long endTime = System.nanoTime();
         long duration = endTime - startTime;
         System.out.println("Metodo TablaHash tardo: " + (double) duration / 1000000000 + " segundos");
+        System.out.println("TERMINO EL LISTAR POR GF DE HASH");
     }
 
     /*
@@ -898,6 +933,7 @@ public class Main {
         long duration = endTime - startTime;
         System.out.println("Metodo AVL tardo: " + (double) duration / 1000000000 + " segundos");
         System.out.println("-------------------------------------");
+        System.out.println("TERMINO EL LISTAR POR GF DE AVL ESPECIFICO");
     }
 
     public static void mostrarDatos() {
@@ -914,6 +950,10 @@ public class Main {
 
     public static void main(String[] args) {
         boolean exit = false;
+        /*
+         * EL grafo se encuentra en:
+         * http://graphonline.top/es/?graph=DcxDnXxEwmDkmFrR
+         */
         String salida = "salida.txt";
         // Este try-catch de filewriter es para vaciar a salida.txt cada vez que inicio
         // el programa
@@ -958,7 +998,8 @@ public class Main {
                     consultaViajes();
                     break;
                 case '7':
-                    listarPorGF(); // Metodo 1(Hash)
+                    listarPorGF();
+                    listarPorGF1(); // Metodo 1(Hash)
                     listarPorGF2(); // Metodo 2(AVL)
                     break;
                 case '8':
