@@ -4,7 +4,7 @@ import Estructuras.AVL.NodoAVL;
 
 /* 
  * Debido a las pruebas realizadas se llego a la conclucion que
- * No es factible utilizar este NodoAVL debido a que no se utilizar el AVL
+ * No es factible utilizar este NodoAVL debido a funciones como Eliminar que quedarian raras
  * 
  * Se guardara para futuras pruebas
  */

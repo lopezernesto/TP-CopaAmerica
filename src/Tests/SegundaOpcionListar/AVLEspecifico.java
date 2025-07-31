@@ -1,6 +1,7 @@
 package Tests.SegundaOpcionListar;
 
 import Dominio.Equipo;
+import Dominio.EquipoGoles;
 import Estructuras.Lineales.Lista;
 
 /* 
@@ -28,8 +29,7 @@ public class AVLEspecifico {
 
     // Entra un Equipo
     public boolean insertar(Comparable elem) {
-        Equipo e = (Equipo) elem;
-        EquipoGoles equipo = new EquipoGoles(e.getNombre(), e.getGolesFavor());
+        EquipoGoles equipo = new EquipoGoles(elem);
         boolean exit = false;
         if (raiz == null) {
             // Si raiz es nula, lo inserto ahi
